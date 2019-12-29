@@ -1,1 +1,13 @@
-<p>log-in works!</p>
+<form class="example-container" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+        <textarea matInput placeholder="Enter your login" formControlName="login"></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Enter your password" formControlName="password" [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+    </mat-form-field>
+    <button  class="for-button" type="submit" mat-raised-button>Create</button> 
+</form>
