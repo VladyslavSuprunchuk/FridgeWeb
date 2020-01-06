@@ -19,7 +19,7 @@ export class LogInComponent implements OnInit {
   ngOnInit() {
 
     this.loginForm = new FormGroup({
-      login: new FormControl(),
+      email: new FormControl(),
       password: new FormControl()
     });
 
@@ -35,8 +35,8 @@ onSubmit() {
           this.storage.SetToken(data.data);
           //вызов компонента
         }
-        else
-          this.alertManager.showSuccess("Error");
+       // else
+         // this.alertManager.showSuccess("Error");
       });
     }
   }
