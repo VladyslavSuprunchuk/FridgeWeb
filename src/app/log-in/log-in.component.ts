@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { GenericResponse } from '../GenericRespons/GenericResponse';
+import { GenericResponse } from '../Models/GenericResponse';
 import { ServerConnectionService } from '../services/server-connection.service';
-import { AlertManagerService } from '../services/alert-manager.service'
+import { AlertManagerService } from '../services/alert-manager.service';
+import { client } from '../Models/Client'
+import { LocalStorage } from '../services/LocalStorage';
 
 @Component({
   selector: 'app-log-in',
@@ -13,7 +15,9 @@ export class LogInComponent implements OnInit {
 
   hide = true;
   public loginForm: FormGroup;
-  public storage:LocalStorage
+  public storage:LocalStorage;
+  _client:client;
+
   constructor(private server: ServerConnectionService,public alertManager: AlertManagerService) { }
 
   ngOnInit() {
@@ -32,11 +36,14 @@ onSubmit() {
       console.log(this.loginForm.value);
       this.server.postQuery<GenericResponse<boolean>>(srt, this.loginForm.value).subscribe(data => {
         if (data.isSuccess) {
-          this.storage.SetToken(data.data);
-          //вызов компонента
+          this._client=data.data;
+          console.log(this._client)
+          console.log(data.data.token);
+          this.storage= new LocalStorage();
+          this.storage.setToken(data.data.token);
         }
-       // else
-         // this.alertManager.showSuccess("Error");
+        else
+          this.alertManager.showSuccess("Error");
       });
     }
   }

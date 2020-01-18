@@ -1,12 +1,12 @@
- class LocalStorage {
+ export class LocalStorage {
   
     constructor() { }
     
-    public SetToken(token:string){
+    public setToken(token:string){
         localStorage.setItem("tokens",token);
     }
 
-    public GetTokens() {
+    public getTokens() {
        return localStorage.getItem("tokens");
     }
 
