@@ -37,7 +37,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { ProductItemListComponent } from './components/product-item-list/product-item-list.component';
 import { HeaderComponent } from './components/navigation/header/header.component';
 import { SidenavListComponent } from './components/navigation/sidenav-list/sidenav-list.component';
-
+import { ProductTypeListComponent } from './components/product-type-list/product-type-list.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { SidenavListComponent } from './components/navigation/sidenav-list/siden
     ProductItemListComponent,
     HeaderComponent,
     SidenavListComponent,
+    ProductTypeListComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,7 +84,8 @@ import { SidenavListComponent } from './components/navigation/sidenav-list/siden
     MatSnackBarModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    HttpClientModule
   ],
   exports: [
     MatTabsModule,

@@ -70,7 +70,7 @@ export class ServerConnectionService {
     _headers = _headers.append("Access-Control-Allow-Methods", "POST, GET");
     _headers = _headers.append("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     _headers = _headers.append('Content-Type', 'application/json');
-    _headers = _headers.append('Authorization', "Bearer " + access_token);
+    _headers = _headers.append('Authorization',"4q4B0Ch9zUCzxlBd/nvlqA==");
     return _headers;
   }
 

@@ -1,0 +1,20 @@
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="imageUrl">
+    <mat-header-cell *matHeaderCellDef> Photo </mat-header-cell>
+    <mat-cell ></mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="expirationTerm">
+    <mat-header-cell *matHeaderCellDef> Expiration term </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.expirationTerm}} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
