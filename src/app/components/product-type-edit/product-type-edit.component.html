@@ -1,0 +1,31 @@
+<!-- <div class="example-container">
+  <div>{{productType.name}}</div>
+  <mat-form-field>
+    <div class="productTypePhoto">
+      <img *ngIf="productType.imageUrl!=null" class="img" src="{{productType.imageUrl}}" alt="">
+      <img *ngIf="productType.imageUrl==null" class="img" src="https://img.icons8.com/color/96/000000/grocery-bag.png" />
+    </div>
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label>Select</mat-label>
+    <mat-select>
+      <mat-option value="option">Option</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label>Textarea</mat-label>
+    <textarea matInput></textarea>
+  </mat-form-field>
+</div> -->
+
+<form class="example-container" [formGroup]="productTypeForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <textarea matInput placeholder="Title" formControlName="name"></textarea>
+  </mat-form-field>
+  <mat-form-field>
+    <textarea  matInput placeholder="Description" formControlName="description"></textarea>
+  </mat-form-field>
+  <button class="for-button" type="submit" mat-raised-button>Save</button>
+</form>

@@ -1,10 +1,10 @@
 export class UnitClient{
 
-    id:number;
+    id:number = 0;
 
-    name:string;
+    name:string = "";
 
-    shortName:string;
+    shortName:string = "";
 
-    iterator:number;
+    iterator:number = 0;
 }

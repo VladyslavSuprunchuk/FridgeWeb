@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServerConnectionService } from '../../services/server-connection.service';
-import { ProductTypeClient } from '../../Models/ProductTypeClient';
+import { ProductType } from '..//..//Models//ProductType';
 import { GenericResponse } from '..//../Models//GenericResponse'
 
 
@@ -13,19 +13,17 @@ import { GenericResponse } from '..//../Models//GenericResponse'
 export class ProductTypeListComponent implements OnInit {
 
   public displayedColumns: string[] = ['imageUrl', 'name', 'expirationTerm'];
-  public dataSource: ProductTypeClient[];
-
-  public productTypeClients: ProductTypeClient[];
+  public dataSources: ProductType[];
+  public productTypes: ProductType[];
 
   constructor(private server: ServerConnectionService) { }
 
   ngOnInit(): void {
     this.server.getQuery<GenericResponse<boolean>>('/producttype').subscribe(data => {
       if (data.isSuccess) {
-        this.productTypeClients = data.data;
-        this.dataSource = this.productTypeClients;
+        this.productTypes = data.data;
+        this.dataSources = this.productTypes;
       }
     });
   }
-
 }

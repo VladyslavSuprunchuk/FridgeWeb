@@ -1,8 +1,13 @@
-<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<mat-table [dataSource]="dataSources" class="mat-elevation-z8">
 
   <ng-container matColumnDef="imageUrl">
     <mat-header-cell *matHeaderCellDef> Photo </mat-header-cell>
-    <mat-cell ></mat-cell>
+    <mat-cell *matCellDef="let element">
+      <div class="productTypePhoto">
+        <img *ngIf="element.imageUrl!=null" class="img" src="{{element.imageUrl}}" alt="">
+        <img *ngIf="element.imageUrl==null" src="https://img.icons8.com/color/96/000000/grocery-bag.png" />
+      </div>
+    </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="name">
@@ -12,9 +17,11 @@
 
   <ng-container matColumnDef="expirationTerm">
     <mat-header-cell *matHeaderCellDef> Expiration term </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.expirationTerm}} </mat-cell>
+    <mat-cell *matCellDef="let element">
+      <div style="width:250px;margin-left: 30px;">{{element.expirationTerm}}</div>
+    </mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  <mat-row  [routerLink]="['/product-type-edit', row.id]" *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>

@@ -39,6 +39,8 @@ import { HeaderComponent } from './components/navigation/header/header.component
 import { SidenavListComponent } from './components/navigation/sidenav-list/sidenav-list.component';
 import { ProductTypeListComponent } from './components/product-type-list/product-type-list.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { ProductTypeEditComponent } from './components/product-type-edit/product-type-edit.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
     HeaderComponent,
     SidenavListComponent,
     ProductTypeListComponent,
+    ProductTypeEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,7 +88,9 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     MatTabsModule,
