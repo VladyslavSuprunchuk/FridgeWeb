@@ -42,6 +42,16 @@ export class ServerConnectionService {
       .pipe(catchError(this.handleError<T>('postFormData')));
   }
 
+  public putFormData<T>(url: string, data:any, file: any, params?: URLSearchParams) {
+    let queryURL: string = `${this.BASE_URL}${url}`;
+    let headers = this.bindHeadersToRequestFormData();
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+    uploadData.append('data', JSON.stringify(data));
+    return this.http.put(queryURL, uploadData, { headers: headers })
+      .pipe(catchError(this.handleError<T>('putFormData')));
+  }
+
   public deleteQuery<T>(url: string) {
     let queryURL: string = `${this.BASE_URL}${url}`;
     let headers = this.bindHeadersToRequestModel();
@@ -57,6 +67,7 @@ export class ServerConnectionService {
     _headers = _headers.append("Access-Control-Allow-Origin", "*");
     _headers = _headers.append("Access-Control-Allow-Methods", "POST, GET");
     _headers = _headers.append("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    _headers = _headers.append('Authorization',"4q4B0Ch9zUCzxlBd/nvlqA==");
     //_headers = _headers.append('Authorization', "Bearer " + access_token);
     return _headers;
   }
