@@ -16,7 +16,7 @@ export class AlertManagerService {
   }
 
   showError(message: string) {
-    this.snackBar.open(message, 'Ok', {
+    this.snackBar.open(message, 'Error', {
       duration: 10000,
       verticalPosition: 'bottom'
     });

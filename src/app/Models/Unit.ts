@@ -1,4 +1,4 @@
-export class UnitClient{
+export class Unit{
 
     id:number = 0;
 
