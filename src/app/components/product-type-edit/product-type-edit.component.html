@@ -1,7 +1,7 @@
 <div class="prodycTypeLayout">
   <div class="productTypePhoto">
-    <img *ngIf="productType.imageUrl!=null" class="img" src="{{productType.imageUrl}}" alt="">
-    <img *ngIf="productType.imageUrl==null" class="img" src="https://img.icons8.com/color/96/000000/grocery-bag.png" />
+    <img *ngIf="productType.imageUrl!=null" class="photo" src="{{productType.imageUrl}}" alt="">
+    <img *ngIf="productType.imageUrl==null" class="photo" src="https://img.icons8.com/color/96/000000/grocery-bag.png" />
   </div>
 </div>
 
@@ -21,7 +21,7 @@
   <mat-form-field>
     <textarea matInput placeholder="Opened expiration term" formControlName="openedExpirationTerm"></textarea>
   </mat-form-field>
-  <div style="display: inline-flex">
+  <div class="buttons">
     <button class="for-button submitButton" type="submit" mat-raised-button>Save</button>
     <button class="for-button deleteButton" type="button" (click)="delete()" mat-raised-button>Delete</button>
   </div>

@@ -1,4 +1,4 @@
-.img{
+.photo{
   position: absolute;
     top: 0;
     bottom: 0;
@@ -32,6 +32,7 @@
 }
 
 .prodycTypeLayout{
+  margin-left: 2%;
   display: block;
     border: 1px solid #b5e9a7;
     border-radius: 3px;
@@ -40,4 +41,7 @@
     color: #474747;
     height: 250px;
     width: 250px;
+}
+.buttons{
+  display: inline-flex;
 }
