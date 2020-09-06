@@ -4,6 +4,8 @@ import { Observable } from "rxjs";
 import { catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatFormField } from '@angular/material/form-field';
+import { ParseSourceFile } from '@angular/compiler';
 @Injectable({
   providedIn: 'root'
 })
@@ -42,7 +44,7 @@ export class ServerConnectionService {
       .pipe(catchError(this.handleError<T>('postFormData')));
   }
 
-  public putFormData<T>(url: string, data:any, file: any, params?: URLSearchParams) {
+  public putFormData<T>(url: string, data: any, file: any, params?: URLSearchParams) {
     let queryURL: string = `${this.BASE_URL}${url}`;
     let headers = this.bindHeadersToRequestFormData();
     const uploadData = new FormData();
@@ -67,7 +69,7 @@ export class ServerConnectionService {
     _headers = _headers.append("Access-Control-Allow-Origin", "*");
     _headers = _headers.append("Access-Control-Allow-Methods", "POST, GET");
     _headers = _headers.append("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    _headers = _headers.append('Authorization',"4q4B0Ch9zUCzxlBd/nvlqA==");
+    _headers = _headers.append('Authorization', "4q4B0Ch9zUCzxlBd/nvlqA==");
     //_headers = _headers.append('Authorization', "Bearer " + access_token);
     return _headers;
   }
@@ -81,7 +83,7 @@ export class ServerConnectionService {
     _headers = _headers.append("Access-Control-Allow-Methods", "POST, GET");
     _headers = _headers.append("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     _headers = _headers.append('Content-Type', 'application/json');
-    _headers = _headers.append('Authorization',"4q4B0Ch9zUCzxlBd/nvlqA==");
+    _headers = _headers.append('Authorization', "4q4B0Ch9zUCzxlBd/nvlqA==");
     return _headers;
   }
 

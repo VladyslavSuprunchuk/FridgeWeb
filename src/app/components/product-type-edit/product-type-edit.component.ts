@@ -17,6 +17,7 @@ export class ProductTypeEditComponent implements OnInit {
   id: number;
   public productType: ProductType = new ProductType();
   public productTypeForm: FormGroup;
+  public fileToUpload: File = null;
 
   constructor(private activateRoute: ActivatedRoute,
     private server: ServerConnectionService,
@@ -45,12 +46,15 @@ export class ProductTypeEditComponent implements OnInit {
       expirationTerm: [this.productType.expirationTerm],
       openedExpirationTerm: [this.productType.openedExpirationTerm]
     });
+    this.productTypeForm.get('unitName').disable();
   }
 
   onSubmit() {
-    this.server.putFormData<GenericResponse<boolean>>('/producttype/', this.productTypeForm.value, null).subscribe(data => {
-      if (data.isSuccess) 
-        this.alertManager.showSuccess("Product type successed  updated");    
+    this.server.putFormData<GenericResponse<boolean>>('/producttype/', this.productTypeForm.value, this.fileToUpload).subscribe(data => {
+      if (data.isSuccess) {
+         this.router.navigate(['product-type-list']);
+        this.alertManager.showSuccess("Product type successed  updated");  
+      }  
       else
         this.alertManager.showError("Error"); 
     })
@@ -63,5 +67,9 @@ export class ProductTypeEditComponent implements OnInit {
       else
         this.alertManager.showError("Error"); 
     })
+  }
+
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
   }
 }

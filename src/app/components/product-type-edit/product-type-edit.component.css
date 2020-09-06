@@ -16,7 +16,7 @@
   } 
 
 .properties{
-  margin-top: 2%;
+  margin-top: 0.5%;
   margin-left: 2%;
   display: flex;flex-flow: column wrap;
   width: 20%;
@@ -42,6 +42,11 @@
     height: 250px;
     width: 250px;
 }
+
+.fileUpload{
+  margin-bottom: 25px;
+}
+
 .buttons{
   display: inline-flex;
 }
