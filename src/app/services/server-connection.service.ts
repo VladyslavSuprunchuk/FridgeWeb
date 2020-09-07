@@ -69,7 +69,7 @@ export class ServerConnectionService {
     _headers = _headers.append("Access-Control-Allow-Origin", "*");
     _headers = _headers.append("Access-Control-Allow-Methods", "POST, GET");
     _headers = _headers.append("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    _headers = _headers.append('Authorization', "4q4B0Ch9zUCzxlBd/nvlqA==");
+    _headers = _headers.append('Authorization', "O7GhxIG9hUKJZenl4QlTVg==");
     //_headers = _headers.append('Authorization', "Bearer " + access_token);
     return _headers;
   }
@@ -83,7 +83,7 @@ export class ServerConnectionService {
     _headers = _headers.append("Access-Control-Allow-Methods", "POST, GET");
     _headers = _headers.append("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     _headers = _headers.append('Content-Type', 'application/json');
-    _headers = _headers.append('Authorization', "4q4B0Ch9zUCzxlBd/nvlqA==");
+    _headers = _headers.append('Authorization', "O7GhxIG9hUKJZenl4QlTVg==");
     return _headers;
   }
 

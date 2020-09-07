@@ -1,4 +1,4 @@
-import {Unit} from './Unit'
+import {Unit} from './unit'
 import { from } from "rxjs";
 
 export class ProductType{

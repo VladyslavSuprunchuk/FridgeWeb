@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServerConnectionService } from '../../services/server-connection.service';
-import { ProductType } from '..//..//Models//ProductType';
-import { GenericResponse } from '..//../Models//GenericResponse'
+import { ProductType } from '../../models/product-type';
+import { GenericResponse } from '../../models/generic-response'
 
 
 @Component({
@@ -13,7 +13,6 @@ import { GenericResponse } from '..//../Models//GenericResponse'
 export class ProductTypeListComponent implements OnInit {
 
   public displayedColumns: string[] = ['imageUrl', 'name', 'expirationTerm'];
-  public dataSources: ProductType[];
   public productTypes: ProductType[];
 
   constructor(private server: ServerConnectionService) { }
@@ -22,7 +21,6 @@ export class ProductTypeListComponent implements OnInit {
     this.server.getQuery<GenericResponse<boolean>>('/producttype').subscribe(data => {
       if (data.isSuccess) {
         this.productTypes = data.data;
-        this.dataSources = this.productTypes;
       }
     });
   }

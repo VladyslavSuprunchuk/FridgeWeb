@@ -1,7 +1,7 @@
 <div class="prodycTypeLayout">
   <div class="productTypePhoto">
-    <img *ngIf="productType.imageUrl!=null" class="photo" src="{{productType.imageUrl}}" alt="">
-    <img *ngIf="productType.imageUrl==null" class="photo" src="https://img.icons8.com/color/96/000000/grocery-bag.png" />
+    <img *ngIf="productType!=null && productType.imageUrl!=null" class="photo" src="{{productType.imageUrl}}">
+    <img *ngIf="productType==null || productType.imageUrl==null" class="photo" src="assets/images/grocery-bag.png"/>
   </div>
 </div>
 <form class="example-container" class="properties" [formGroup]="productTypeForm" (ngSubmit)="onSubmit()">
@@ -9,19 +9,27 @@
     <input type="file" id="file" (change)="handleFileInput($event.target.files)">
   </div>
   <mat-form-field>
-    <textarea matInput placeholder="Title" formControlName="name"></textarea>
+    <input matInput placeholder="Title" formControlName="name">
   </mat-form-field>
   <mat-form-field>
     <textarea matInput placeholder="Description" formControlName="description"></textarea>
   </mat-form-field>
-  <mat-form-field>
-    <textarea readonly matInput placeholder="Unit" formControlName="unitName"></textarea>
+  <!-- <mat-form-field>
+    <input readonly matInput placeholder="Unit" formControlName="unitName">
+  </mat-form-field> -->
+  <mat-form-field appearance="fill">
+    <mat-label>Units</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let unit of unitService.units" [value]="unit.name">
+        {{unit.name}}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
   <mat-form-field>
-    <textarea matInput placeholder="Expiration term" formControlName="expirationTerm"></textarea>
+    <input type="number" matInput placeholder="Expiration term" formControlName="expirationTerm">
   </mat-form-field>
   <mat-form-field>
-    <textarea matInput placeholder="Opened expiration term" formControlName="openedExpirationTerm"></textarea>
+    <input type="number" matInput placeholder="Opened expiration term" formControlName="openedExpirationTerm">
   </mat-form-field>
   <div class="buttons">
     <button class="for-button submitButton" type="submit" mat-raised-button>Save</button>
