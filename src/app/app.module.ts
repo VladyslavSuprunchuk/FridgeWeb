@@ -42,6 +42,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { ProductTypeEditComponent } from './components/product-type-edit/product-type-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StorehouseComponent } from './components/storehouse/storehouse.component';
+import { LogInComponent } from './components/log-in/log-in.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { StorehouseComponent } from './components/storehouse/storehouse.componen
     ProductTypeListComponent,
     ProductTypeEditComponent,
     StorehouseComponent,
+    LogInComponent,
   ],
   imports: [
     BrowserModule,

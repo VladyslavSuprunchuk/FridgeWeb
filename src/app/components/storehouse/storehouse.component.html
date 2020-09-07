@@ -27,7 +27,7 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
-<button routerLink="/form" (click)="Post()" class="mat-fab-bottom-right" style="position: absolute;bottom: 0;right: 0;margin:10px"
-    mat-fab>
+<button routerLink="/form" (click)="Post()" class="mat-fab-bottom-right"
+    style="position: absolute;bottom: 0;right: 0;margin:10px" mat-fab>
     <mat-icon class="icon">add</mat-icon>
 </button>

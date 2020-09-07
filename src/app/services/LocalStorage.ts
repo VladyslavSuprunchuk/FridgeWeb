@@ -2,12 +2,12 @@
   
     constructor() { }
     
-    public setToken(token:string){
-        localStorage.setItem("tokens",token);
+    public setToken(token:string) : void {
+        localStorage.setItem("token",token);
     }
 
-    public getTokens() {
-       return localStorage.getItem("tokens");
+    public getToken() {
+       return localStorage.getItem("token");
     }
 
  }

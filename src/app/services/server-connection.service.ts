@@ -6,12 +6,14 @@ import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatFormField } from '@angular/material/form-field';
 import { ParseSourceFile } from '@angular/compiler';
+import { LocalStorage } from '..//services//LocalStorage'
 @Injectable({
   providedIn: 'root'
 })
 export class ServerConnectionService {
 
   private BASE_URL: string = "http://localhost:5000/api";
+  private storage : LocalStorage = new LocalStorage();
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -62,20 +64,19 @@ export class ServerConnectionService {
   }
 
   private bindHeadersToRequestFormData(): HttpHeaders {
-    let access_token = localStorage.getItem('access_token');
+    let access_token = this.storage.getToken();
     console.log("access_token: " + access_token);
     let _headers = new HttpHeaders();
     _headers = _headers.set('Accept', 'application/json');
     _headers = _headers.append("Access-Control-Allow-Origin", "*");
     _headers = _headers.append("Access-Control-Allow-Methods", "POST, GET");
     _headers = _headers.append("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    _headers = _headers.append('Authorization', "4q4B0Ch9zUCzxlBd/nvlqA==");
-    //_headers = _headers.append('Authorization', "Bearer " + access_token);
+    _headers = _headers.append('Authorization', access_token);
     return _headers;
   }
 
   private bindHeadersToRequestModel(): HttpHeaders {
-    let access_token = localStorage.getItem('access_token');
+    let access_token = this.storage.getToken();
     console.log("access_token: " + access_token);
     let _headers = new HttpHeaders();
     _headers = _headers.set('Accept', 'application/json');
@@ -83,7 +84,7 @@ export class ServerConnectionService {
     _headers = _headers.append("Access-Control-Allow-Methods", "POST, GET");
     _headers = _headers.append("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     _headers = _headers.append('Content-Type', 'application/json');
-    _headers = _headers.append('Authorization', "4q4B0Ch9zUCzxlBd/nvlqA==");
+    _headers = _headers.append('Authorization', access_token);
     return _headers;
   }
 
