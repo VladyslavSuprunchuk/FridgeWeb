@@ -1,4 +1,4 @@
-export class client{
+export class Client{
 
     token:string;
 

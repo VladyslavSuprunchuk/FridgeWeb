@@ -41,6 +41,7 @@ import { ProductTypeListComponent } from './components/product-type-list/product
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { ProductTypeEditComponent } from './components/product-type-edit/product-type-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StorehouseComponent } from './components/storehouse/storehouse.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SidenavListComponent,
     ProductTypeListComponent,
     ProductTypeEditComponent,
+    StorehouseComponent,
   ],
   imports: [
     BrowserModule,
