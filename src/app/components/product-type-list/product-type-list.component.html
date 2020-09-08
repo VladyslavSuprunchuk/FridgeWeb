@@ -28,7 +28,7 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row [routerLink]="['/product-type-edit', row.id]" *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
-  <button [routerLink]="['/product-type-edit', null]" class="mat-fab-bottom-right" mat-fab>
+  <button [routerLink]="['/product-type-edit', 0]" class="mat-fab-bottom-right" mat-fab>
     <mat-icon class="icon">add</mat-icon>
   </button>
 </div>

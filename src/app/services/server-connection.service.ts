@@ -35,11 +35,12 @@ export class ServerConnectionService {
     return this.http.put(queryURL, object, { headers: headers })
       .pipe(catchError(this.handleError<T>('putQuery')));
   }
-  public postFormData<T>(url: string, file: any, params?: URLSearchParams) {
+  public postFormData<T>(url: string, data: any, file: any, params?: URLSearchParams) {
     let queryURL: string = `${this.BASE_URL}${url}`;
     let headers = this.bindHeadersToRequestFormData();
     const uploadData = new FormData();
-    uploadData.append('Image', file);
+    uploadData.append('file', file);
+    uploadData.append('data', JSON.stringify(data));
     return this.http.post(queryURL, uploadData, { headers: headers })
       .pipe(catchError(this.handleError<T>('postFormData')));
   }
