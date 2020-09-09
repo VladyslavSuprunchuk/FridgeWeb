@@ -1,28 +1,34 @@
-<mat-table [dataSource]="dataSources" class="mat-elevation-z8">
-  <ng-container matColumnDef="imageUrl">
-    <mat-header-cell class="headerForPhotoColumn" *matHeaderCellDef > Photo </mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      <div class="prodycTypeLayout">
-        <div class="productTypePhoto">
-          <img *ngIf="element.imageUrl!=null" class="photo" src="{{element.imageUrl}}" alt="">
-          <img *ngIf="element.imageUrl==null" class="photo" src="https://img.icons8.com/color/96/000000/grocery-bag.png" />
+<div class="mainDiv">
+  <mat-table [dataSource]="productTypes" class="mat-elevation-z8">
+    <ng-container matColumnDef="imageUrl">
+      <mat-header-cell class="headerForPhotoColumn" *matHeaderCellDef> Photo </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div class="prodycTypeLayout">
+          <div class="productTypePhoto">
+            <img *ngIf="element.imageUrl!=null" class="photo" src="{{element.imageUrl}}" alt="">
+            <img *ngIf="element.imageUrl==null" class="photo"
+              src="assets/images/grocery-bag.png" />
+          </div>
         </div>
-      </div>
-    </mat-cell>
-  </ng-container>
+      </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="expirationTerm">
-    <mat-header-cell *matHeaderCellDef> Expiration term </mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      <div class="expirationTermColumn">{{element.expirationTerm}}</div>
-    </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="expirationTerm">
+      <mat-header-cell *matHeaderCellDef> Expiration term </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div class="expirationTermColumn">{{element.expirationTerm}}</div>
+      </mat-cell>
+    </ng-container>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row  [routerLink]="['/product-type-edit', row.id]" *matRowDef="let row; columns: displayedColumns;"></mat-row>
-</mat-table>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row [routerLink]="['/product-type-edit', row.id]" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <button [routerLink]="['/product-type-edit', 0]" class="mat-fab-bottom-right" mat-fab>
+    <mat-icon class="icon">add</mat-icon>
+  </button>
+</div>

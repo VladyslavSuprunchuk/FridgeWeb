@@ -1,30 +1,41 @@
 <div class="prodycTypeLayout">
   <div class="productTypePhoto">
-    <img *ngIf="productType.imageUrl!=null" class="photo" src="{{productType.imageUrl}}" alt="">
-    <img *ngIf="productType.imageUrl==null" class="photo" src="https://img.icons8.com/color/96/000000/grocery-bag.png" />
+    <img *ngIf="productType!=null && productType.imageUrl!=null" class="photo" src="{{productType.imageUrl}}">
+    <img *ngIf="productType==null || productType.imageUrl==null" class="photo" src="assets/images/grocery-bag.png" />
   </div>
 </div>
 <form class="example-container" class="properties" [formGroup]="productTypeForm" (ngSubmit)="onSubmit()">
   <div class="fileUpload">
-    <input type="file" id="file" (change)="handleFileInput($event.target.files)">
+    <button mat-button color="primary" type="button" (click)="fileInput.click()">
+      <span *ngIf="fileToUpload!=null">Select another image</span>
+      <span *ngIf="fileToUpload==null">Select image</span>
+      <input #fileInput type="file" style="display:none;" id="file" (change)="handleFileInput($event.target.files)">
+    </button>
   </div>
   <mat-form-field>
-    <textarea matInput placeholder="Title" formControlName="name"></textarea>
+    <input matInput placeholder="Title" id="title" formControlName="name">
   </mat-form-field>
   <mat-form-field>
     <textarea matInput placeholder="Description" formControlName="description"></textarea>
   </mat-form-field>
   <mat-form-field>
-    <textarea readonly matInput placeholder="Unit" formControlName="unitName"></textarea>
+    <mat-label>Units</mat-label>
+    <mat-select formControlName="unitId">
+      <mat-option *ngFor="let unit of unitService.units" [value]="unit.id">
+        {{unit.name}}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
   <mat-form-field>
-    <textarea matInput placeholder="Expiration term" formControlName="expirationTerm"></textarea>
+    <input type="number" matInput placeholder="Expiration term" formControlName="expirationTerm">
   </mat-form-field>
   <mat-form-field>
-    <textarea matInput placeholder="Opened expiration term" formControlName="openedExpirationTerm"></textarea>
+    <input type="number" matInput placeholder="Opened expiration term" formControlName="openedExpirationTerm">
   </mat-form-field>
   <div class="buttons">
-    <button class="for-button submitButton" type="submit" mat-raised-button>Save</button>
-    <button class="for-button deleteButton" type="button" (click)="delete()" mat-raised-button>Delete</button>
+    <button [disabled]="productTypeForm.invalid" mat-flat-button color="primary" class="for-button submitButton"
+      type="submit" mat-raised-button>Save</button>
+    <button *ngIf="id!=0" mat-flat-button color="warn" class="for-button deleteButton" type="button" (click)="delete()"
+      mat-raised-button>Delete</button>
   </div>
 </form>

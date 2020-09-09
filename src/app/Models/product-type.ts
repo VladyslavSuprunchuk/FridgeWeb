@@ -1,5 +1,4 @@
-import {Unit} from './Unit'
-import { from } from "rxjs";
+import {Unit} from './unit'
 
 export class ProductType{
 
@@ -19,7 +18,7 @@ export class ProductType{
 
     tags:string[] = [];
 
-    unit:Unit =  new Unit();
+    unit:Unit = new Unit();
 
-    unitClietId:number = 0 ;
+    unitId:number = 0 ;
 }
