@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class TokenService {
 
   get():string {
+    console.log(localStorage.getItem("token"));
     return localStorage.getItem("token");
   }
   

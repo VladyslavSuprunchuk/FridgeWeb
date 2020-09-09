@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServerConnectionService } from '../../services/server-connection.service';
-import { Storehouse }from '..//..//Models//Storehouse';
-import { GenericResponse } from '..//../Models//GenericResponse'
+import { Storehouse }from '../../models/storehouse';
+import { GenericResponse } from '../../models/generic-response'
 
 @Component({
   selector: 'app-storehouse',

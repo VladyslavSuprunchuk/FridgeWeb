@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { GenericResponse } from '../../Models/GenericResponse';
+import { GenericResponse } from '../../models/generic-response';
 import { ServerConnectionService } from '../../services/server-connection.service';
 import { AlertManagerService } from '../../services//alert-manager.service';
-import { Client } from '../../Models/Client'
+import { Client } from '../../models/client'
 import { Router } from '@angular/router';
 
 @Component({
@@ -33,11 +33,10 @@ export class LogInComponent implements OnInit {
           if (data.isSuccess) {
             this.client=data.data;
             localStorage.setItem("token",this.client.token);
-            console.log(this.client.token);
             this.router.navigate(['product-type-list']);   
           }
           else
-            this.alertManager.showSuccess("Error");
+            this.alertManager.showSuccess("Invalid login or password");
         });
       }     
      }
