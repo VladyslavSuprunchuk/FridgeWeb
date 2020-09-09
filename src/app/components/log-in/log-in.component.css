@@ -1,0 +1,24 @@
+.form{
+    display: flex;flex-flow: column wrap;
+    padding: 50px;
+    position: fixed; top: 40%; left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+.field {
+    width: 260px;
+}
+
+.login100-form-title {
+    width: 100%;
+    margin-bottom: 13%;
+    display: block;
+    font-family: Poppins-Regular;
+    font-size: 30px;
+    color: #333333;
+    line-height: 1.2;
+    text-align: center;
+}
+

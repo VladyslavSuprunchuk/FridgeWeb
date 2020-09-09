@@ -1,14 +1,17 @@
-<form class="example-container" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <mat-form-field>
-        <textarea matInput placeholder="Enter your email" formControlName="email"></textarea>
+<form class="example-container form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <span class="login100-form-title p-b-43">
+        Login
+        </span>
+    <mat-form-field class="field">
+        <input matInput placeholder="Enter your email" formControlName="email">
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field class="fild">
         <input matInput placeholder="Enter your password" formControlName="password" [type]="hide ? 'password' : 'text'">
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
     </mat-form-field>
     
-    <button  class="for-button" type="submit" mat-raised-button>Create</button> 
+    <button  class="for-button" type="submit" mat-raised-button>Login</button> 
 </form>

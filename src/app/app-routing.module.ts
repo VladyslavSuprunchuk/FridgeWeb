@@ -8,8 +8,8 @@ import { LogInComponent } from './components/log-in/log-in.component';
 
 
 const routes: Routes = [
-  { path: 'product-item-iist', component: ProductItemListComponent},
-  { path: '', redirectTo: '/product-item-iist', pathMatch: 'full' },
+  { path: 'product-item-list', component: ProductItemListComponent},
+  // { path: '', redirectTo: '/product-item-list', pathMatch: 'full' },
   { path: 'product-type-list', component: ProductTypeListComponent},
   {path: 'product-type-edit/:id', component: ProductTypeEditComponent},
   {path: 'storehouse', component: StorehouseComponent},

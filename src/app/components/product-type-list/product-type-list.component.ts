@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServerConnectionService } from '../../services/server-connection.service';
-import { ProductType } from '..//..//Models//ProductType';
-import { GenericResponse } from '..//../Models//GenericResponse'
+import { ProductType } from '../../Models/ProductType';
+import { GenericResponse } from '../../Models//GenericResponse'
 
 
 @Component({
@@ -19,6 +19,7 @@ export class ProductTypeListComponent implements OnInit {
   constructor(private server: ServerConnectionService) { }
 
   ngOnInit(): void {
+    debugger;
     this.server.getQuery<GenericResponse<boolean>>('/producttype').subscribe(data => {
       if (data.isSuccess) {
         this.productTypes = data.data;

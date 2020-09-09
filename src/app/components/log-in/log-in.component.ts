@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { GenericResponse } from '..//..//Models//GenericResponse';
-import { ServerConnectionService } from '..//..//services//server-connection.service';
-import { AlertManagerService } from '..//..//services//alert-manager.service';
-import { Client } from '..//..//Models//Client'
-import { LocalStorage } from '..//..//services//LocalStorage';
+import { GenericResponse } from '../../Models/GenericResponse';
+import { ServerConnectionService } from '../../services/server-connection.service';
+import { AlertManagerService } from '../../services//alert-manager.service';
+import { Client } from '../../Models/Client'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-log-in',
@@ -15,10 +15,9 @@ export class LogInComponent implements OnInit {
 
   hide = true;
    loginForm: FormGroup;
-   private storage: LocalStorage;
    private client: Client;
 
-  constructor(private server: ServerConnectionService,private alertManager: AlertManagerService) { }
+  constructor(private server: ServerConnectionService,private alertManager: AlertManagerService, private router: Router) { }
 
   ngOnInit() {
 
@@ -33,8 +32,9 @@ export class LogInComponent implements OnInit {
         this.server.postQuery<GenericResponse<boolean>>("/login", this.loginForm.value).subscribe(data => {
           if (data.isSuccess) {
             this.client=data.data;
-            this.storage= new LocalStorage();
-            this.storage.setToken(this.client.token);
+            localStorage.setItem("token",this.client.token);
+            console.log(this.client.token);
+            this.router.navigate(['product-type-list']);   
           }
           else
             this.alertManager.showSuccess("Error");

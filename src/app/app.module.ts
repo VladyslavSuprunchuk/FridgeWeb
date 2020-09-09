@@ -43,6 +43,7 @@ import { ProductTypeEditComponent } from './components/product-type-edit/product
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StorehouseComponent } from './components/storehouse/storehouse.component';
 import { LogInComponent } from './components/log-in/log-in.component';
+import { AuthorizationInterceptor } from './Interceptors/authorization-interceptor';
 
 @NgModule({
   declarations: [
@@ -104,7 +105,13 @@ import { LogInComponent } from './components/log-in/log-in.component';
     MatIconModule,
     MatListModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthorizationInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
