@@ -44,6 +44,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StorehouseComponent } from './components/storehouse/storehouse.component';
 import { LogInComponent } from './components/log-in/log-in.component';
 import { AuthorizationInterceptor } from './Interceptors/authorization-interceptor';
+import { LogOutComponent } from './components/log-out/log-out.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { AuthorizationInterceptor } from './Interceptors/authorization-intercept
     ProductTypeEditComponent,
     StorehouseComponent,
     LogInComponent,
+    LogOutComponent,
   ],
   imports: [
     BrowserModule,
