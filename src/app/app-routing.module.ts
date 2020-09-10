@@ -5,7 +5,6 @@ import { ProductTypeListComponent } from './components/product-type-list/product
 import { ProductTypeEditComponent } from './components/product-type-edit/product-type-edit.component';
 import { StorehouseComponent } from './components/storehouse/storehouse.component';
 import { LogInComponent } from './components/log-in/log-in.component';
-import { LogOutComponent } from './components/log-out/log-out.component';
 
 
 const routes: Routes = [
@@ -14,8 +13,7 @@ const routes: Routes = [
   { path: 'product-type-list', component: ProductTypeListComponent},
   {path: 'product-type-edit/:id', component: ProductTypeEditComponent},
   {path: 'storehouse', component: StorehouseComponent},
-  {path: 'login', component: LogInComponent},
-  {path: 'logout', component: LogOutComponent}
+  // {path: 'login', component: LogInComponent}
  // {path: 'mediaservice', component: MediaServiceComponent}
 ];
 

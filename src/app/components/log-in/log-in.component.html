@@ -1,17 +1,30 @@
 <form class="example-container form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <span class="login100-form-title p-b-43">
-        Login
-        </span>
+
+    <span *ngIf="isWantToCreateAccount != true" class="login100-form-title p-b-43">
+        Log In
+    </span>
+
+    <span *ngIf="isWantToCreateAccount == true" class="login100-form-title p-b-43">
+        Sign Up
+    </span>
+
+    <mat-form-field *ngIf="isWantToCreateAccount == true" class="field">
+        <input matInput placeholder="Enter your name" formControlName="name">
+    </mat-form-field>
+
     <mat-form-field class="field">
-        <input matInput placeholder="Enter your email" formControlName="email">
+        <input matInput placeholder="Enter your email" formControlName="email" required>
     </mat-form-field>
 
     <mat-form-field class="fild">
-        <input matInput placeholder="Enter your password" formControlName="password" [type]="hide ? 'password' : 'text'">
+        <input matInput placeholder="Enter your password" required formControlName="password" [type]="hide ? 'password' : 'text'">
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
     </mat-form-field>
     
-    <button  class="for-button" type="submit" mat-raised-button>Login</button> 
+    <button [disabled]="loginForm.invalid" *ngIf="isWantToCreateAccount != true" class="for-button" type="submit" mat-raised-button>Log In</button>
+    <button [disabled]="loginForm.invalid" *ngIf="isWantToCreateAccount == true" class="for-button" type="submit" mat-raised-button>Sign Up</button>  
+    <div  (click)="changeForm()" *ngIf="isWantToCreateAccount != true"  class="message">Create an account</div>
+    <div (click)="changeForm()" *ngIf="isWantToCreateAccount == true"  class="message">Already have account</div>
 </form>

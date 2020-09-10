@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup,FormBuilder ,Validators } from '@angular/forms';
 import { GenericResponse } from '../../models/generic-response';
 import { ServerConnectionService } from '../../services/server-connection.service';
 import { AlertManagerService } from '../../services//alert-manager.service';
-import { Client } from '../../models/client'
+import { Client } from '../../models/client';
 import { Router } from '@angular/router';
+import { TokenService } from '../../services/token.service';
 
 @Component({
   selector: 'app-log-in',
@@ -14,31 +15,77 @@ import { Router } from '@angular/router';
 export class LogInComponent implements OnInit {
 
   hide = true;
-   loginForm: FormGroup;
+   public loginForm: FormGroup;
    private client: Client;
+   public isWantToCreateAccount:boolean = false;
 
-  constructor(private server: ServerConnectionService,private alertManager: AlertManagerService, private router: Router) { }
+  constructor(private server: ServerConnectionService,
+    private alertManager: AlertManagerService,
+     private router: Router,
+     public tokenService:TokenService,
+     private fb: FormBuilder) { }
 
   ngOnInit() {
-
     this.loginForm = new FormGroup({
+      name: new FormControl(),
       email: new FormControl(),
       password: new FormControl()
     });
+    this.formInitialization();
+  }
+
+  private formInitialization(){
+    this.loginForm = this.fb.group({
+      name: [],
+      email: [],
+      password: [],
+      deviceId: [],
+    });
+     if(this.isWantToCreateAccount){
+      this.loginForm.get('name').enable();
+     }
   }
 
   onSubmit() {
-      if (this.loginForm.valid) {
-        this.server.postQuery<GenericResponse<boolean>>("/login", this.loginForm.value).subscribe(data => {
-          if (data.isSuccess) {
-            this.client=data.data;
-            localStorage.setItem("token",this.client.token);
-            this.router.navigate(['product-type-list']);   
-          }
-          else
-            this.alertManager.showSuccess("Invalid login or password");
-        });
-      }     
-     }
+     if(!this.isWantToCreateAccount)
+        this.logIn();  
+     else
+      this.signUp();
+  }
 
+  changeForm(){
+    
+    this.isWantToCreateAccount = !this.isWantToCreateAccount;
+  }
+
+  private logIn(){
+    if (this.loginForm.valid) {
+      this.server.postQuery<GenericResponse<boolean>>("/login", this.loginForm.value).subscribe(data => {
+        if (data.isSuccess) {
+          this.saveUserInfo(data);
+          this.router.navigate(['product-type-list']);   
+        }
+        else
+          this.alertManager.showError(data.error.errorMessage);
+      });
+    }     
+  }
+
+  private saveUserInfo(data:any){
+    this.client=data.data;
+    localStorage.setItem("token",this.client.token);
+  }
+
+  private signUp() {
+    if (this.loginForm.valid) {
+      this.server.postQuery<GenericResponse<boolean>>("/signUp", this.loginForm.value).subscribe(data => {
+        if (data.isSuccess) {
+          this.saveUserInfo(data);
+          this.router.navigate(['product-type-list']);
+        }
+        else
+        this.alertManager.showSuccess(data.error.errorMessage);
+      });
+    }
+  }
 }
