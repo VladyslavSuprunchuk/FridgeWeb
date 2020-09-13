@@ -41,9 +41,10 @@ import { ProductTypeListComponent } from './components/product-type-list/product
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { ProductTypeEditComponent } from './components/product-type-edit/product-type-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { StorehouseComponent } from './components/storehouse/storehouse.component';
 import { LogInComponent } from './components/log-in/log-in.component';
 import { AuthorizationInterceptor } from './Interceptors/authorization-interceptor';
+import { StorehouseEditComponent } from './components/storehouse-edit/storehouse-edit.component';
+import { StorehouseListComponent } from './components/storehouse-list/storehouse-list.component';
 
 @NgModule({
   declarations: [
@@ -53,8 +54,9 @@ import { AuthorizationInterceptor } from './Interceptors/authorization-intercept
     SidenavListComponent,
     ProductTypeListComponent,
     ProductTypeEditComponent,
-    StorehouseComponent,
-    LogInComponent
+    LogInComponent,
+    StorehouseEditComponent,
+    StorehouseListComponent
   ],
   imports: [
     BrowserModule,

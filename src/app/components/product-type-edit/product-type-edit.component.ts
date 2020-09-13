@@ -75,7 +75,7 @@ export class ProductTypeEditComponent implements OnInit {
         this.alertManager.showSuccess("Product type was updated successfully");
       }
       else
-        this.alertManager.showError("Couldn't update product type");
+        this.alertManager.showError(data.error.errorMessage);
     })
   }
 
@@ -86,7 +86,7 @@ export class ProductTypeEditComponent implements OnInit {
         this.alertManager.showSuccess("Product type has been created");
       }
       else
-        this.alertManager.showError("Couldn't create product type");
+        this.alertManager.showError(data.error.errorMessage);
     })
   }
 
@@ -95,8 +95,9 @@ export class ProductTypeEditComponent implements OnInit {
       if (data.isSuccess){
         this.router.navigate(['product-type-list']);
         this.alertManager.showSuccess("Product type has been deleted");
-      }else{
-        this.alertManager.showError("Error");
+      }
+      else{
+         this.alertManager.showError(data.error.errorMessage);
       }
     })
   }

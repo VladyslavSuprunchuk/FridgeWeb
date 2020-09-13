@@ -41,9 +41,6 @@ export class LogInComponent implements OnInit {
       password: [],
       deviceId: [],
     });
-     if(this.isWantToCreateAccount){
-      this.loginForm.get('name').enable();
-     }
   }
 
   onSubmit() {
@@ -53,8 +50,7 @@ export class LogInComponent implements OnInit {
       this.signUp();
   }
 
-  changeForm(){
-    
+  changeForm(){  
     this.isWantToCreateAccount = !this.isWantToCreateAccount;
   }
 

@@ -2,11 +2,11 @@
     <ng-container matColumnDef="imageUrl">
         <mat-header-cell class="headerForPhotoColumn" *matHeaderCellDef> Photo </mat-header-cell>
         <mat-cell *matCellDef="let element">
-            <div class="prodycTypeLayout">
-                <div class="productTypePhoto">
+            <div class="storehouseLayout">
+                <div class="storehousePhoto">
                     <img *ngIf="element.imageUrl!=null" class="photo" src="{{element.imageUrl}}" alt="">
                     <img *ngIf="element.imageUrl==null" class="photo"
-                        src="https://img.icons8.com/color/96/000000/grocery-bag.png" />
+                        src="assets/images/storehouse.png" />
                 </div>
             </div>
         </mat-cell>
@@ -15,19 +15,13 @@
     <ng-container matColumnDef="title">
         <mat-header-cell *matHeaderCellDef>
             Name
-            <!-- <div class="example-button-container">
-                <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon">
-                    <mat-icon>plus_one</mat-icon>
-                </button>
-            </div> -->
         </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row [routerLink]="['/storehouse-edit', row.id]" *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
-<button routerLink="/form" (click)="Post()" class="mat-fab-bottom-right"
-    style="position: absolute;bottom: 0;right: 0;margin:10px" mat-fab>
+<button [routerLink]="['/storehouse-edit', 0]" class="mat-fab-bottom-right" mat-fab>
     <mat-icon class="icon">add</mat-icon>
 </button>

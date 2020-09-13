@@ -1,0 +1,27 @@
+<div class="storehouseLayout">
+    <div class="storehousePhoto">
+      <img *ngIf="storehouse!=null && storehouse.imageUrl!=null" class="photo" src="{{storehouse.imageUrl}}">
+      <img *ngIf="storehouse==null || storehouse.imageUrl==null" class="photo" src="assets/images/storehouse.png" />
+    </div>
+  </div>
+  <form class="example-container" class="properties" [formGroup]="storehouseForm" (ngSubmit)="onSubmit()">
+    <div class="fileUpload">
+      <button mat-button color="primary" type="button" (click)="fileInput.click()">
+        <span *ngIf="fileToUpload!=null">Select another image</span>
+        <span *ngIf="fileToUpload==null">Select image</span>
+        <input #fileInput type="file" style="display:none;" id="file" (change)="handleFileInput($event.target.files)">
+      </button>
+    </div>
+    <mat-form-field>
+      <input matInput placeholder="Title" id="title" formControlName="title">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="password" formControlName="password">
+    </mat-form-field>
+    <div class="buttons">
+      <button [disabled]="storehouseForm.invalid" mat-flat-button color="primary" class="for-button submitButton"
+        type="submit" mat-raised-button>Save</button>
+      <button *ngIf="id!=0" mat-flat-button color="warn" class="for-button deleteButton" type="button" (click)="delete()"
+        mat-raised-button>Delete</button>
+    </div>
+  </form>
