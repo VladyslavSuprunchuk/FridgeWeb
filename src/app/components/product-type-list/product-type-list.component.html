@@ -1,5 +1,9 @@
 <div class="mainDiv">
+  <mat-form-field >
+    <input matInput type="text" autocomplete="off" (keyup)="filterTable($event.target.value)" placeholder="Filter">
+  </mat-form-field>
   <mat-table [dataSource]="productTypes" class="mat-elevation-z8">
+
     <ng-container matColumnDef="imageUrl">
       <mat-header-cell class="headerForPhotoColumn" *matHeaderCellDef> Photo </mat-header-cell>
       <mat-cell *matCellDef="let element">

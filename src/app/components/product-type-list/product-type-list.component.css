@@ -78,3 +78,7 @@ section {
   left: auto;
   position: fixed;
 }
+
+mat-form-field {
+  width: 100%;
+}
