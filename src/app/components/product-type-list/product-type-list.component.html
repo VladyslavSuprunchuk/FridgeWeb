@@ -9,9 +9,8 @@
       <mat-cell *matCellDef="let element">
         <div class="prodycTypeLayout">
           <div class="productTypePhoto">
-            <img *ngIf="element.imageUrl!=null" class="photo" src="{{element.imageUrl}}" alt="">
-            <img *ngIf="element.imageUrl==null" class="photo"
-              src="assets/images/grocery-bag.png" />
+            <img *ngIf="element.imageUrl!=null" class="photo real-image" src="{{element.imageUrl}}">
+            <img *ngIf="element.imageUrl==null" class="photo" src="assets/images/grocery-bag.png" />
           </div>
         </div>
       </mat-cell>

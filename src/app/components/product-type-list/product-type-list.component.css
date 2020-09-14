@@ -8,6 +8,10 @@
     width: 80px;
 }
 
+.real-image{
+  border-radius: 50%;
+}
+
 .photo{
   position: absolute;
     top: 0;
