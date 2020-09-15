@@ -18,6 +18,7 @@
     <mat-form-field>
       <input matInput placeholder="password" formControlName="password">
     </mat-form-field>
+      <p>Select storehouse color: <input style="width: 60px;height: 26px;margin-bottom:-3px;" matInput type="color" formControlName="colorHex" name="bg" value="#ff0000">
     <div class="buttons">
       <button [disabled]="storehouseForm.invalid" mat-flat-button color="primary" class="for-button submitButton"
         type="submit" mat-raised-button>Save</button>

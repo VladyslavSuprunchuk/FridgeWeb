@@ -29,15 +29,17 @@ export class StorehouseEditComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.activateRoute.snapshot.params['id'];
     this.formInitialization();
-
     if (this.id != 0) {
       this.server.getQuery<GenericResponse<boolean>>('/storehouse/' + this.id).subscribe(data => {
         if (data.isSuccess) {
           this.storehouse = data.data;
           this.formInitialization();
+          localStorage.setItem("colorOfHeader",this.storehouseForm.value.colorHex);
         }
       });
     }
+
+    console.log(localStorage.getItem("colorOfHeader"));
   }
 
   onSubmit() {
@@ -77,8 +79,8 @@ export class StorehouseEditComponent implements OnInit {
     this.storehouseForm = this.fb.group({
       id: [this.storehouse.id],
       title: [this.storehouse.title, Validators.required],
-      password: [this.storehouse.password],
-      colorHex: [this.storehouse.colorHex, [Validators.required]]
+      password: [this.storehouse.password, Validators.required],
+      colorHex: ['#'+this.storehouse.colorHex, [Validators.required]]
     });
   }
 }

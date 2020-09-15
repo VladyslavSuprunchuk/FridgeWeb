@@ -1,4 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { ColorService } from '../../../services/color.service';
+import { Router } from '@angular/router';
+import { UrlService } from '../../../services/url.service';
 
 @Component({
   selector: 'app-header',
@@ -9,9 +12,10 @@ export class HeaderComponent implements OnInit {
 
   @Output() public sidenavToggle = new EventEmitter();
  
-  constructor() { }
-
+  constructor(public colorService:ColorService,public router: Router,public urlService:UrlService) { }
+  
   ngOnInit(): void {
+    console.log(this.router.url);
   };
  
   public onToggleSidenav = () => {
