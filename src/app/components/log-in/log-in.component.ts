@@ -5,7 +5,6 @@ import { ServerConnectionService } from '../../services/server-connection.servic
 import { AlertManagerService } from '../../services//alert-manager.service';
 import { Client } from '../../models/client';
 import { Router } from '@angular/router';
-import { TokenService } from '../../services/token.service';
 
 @Component({
   selector: 'app-log-in',
@@ -22,7 +21,6 @@ export class LogInComponent implements OnInit {
   constructor(private server: ServerConnectionService,
     private alertManager: AlertManagerService,
      private router: Router,
-     public tokenService:TokenService,
      private fb: FormBuilder) { }
 
   ngOnInit() {

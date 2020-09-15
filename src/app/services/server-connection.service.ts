@@ -6,12 +6,14 @@ import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatFormField } from '@angular/material/form-field';
 import { ParseSourceFile } from '@angular/compiler';
+import { environment } from '../../environments/environment'
 @Injectable({
   providedIn: 'root'
 })
 export class ServerConnectionService {
 
-  private BASE_URL: string = "http://localhost:5000/api";
+  //private BASE_URL: string = "http://localhost:5000/api";
+  private BASE_URL: string = environment.apiUrl;
 
   constructor(private http: HttpClient, private router: Router, ) { }
 

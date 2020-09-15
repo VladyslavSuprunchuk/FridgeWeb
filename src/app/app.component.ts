@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {TokenService} from './services/token.service';
+import {AuthorizationService} from './services/authorization.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,7 @@ import {TokenService} from './services/token.service';
 export class AppComponent {
   title = 'FridgeLynxiWeb2';
 
-  constructor(public tokenService:TokenService){
+  constructor(public tokenService:AuthorizationService){
 
   }
 }
