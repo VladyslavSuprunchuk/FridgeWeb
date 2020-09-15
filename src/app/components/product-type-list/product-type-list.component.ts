@@ -3,7 +3,7 @@ import { ServerConnectionService } from '../../services/server-connection.servic
 import { ProductType } from '../../models/product-type';
 import { GenericResponse } from '../../models/generic-response';
 import { AlertManagerService } from '../../services//alert-manager.service';
-
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-product-type-list',
@@ -14,7 +14,9 @@ import { AlertManagerService } from '../../services//alert-manager.service';
 export class ProductTypeListComponent implements OnInit {
 
   public displayedColumns: string[] = ['imageUrl', 'name', 'expirationTerm'];
-  public productTypes: ProductType[];
+  public productTypes: MatTableDataSource<ProductType>;
+  public productTypesFiltered: ProductType[];
+  public filterName:string;
 
   constructor(private server: ServerConnectionService,private alertManager: AlertManagerService,) { }
 
@@ -26,4 +28,8 @@ export class ProductTypeListComponent implements OnInit {
         this.alertManager.showError(data.error.errorMessage);
     });
   }
+
+  filterTable (filterValue :string) { 
+    this.productTypes.filter = filterValue.trim().toLowerCase(); 
+ }
 }

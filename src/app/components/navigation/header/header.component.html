@@ -1,4 +1,4 @@
-<mat-toolbar *ngIf="colorService.get() != null && urlService.getCurrentUrl().includes('/storehouse-edit/'); else unset" [ngStyle]="{'background': colorService.get()}">
+<mat-toolbar class="position-fixed" *ngIf="colorService.get() != null && urlService.getCurrentUrl().includes('/storehouse-edit/'); else unset" [ngStyle]="{'background': colorService.get()}">
     <div fxHide.gt-xs >
         <button mat-icon-button (click)="onToggleSidenav()" >
             <mat-icon>menu</mat-icon>
