@@ -7,6 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatFormField } from '@angular/material/form-field';
 import { ParseSourceFile } from '@angular/compiler';
 import { environment } from '../../environments/environment'
+import {AuthorizationService} from '../services/authorization.service';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +17,7 @@ export class ServerConnectionService {
   //private BASE_URL: string = "http://localhost:5000/api";
   private BASE_URL: string = environment.apiUrl;
 
-  constructor(private http: HttpClient, private router: Router, ) { }
+  constructor(private http: HttpClient, private router: Router, private authorizationService:AuthorizationService) { }
 
   public getQuery<T>(url: string, params?: URLSearchParams) {
     let queryURL: string = `${this.BASE_URL}${url}`;
@@ -87,7 +89,8 @@ export class ServerConnectionService {
     return (error: any) => {
 
       if (error.status == 401) {
-        this.router.navigate(['/login']);
+        this.authorizationService.drop()
+        this.router.navigate(['']);
       }
 
       result = error.error;
