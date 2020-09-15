@@ -28,7 +28,7 @@ export class StorehouseEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.activateRoute.snapshot.params['id'];
-    this.formInitialization();
+    this.formEmptyInitialization();
     if (this.id != 0) {
       this.server.getQuery<GenericResponse<boolean>>('/storehouse/' + this.id).subscribe(data => {
         if (data.isSuccess) {
@@ -53,6 +53,7 @@ export class StorehouseEditComponent implements OnInit {
   }
 
   private update() {
+    this.storehouseForm.value.colorHex = this.storehouseForm.value.colorHex.replace('#','FF');
     this.server.putFormData<GenericResponse<boolean>>('/storehouse/', this.storehouseForm.value, this.fileToUpload).subscribe(data => {
       if (data.isSuccess) {
         this.router.navigate(['storehouse-list']);
@@ -75,12 +76,21 @@ export class StorehouseEditComponent implements OnInit {
     this.fileToUpload = files.item(0);
   }
 
+  private formEmptyInitialization() {
+    this.storehouseForm = this.fb.group({
+      id: [''],
+      title: ['', Validators.required],
+      password: ['', Validators.required],
+      colorHex: ['', [Validators.required]]
+    });
+  }
+
   private formInitialization() {
     this.storehouseForm = this.fb.group({
       id: [this.storehouse.id],
       title: [this.storehouse.title, Validators.required],
       password: [this.storehouse.password, Validators.required],
-      colorHex: ['#'+this.storehouse.colorHex, [Validators.required]]
+      colorHex: ['#'+this.storehouse.colorHex.slice(2), [Validators.required]]
     });
   }
 }
