@@ -32,7 +32,8 @@
   }
   
   .storehouseLayout{
-    margin-left: 2%;
+    margin-left: 25px;
+    margin-top: 85px;
     display: block;
       border: 1px solid #b5e9a7;
       border-radius: 3px;
@@ -47,6 +48,28 @@
     margin-bottom: 25px;
   }
   
-  .buttons{
+  .input{
+    width: 300px;
+  }
+  
+  .icon{
+    margin-top: 12px;
+    margin-left:3px;
+  }
+
+  .lockInfo{
+    width: 480px;
     display: inline-flex;
+  }
+
+  .buttons{
+    margin-top: 20px;
+    display: inline-flex;
+  }
+
+  .colorInput{
+    width: 60px;
+    height: 26px;
+    margin-top:11px;
+    margin-left:3px;
   }

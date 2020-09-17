@@ -1,28 +1,42 @@
 <div class="storehouseLayout">
-    <div class="storehousePhoto">
-      <img *ngIf="storehouse!=null && storehouse.imageUrl!=null" class="photo" src="{{storehouse.imageUrl}}">
-      <img *ngIf="storehouse==null || storehouse.imageUrl==null" class="photo" src="assets/images/storehouse.png" />
-    </div>
+  <div class="storehousePhoto">
+    <img *ngIf="storehouse!=null && storehouse.imageUrl!=null" class="photo" src="{{storehouse.imageUrl}}">
+    <img *ngIf="storehouse==null || storehouse.imageUrl==null" class="photo" src="assets/images/storehouse.png" />
   </div>
-  <form class="example-container" class="properties" [formGroup]="storehouseForm" (ngSubmit)="onSubmit()">
-    <div class="fileUpload">
-      <button mat-button color="primary" type="button" (click)="fileInput.click()">
-        <span *ngIf="fileToUpload!=null">Select another image</span>
-        <span *ngIf="fileToUpload==null">Select image</span>
-        <input #fileInput type="file" style="display:none;" id="file" (change)="handleFileInput($event.target.files)">
-      </button>
-    </div>
-    <mat-form-field>
-      <input matInput placeholder="Title" id="title" formControlName="title">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="password" formControlName="password">
-    </mat-form-field>
-      <p>Select storehouse color: <input style="width: 60px;height: 26px;margin-bottom:-3px;" matInput type="color" formControlName="colorHex" name="bg" value="#ff0000">
-    <div class="buttons">
-      <button [disabled]="storehouseForm.invalid" mat-flat-button color="primary" class="for-button submitButton"
-        type="submit" mat-raised-button>Save</button>
-      <button *ngIf="id!=0" mat-flat-button color="warn" class="for-button deleteButton" type="button" (click)="delete()"
-        mat-raised-button>Delete</button>
-    </div>
-  </form>
+</div>
+<form class="example-container" class="properties" [formGroup]="storehouseForm" (ngSubmit)="onSubmit()">
+  <div class="fileUpload">
+    <button mat-button color="primary" type="button" (click)="fileInput.click()">
+      <span *ngIf="fileToUpload!=null">Select another image</span>
+      <span *ngIf="fileToUpload==null">Select image</span>
+      <input #fileInput type="file" style="display:none;" id="file" [attr.disabled]="!storehouse.isAuthor" (change)="handleFileInput($event.target.files)">
+    </button>
+  </div>
+  <mat-form-field  class="input">
+    <input matInput placeholder="Title" [attr.disabled]="storehouse.isAuthor == false" id="title" formControlName="title">
+  </mat-form-field>
+  <mat-form-field class="input">
+    <input matInput placeholder="password" [attr.disabled]="storehouse.isAuthor == false" formControlName="password">
+  </mat-form-field>
+  
+
+  <div *ngIf="storehouse.isLocked == true" class="lockInfo">
+    <p>Storehouse is locked:</p>
+    <mat-icon class="icon">lock</mat-icon>
+  </div>
+  <div *ngIf="storehouse.isLocked == false" class="lockInfo">
+    <p>Anybody with password can join this storehouse:</p>
+    <mat-icon class="icon">lock_open</mat-icon> 
+  </div>
+
+  <div style="display: inline-flex;">
+    <p>Select storehouse color:</p> <input class="colorInput" [attr.disabled]="storehouse.isAuthor == false" matInput
+      type="color" formControlName="colorHex" name="bg" value="#ff0000">
+  </div>
+  <div class="buttons">
+    <button [disabled]="storehouseForm.invalid" *ngIf="storehouse.isAuthor == true" mat-flat-button color="primary" class="for-button submitButton"
+      type="submit" mat-raised-button>Save</button>
+    <button *ngIf="id!=0 && storehouse.isAuthor == true" mat-flat-button color="warn" class="for-button deleteButton" type="button" (click)="delete()"
+      mat-raised-button>Delete</button>
+  </div>
+</form>

@@ -15,7 +15,6 @@ export class HeaderComponent implements OnInit {
   constructor(public colorService:ColorService,public router: Router,public urlService:UrlService) { }
   
   ngOnInit(): void {
-    console.log(this.router.url);
   };
  
   public onToggleSidenav = () => {

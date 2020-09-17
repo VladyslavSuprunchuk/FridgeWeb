@@ -35,11 +35,10 @@ export class StorehouseEditComponent implements OnInit {
           this.storehouse = data.data;
           this.formInitialization();
           localStorage.setItem("colorOfHeader",this.storehouseForm.value.colorHex);
+          console.log(this.storehouse.isAuthor);
         }
       });
     }
-
-    console.log(localStorage.getItem("colorOfHeader"));
   }
 
   onSubmit() {

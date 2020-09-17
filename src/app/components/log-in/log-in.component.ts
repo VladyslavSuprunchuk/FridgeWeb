@@ -14,9 +14,9 @@ import { Router } from '@angular/router';
 export class LogInComponent implements OnInit {
 
   hide = true;
-   public loginForm: FormGroup;
-   private client: Client;
-   public isWantToCreateAccount:boolean = false;
+  public loginForm: FormGroup;
+  private client: Client;
+  public isWantToCreateAccount:boolean = false;
 
   constructor(private server: ServerConnectionService,
     private alertManager: AlertManagerService,
