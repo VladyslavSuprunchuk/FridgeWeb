@@ -35,7 +35,6 @@ export class StorehouseEditComponent implements OnInit {
           this.storehouse = data.data;
           this.formInitialization();
           localStorage.setItem("colorOfHeader",this.storehouseForm.value.colorHex);
-          console.log(this.storehouse.isAuthor);
         }
       });
     }
@@ -64,11 +63,27 @@ export class StorehouseEditComponent implements OnInit {
   }
 
   private create() {
-    
+     this.storehouseForm.value.colorHex = this.storehouseForm.value.colorHex.replace('#','FF');
+    this.server.postFormData<GenericResponse<boolean>>('/storehouse/', this.storehouseForm.value, this.fileToUpload).subscribe(data => {
+      if (data.isSuccess) {
+        this.router.navigate(['storehouse-list']);
+        this.alertManager.showSuccess("Storehouse type has been created");
+      }
+      else
+        this.alertManager.showError(data.error.errorMessage);
+    })
   }
 
   delete(): void {
-   
+    this.server.deleteQuery<GenericResponse<boolean>>('/storehouse/' + this.storehouse.id).subscribe(data => {
+      if (data.isSuccess){
+        this.router.navigate(['storehouse-list']);
+        this.alertManager.showSuccess("Storehouse has been deleted");
+      }
+      else{
+         this.alertManager.showError(data.error.errorMessage);
+      }
+    })
   }
 
   handleFileInput(files: FileList) {
@@ -77,7 +92,7 @@ export class StorehouseEditComponent implements OnInit {
 
   private formEmptyInitialization() {
     this.storehouseForm = this.fb.group({
-      id: [''],
+      id: ['0'],
       title: ['', Validators.required],
       password: ['', Validators.required],
       colorHex: ['', [Validators.required]]

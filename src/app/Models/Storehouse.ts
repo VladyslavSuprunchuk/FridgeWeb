@@ -1,18 +1,18 @@
 export class Storehouse{
 
-    id:number;
+    id:number ;
 
-    title:string;
+    title:string ;
 
-    imageUrl:string;
+    imageUrl:string ;
 
-    password:string;
+    password:string ;
 
-    colorHex:string;
+    colorHex:string ;
 
-    isLocked:boolean;
+    isLocked:boolean ;
 
-    isAuthor:boolean;
+    isAuthor:boolean ;
 
-    isActive:boolean;
+    isActive:boolean ;
 }

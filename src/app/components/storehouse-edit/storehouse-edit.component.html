@@ -34,7 +34,7 @@
       type="color" formControlName="colorHex" name="bg" value="#ff0000">
   </div>
   <div class="buttons">
-    <button [disabled]="storehouseForm.invalid" *ngIf="storehouse.isAuthor == true" mat-flat-button color="primary" class="for-button submitButton"
+    <button [disabled]="storehouseForm.invalid" *ngIf="storehouse.isAuthor == true || id==0" mat-flat-button color="primary" class="for-button submitButton"
       type="submit" mat-raised-button>Save</button>
     <button *ngIf="id!=0 && storehouse.isAuthor == true" mat-flat-button color="warn" class="for-button deleteButton" type="button" (click)="delete()"
       mat-raised-button>Delete</button>
