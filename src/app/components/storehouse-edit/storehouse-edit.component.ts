@@ -19,6 +19,7 @@ export class StorehouseEditComponent implements OnInit {
   public fileToUpload: File = null;
   public storehouse:Storehouse = new Storehouse();
 
+
   constructor(private activateRoute: ActivatedRoute,
     private server: ServerConnectionService,
     private fb: FormBuilder,
@@ -27,6 +28,7 @@ export class StorehouseEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    debugger;
     this.id = this.activateRoute.snapshot.params['id'];
     this.formEmptyInitialization();
     if (this.id != 0) {
@@ -75,7 +77,7 @@ export class StorehouseEditComponent implements OnInit {
   }
 
   delete(): void {
-    this.server.deleteQuery<GenericResponse<boolean>>('/storehouse/' + this.storehouse.id).subscribe(data => {
+    this.server.deleteQuery<GenericResponse<boolean>>('/storehouse/deletestorehouse/' + this.id).subscribe(data => {
       if (data.isSuccess){
         this.router.navigate(['storehouse-list']);
         this.alertManager.showSuccess("Storehouse has been deleted");

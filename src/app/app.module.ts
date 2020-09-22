@@ -45,6 +45,9 @@ import { LogInComponent } from './components/log-in/log-in.component';
 import { AuthorizationInterceptor } from './Interceptors/authorization-interceptor';
 import { StorehouseEditComponent } from './components/storehouse-edit/storehouse-edit.component';
 import { StorehouseListComponent } from './components/storehouse-list/storehouse-list.component';
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+
 
 @NgModule({
   declarations: [
@@ -97,7 +100,9 @@ import { StorehouseListComponent } from './components/storehouse-list/storehouse
     MatPaginatorModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ShareButtonsModule,
+    ShareIconsModule 
   ],
   exports: [
     MatTabsModule,

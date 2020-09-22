@@ -4,7 +4,9 @@ import { ProductItemListComponent } from './components/product-item-list/product
 import { ProductTypeListComponent } from './components/product-type-list/product-type-list.component';
 import { ProductTypeEditComponent } from './components/product-type-edit/product-type-edit.component';
 import { StorehouseEditComponent } from './components/storehouse-edit/storehouse-edit.component';
-import { StorehouseListComponent } from './components/storehouse-list/storehouse-list.component'
+import { StorehouseListComponent } from './components/storehouse-list/storehouse-list.component';
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 
 
 
@@ -19,7 +21,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes),  ShareButtonsModule,ShareIconsModule ],
+  exports: [RouterModule],
 })
 export class AppRoutingModule { }
