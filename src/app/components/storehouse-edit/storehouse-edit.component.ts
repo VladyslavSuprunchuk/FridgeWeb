@@ -44,9 +44,8 @@ export class StorehouseEditComponent implements OnInit {
 
   onSubmit() {
     if (this.storehouseForm.valid) {
-      this.storehouseForm.value.isLocked = this.storehouse.isLocked;
       this.storehouseForm.value.colorHex = this.storehouseForm.value.colorHex.replace('#', 'FF');
-
+      this.storehouseForm.value.isLocked = this.storehouse.isLocked;//когда поменяю колорХекс инпут поменять на storehouseForm.value.isLocked
       if (this.id != 0) 
         this.update();
        else 
@@ -103,16 +102,17 @@ export class StorehouseEditComponent implements OnInit {
   }
 
   public setIsLocked(){
-    this.storehouse.isLocked = !this.storehouse.isLocked;
+    if(this.id==0)
+      this.storehouse.isLocked  = !this.storehouse.isLocked ;
   }
 
   private formInitialization() {
     this.storehouseForm = this.fb.group({
       id: [this.storehouse.id],
-      title: [this.storehouse.title, Validators.required],
-      password: [this.storehouse.password, Validators.required],
-      colorHex: ['#'+this.storehouse.colorHex.slice(2), [Validators.required]],
-      isLocked:[this.storehouse.isLocked]
+      title: [{value: this.storehouse.title, disabled: !this.storehouse.isAuthor}, Validators.required],
+      password: [{value: this.storehouse.password, disabled: !this.storehouse.isAuthor}, Validators.required],
+      colorHex: [{value: '#'+this.storehouse.colorHex.slice(2), disabled: !this.storehouse.isAuthor}, Validators.required],
+      isLocked:[{value: this.storehouse.isLocked}, Validators.required]
     });
   }
 }

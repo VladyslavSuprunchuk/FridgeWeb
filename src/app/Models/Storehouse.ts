@@ -10,9 +10,9 @@ export class Storehouse{
 
     colorHex:string = "";
 
-    isLocked:boolean = true;
+    isLocked:boolean = false;
 
-    isAuthor:boolean = true;
+    isAuthor:boolean = false;
 
-    isActive:boolean = true;
+    isActive:boolean = false;
 }
