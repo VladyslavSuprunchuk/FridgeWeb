@@ -28,15 +28,15 @@ export class StorehouseEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    debugger;
     this.id = this.activateRoute.snapshot.params['id'];
     this.formEmptyInitialization();
     if (this.id != 0) {
       this.server.getQuery<GenericResponse<boolean>>('/storehouse/' + this.id).subscribe(data => {
         if (data.isSuccess) {
+          debugger;
           this.storehouse = data.data;
           this.formInitialization();
-          localStorage.setItem("colorOfHeader",this.storehouseForm.value.colorHex);
+          localStorage.setItem("colorOfHeader", this.storehouseForm.value.colorHex);
         }
       });
     }
@@ -44,16 +44,17 @@ export class StorehouseEditComponent implements OnInit {
 
   onSubmit() {
     if (this.storehouseForm.valid) {
-      if (this.id != 0) {
+      this.storehouseForm.value.isLocked = this.storehouse.isLocked;
+      this.storehouseForm.value.colorHex = this.storehouseForm.value.colorHex.replace('#', 'FF');
+
+      if (this.id != 0) 
         this.update();
-      } else {
-        this.create();
-      }
+       else 
+        this.create();    
     }
   }
 
   private update() {
-    this.storehouseForm.value.colorHex = this.storehouseForm.value.colorHex.replace('#','FF');
     this.server.putFormData<GenericResponse<boolean>>('/storehouse/', this.storehouseForm.value, this.fileToUpload).subscribe(data => {
       if (data.isSuccess) {
         this.router.navigate(['storehouse-list']);
@@ -65,7 +66,6 @@ export class StorehouseEditComponent implements OnInit {
   }
 
   private create() {
-     this.storehouseForm.value.colorHex = this.storehouseForm.value.colorHex.replace('#','FF');
     this.server.postFormData<GenericResponse<boolean>>('/storehouse/', this.storehouseForm.value, this.fileToUpload).subscribe(data => {
       if (data.isSuccess) {
         this.router.navigate(['storehouse-list']);
@@ -97,8 +97,13 @@ export class StorehouseEditComponent implements OnInit {
       id: ['0'],
       title: ['', Validators.required],
       password: ['', Validators.required],
-      colorHex: ['', [Validators.required]]
+      colorHex: ['', [Validators.required]],
+      isLocked:[false]
     });
+  }
+
+  public setIsLocked(){
+    this.storehouse.isLocked = !this.storehouse.isLocked;
   }
 
   private formInitialization() {
@@ -106,7 +111,8 @@ export class StorehouseEditComponent implements OnInit {
       id: [this.storehouse.id],
       title: [this.storehouse.title, Validators.required],
       password: [this.storehouse.password, Validators.required],
-      colorHex: ['#'+this.storehouse.colorHex.slice(2), [Validators.required]]
+      colorHex: ['#'+this.storehouse.colorHex.slice(2), [Validators.required]],
+      isLocked:[this.storehouse.isLocked]
     });
   }
 }

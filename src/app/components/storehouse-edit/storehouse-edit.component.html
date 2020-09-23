@@ -9,7 +9,7 @@
     <button mat-button color="primary" type="button" (click)="fileInput.click()">
       <span *ngIf="fileToUpload!=null">Select another image</span>
       <span *ngIf="fileToUpload==null">Select image</span>
-      <input #fileInput type="file" style="display:none;" id="file" [attr.disabled]="!storehouse.isAuthor" (change)="handleFileInput($event.target.files)">
+      <input #fileInput type="file" style="display:none;" id="file" [attr.disabled]="storehouse.isAuthor == false" (change)="handleFileInput($event.target.files)">
     </button>
   </div>
   <mat-form-field  class="input">
@@ -17,24 +17,32 @@
   </mat-form-field>
   <mat-form-field class="input">
     <input matInput placeholder="password" [attr.disabled]="storehouse.isAuthor == false" formControlName="password">
-  </mat-form-field>
-  
+    </mat-form-field>
+    
+    <div *ngIf="id==0 && storehouse.isLocked == true;" (click)="setIsLocked()" class="lockInfo">
+      <p>Storehouse is locked:</p>
+      <mat-icon class="icon">lock</mat-icon>
+    </div>
+    <div *ngIf="id==0 && storehouse.isLocked == false;" (click)="setIsLocked()" class="lockInfo">
+      <p>Anybody with password can join this storehouse:</p>
+      <mat-icon class="icon">lock_open</mat-icon>
+    </div>
 
-  <div *ngIf="storehouse.isLocked == true" class="lockInfo">
-    <p>Storehouse is locked:</p>
-    <mat-icon class="icon">lock</mat-icon>
-  </div>
-  <div *ngIf="storehouse.isLocked == false" class="lockInfo">
-    <p>Anybody with password can join this storehouse:</p>
-    <mat-icon class="icon">lock_open</mat-icon> 
-  </div>
+    <div  class="lockInfo" *ngIf="id!=0 && storehouse.isLocked == false;">  
+      <p>Anybody with password can join this storehouse:</p>
+      <mat-icon class="icon">lock_open</mat-icon>
+    </div>
+    <div class="lockInfo" *ngIf="id!=0 && storehouse.isLocked == true;">  
+      <p>Storehouse is locked:</p>
+      <mat-icon class="icon">lock</mat-icon>
+    </div>
 
   <div style="display: inline-flex;">
-    <p>Select storehouse color:</p> <input class="colorInput" [attr.disabled]="storehouse.isAuthor == false" matInput
-      type="color" formControlName="colorHex" name="bg" value="#ff0000">
+    <p>Select storehouse color:</p> 
+    <input class="colorInput" [attr.disabled]="storehouse.isAuthor == false" matInput type="color" formControlName="colorHex" name="bg" value="#ff0000">
   </div>
   <div class="buttons"> 
-    <button [disabled]="storehouseForm.invalid" *ngIf="storehouse.isAuthor == true || id==0" mat-flat-button color="primary" class="for-button submitButton"
+    <button [disabled]="storehouseForm.invalid" *ngIf="storehouse.isAuthor == true" mat-flat-button color="primary" class="for-button submitButton"
       type="submit" mat-raised-button>Save</button>
     <button *ngIf="id!=0 && storehouse.isAuthor == true" mat-flat-button color="warn" class="for-button deleteButton" type="button" (click)="delete()"
       mat-raised-button>Delete</button>
