@@ -1,52 +1,59 @@
 <mat-table [dataSource]="storehouses" class="mat-elevation-z8">
-    <ng-container matColumnDef="imageUrl">
-        <mat-header-cell class="headerForPhotoColumn" *matHeaderCellDef> Photo </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-            <div class="storehouseLayout">
-                <div class="storehousePhoto">
-                    <img *ngIf="element.imageUrl!=null" class="photo" src="{{element.imageUrl}}" alt="">
-                    <img *ngIf="element.imageUrl==null" class="photo"
-                        src="assets/images/storehouse.png" />
-                </div>
-            </div>
-        </mat-cell>
-    </ng-container>
+  <ng-container matColumnDef="imageUrl">
+    <mat-header-cell class="headerForPhotoColumn" *matHeaderCellDef> Photo </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <div class="storehouseLayout">
+        <div class="storehousePhoto">
+          <img *ngIf="element.imageUrl!=null" class="photo" src="{{element.imageUrl}}" alt="">
+          <img *ngIf="element.imageUrl==null" class="photo" src="assets/images/storehouse.png" />
+        </div>
+      </div>
+    </mat-cell>
+  </ng-container>
 
-    <ng-container matColumnDef="title">
-        <mat-header-cell *matHeaderCellDef>
-            Name
-        </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-            <div style="width: 150px;">{{element.title}}</div>
-            
-            <button mat-icon-button [matMenuTriggerFor]="menu"
-              aria-label="Example icon-button with a menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item [routerLink]="['/storehouse-edit', element.id]">
-                <mat-icon>edit</mat-icon>
-                <span>Edit</span>
-              </button>
-            
-              <button mat-menu-item>
-                <mat-icon>block</mat-icon>
-                <span>Set hidden</span>
-              </button>
+  <ng-container matColumnDef="title">
+    <mat-header-cell *matHeaderCellDef>
+      Name
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <div style="width: 800px;">{{element.title}}</div>
 
-              <button mat-menu-item>
-              	<mat-icon>people</mat-icon>
-                <span>Members</span>
-              </button>
-            
-            </mat-menu>
-         </mat-cell>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"> </mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;" >
-    </mat-row>
+      <button style="text-align: right;" mat-icon-button [matMenuTriggerFor]="menu"
+        aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item [routerLink]="['/storehouse-edit', element.id]">
+          <mat-icon>edit</mat-icon>
+          <span>Edit</span>
+        </button>
+
+        <button mat-menu-item>
+          <mat-icon>block</mat-icon>
+          <span>Set hidden</span>
+        </button>
+
+        <button mat-menu-item>
+          <mat-icon>people</mat-icon>
+          <span>Members</span>
+        </button>
+
+      </mat-menu>
+
+    <share-button [disabled]="!element.isAuthor" [theme]="'circles-dark'" [button]="'telegram'" [size]="1" [url]="urlService.getCurrentUrl().replace('storehouse-list','storehouse-join')"
+      [description]="'You are invated to share ' + element.title + ' storehouse with ' + authorizationService.getUserinfo().name +' ' + authorizationService.getUserinfo().email 
+      +'. Your storehouse Id: '+element.id +' Password: ' + element.password" 
+      [autoSetMeta]="false">
+     </share-button>
+  
+
+    </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns"> </mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;">
+  </mat-row>
 </mat-table>
 <button [routerLink]="['/storehouse-edit', 0]" class="mat-fab-bottom-right" mat-fab>
-    <mat-icon class="icon">add</mat-icon>
+  <mat-icon class="icon">add</mat-icon>
 </button>

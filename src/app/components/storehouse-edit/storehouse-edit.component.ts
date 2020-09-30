@@ -33,10 +33,11 @@ export class StorehouseEditComponent implements OnInit {
     if (this.id != 0) {
       this.server.getQuery<GenericResponse<boolean>>('/storehouse/' + this.id).subscribe(data => {
         if (data.isSuccess) {
-          debugger;
           this.storehouse = data.data;
+          debugger;
+          var str = '#'+this.storehouse.colorHex.slice(2);
           this.formInitialization();
-          localStorage.setItem("colorOfHeader", this.storehouseForm.value.colorHex);
+          localStorage.setItem("colorOfHeader", str);
         }
       });
     }
@@ -45,7 +46,7 @@ export class StorehouseEditComponent implements OnInit {
   onSubmit() {
     if (this.storehouseForm.valid) {
       this.storehouseForm.value.colorHex = this.storehouseForm.value.colorHex.replace('#', 'FF');
-      this.storehouseForm.value.isLocked = this.storehouse.isLocked;//когда поменяю колорХекс инпут поменять на storehouseForm.value.isLocked
+      this.storehouseForm.value.isLocked = this.storehouse.isLocked;
       if (this.id != 0) 
         this.update();
        else 

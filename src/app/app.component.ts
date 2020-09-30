@@ -9,7 +9,7 @@ import {AuthorizationService} from './services/authorization.service';
 export class AppComponent {
   title = 'FridgeLynxiWeb2';
 
-  constructor(public tokenService:AuthorizationService){
+  constructor(public authorizationService:AuthorizationService){
 
   }
 }

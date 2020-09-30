@@ -20,7 +20,7 @@ export class SidenavListComponent implements OnInit {
 
   public onLogoutClick(){
     this.onSidenavClose();
-    this.authorizationService.drop();
+    this.authorizationService.dropToken();
     this.router.navigate(['']);
   }
 }

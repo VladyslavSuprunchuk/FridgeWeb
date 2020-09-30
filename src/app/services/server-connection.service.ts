@@ -89,7 +89,7 @@ export class ServerConnectionService {
     return (error: any) => {
 
       if (error.status == 401) {
-        this.authorizationService.drop()
+        this.authorizationService.dropToken()
         this.router.navigate(['']);
       }
 

@@ -67,6 +67,7 @@ export class LogInComponent implements OnInit {
 
   private saveUserInfo(data:any){
     this.client=data.data;
+    localStorage.setItem("userInfo",JSON.stringify(this.client))
     localStorage.setItem("token",this.client.token);
   }
 

@@ -1,17 +1,21 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Client } from './../models/client'
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorizationService {
 
-  get():string {
+  getToken():string {
     return localStorage.getItem("token");
   }
 
-  drop():void {
+  dropToken():void {
     localStorage.removeItem("token");
   }
   
+  getUserinfo():Client{
+    return JSON.parse(localStorage.getItem("userInfo"));
+  }
 }

@@ -5,8 +5,8 @@
     <app-sidenav-list (sidenavClose)="sidenav.close()" ></app-sidenav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <app-header *ngIf="tokenService.get() != null" (sidenavToggle)="sidenav.toggle()"></app-header>
-    <app-log-in *ngIf="tokenService.get() == null" (sidenavToggle)="sidenav.toggle()"></app-log-in>
+    <app-header *ngIf="authorizationService.getToken() != null" (sidenavToggle)="sidenav.toggle()"></app-header>
+    <app-log-in *ngIf="authorizationService.getToken() == null" (sidenavToggle)="sidenav.toggle()"></app-log-in>
     <main>
       <router-outlet></router-outlet>
     </main>
