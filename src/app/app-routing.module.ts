@@ -7,6 +7,7 @@ import { StorehouseEditComponent } from './components/storehouse-edit/storehouse
 import { StorehouseListComponent } from './components/storehouse-list/storehouse-list.component';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
+import { MembersComponent } from './components/members/members.component';
 
 
 
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'product-type-edit/:id', component: ProductTypeEditComponent},
   {path: 'storehouse-list', component: StorehouseListComponent},
   {path: 'storehouse-edit/:id', component: StorehouseEditComponent},
+  {path: 'members/:id', component: MembersComponent},
   // {path: 'login', component: LogInComponent}
  // {path: 'mediaservice', component: MediaServiceComponent}
 ];

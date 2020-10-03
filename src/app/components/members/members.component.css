@@ -1,0 +1,12 @@
+.headerForNameColumn{
+    margin-left: 35px;
+  }
+  .cellForNameColumn{
+    margin-left: 25px;
+  }
+  .headerForEmailColumn{
+    margin-left: 35px;
+  }
+  .cellForNameColumn{
+    width:600px;;
+  }

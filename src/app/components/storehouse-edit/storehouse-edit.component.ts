@@ -19,7 +19,6 @@ export class StorehouseEditComponent implements OnInit {
   public fileToUpload: File = null;
   public storehouse:Storehouse = new Storehouse();
 
-
   constructor(private activateRoute: ActivatedRoute,
     private server: ServerConnectionService,
     private fb: FormBuilder,

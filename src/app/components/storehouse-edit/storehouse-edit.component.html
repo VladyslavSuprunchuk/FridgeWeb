@@ -20,18 +20,18 @@
     <input matInput placeholder="password" formControlName="password">
   </mat-form-field>
 
-  <div *ngIf="storehouse.isLocked == true;" (click)="setIsLocked()" class="lockInfo">
-    <p>Storehouse is locked:</p>
-    <mat-icon class="icon">lock</mat-icon>
+  <div *ngIf="storehouse.isLocked == true;" class="lockInfo">
+    <mat-icon  (click)="setIsLocked()" class="icon">lock</mat-icon>
+    <p>Storehouse is locked</p>
   </div>
-  <div *ngIf="storehouse.isLocked == false;" (click)="setIsLocked()" class="lockInfo">
-    <p>Anybody with password can join this storehouse:</p>
-    <mat-icon class="icon">lock_open</mat-icon>
+  <div *ngIf="storehouse.isLocked == false;" class="lockInfo">
+    <mat-icon class="icon"  (click)="setIsLocked()">lock_open</mat-icon>
+    <p>Anybody with password can join this storehouse</p>
   </div>
 
   <div style="display: inline-flex;">
-    <p>Select storehouse color:</p>
     <input class="colorInput" matInput type="color" formControlName="colorHex" name="bg" value="#ff0000">
+    <p>Select storehouse color</p>
   </div>
   
   <div class="buttons">

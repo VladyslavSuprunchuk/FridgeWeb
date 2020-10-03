@@ -18,7 +18,7 @@ export class ProductTypeListComponent implements OnInit {
   public productTypesFiltered: ProductType[];
   public filterName:string;
 
-  constructor(private server: ServerConnectionService,private alertManager: AlertManagerService,) { }
+  constructor(private server: ServerConnectionService,private alertManager: AlertManagerService) { }
 
   ngOnInit(): void {
     this.server.getQuery<GenericResponse<boolean>>('/producttype').subscribe(data => {

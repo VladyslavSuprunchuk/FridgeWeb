@@ -1,0 +1,34 @@
+<div class="mainDiv">
+    <mat-table [dataSource]="storehouseMembers" class="mat-elevation-z8">
+  
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef class="headerForNameColumn"> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"  class="cellForNameColumn"> {{element.name}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef  class="headerForEmailColumn"> Email </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+
+          <div class="cellForNameColumn">
+            {{element.email}}
+          </div>
+
+           <div style="text-align: right;" *ngIf="element.isOwner;else notOwner">
+             Owner
+           </div>
+
+           <ng-template #notOwner >
+           <div style="text-align: right;" (click)="deleteMember(element.id)">
+            <mat-icon>delete_forever</mat-icon>
+          </div>
+        </ng-template>
+          
+       </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+  </div>

@@ -22,7 +22,6 @@ export class StorehouseListComponent implements OnInit {
     public authorizationService:AuthorizationService) { }
 
   ngOnInit(): void {
-    console.log(this.authorizationService.getUserinfo());
     this.server.getQuery<GenericResponse<boolean>>('/storehouse').subscribe(data => {
       if (data.isSuccess) 
         this.storehouses = data.data;

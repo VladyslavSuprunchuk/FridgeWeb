@@ -24,28 +24,35 @@
       </button>
 
       <mat-menu #menu="matMenu">
+
         <button mat-menu-item [routerLink]="['/storehouse-edit', element.id]">
           <mat-icon>edit</mat-icon>
           <span>Edit</span>
         </button>
-
-        <button mat-menu-item>
-          <mat-icon>block</mat-icon>
-          <span>Set hidden</span>
-        </button>
-
-        <button mat-menu-item>
+        
+        <button mat-menu-item [routerLink]="['/members', element.id]">
           <mat-icon>people</mat-icon>
           <span>Members</span>
         </button>
 
+        <button mat-menu-item *ngIf="element.isAuthor;else disconect">
+          <mat-icon>block</mat-icon>
+          <span>Delete</span>
+        </button>
+
+        <ng-template #disconect>
+          <button mat-menu-item>
+            <mat-icon>block</mat-icon>
+            <span>Disconect</span>
+          </button>
+        </ng-template>
+
       </mat-menu>
 
-    <share-button [disabled]="!element.isAuthor" [theme]="'circles-dark'" [button]="'telegram'" [size]="1" [url]="urlService.getCurrentUrl().replace('storehouse-list','storehouse-join')"
-      [description]="'You are invated to share ' + element.title + ' storehouse with ' + authorizationService.getUserinfo().name +' ' + authorizationService.getUserinfo().email 
-      +'. Your storehouse Id: '+element.id +' Password: ' + element.password" 
-      [autoSetMeta]="false">
-     </share-button>
+      <share-button [disabled]="!element.isAuthor ||  element.isLocked " [theme]="'circles-dark'" [button]="'telegram'"
+        [size]="1" [url]="urlService.getCurrentUrl().replace('storehouse-list','storehouse-join')" [description]="'You are invated to share ' + element.title + ' storehouse with ' + authorizationService.getUserinfo().name +' ' + authorizationService.getUserinfo().email 
+      +'. Your storehouse Id: '+element.id +' Password: ' + element.password" [autoSetMeta]="false">
+      </share-button>
   
 
     </mat-cell>
