@@ -59,10 +59,10 @@ export class ServerConnectionService {
       .pipe(catchError(this.handleError<T>('putFormData')));
   }
 
-  public deleteQuery<T>(url: string) {
+  public deleteQuery<T>(url: string,data?:any) {
     let queryURL: string = `${this.BASE_URL}${url}`;
     let headers = this.bindHeadersToRequestModel();
-    return this.http.delete(queryURL, { headers: headers })
+    return this.http.delete(queryURL,{ headers: headers },)
       .pipe(catchError(this.handleError<T>('deleteQuery')));
   }
 

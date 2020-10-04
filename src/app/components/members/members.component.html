@@ -14,15 +14,13 @@
             {{element.email}}
           </div>
 
-           <div style="text-align: right;" *ngIf="element.isOwner;else notOwner">
+           <div style="text-align: right;" *ngIf="element.isOwner">
              Owner
            </div>
 
-           <ng-template #notOwner >
-           <div style="text-align: right;" (click)="deleteMember(element.id)">
-            <mat-icon>delete_forever</mat-icon>
-          </div>
-        </ng-template>
+            <div style="text-align: right;" *ngIf="isCurrentUserOwner() && !element.isOwner" (click)="deleteMember(element.id)">
+              <mat-icon>delete_forever</mat-icon>
+            </div>
           
        </mat-cell>
       </ng-container>
