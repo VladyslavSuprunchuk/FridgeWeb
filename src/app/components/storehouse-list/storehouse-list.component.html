@@ -35,17 +35,15 @@
           <span>Members</span>
         </button>
 
-        <button mat-menu-item *ngIf="element.isAuthor;else disconect">
+        <button (click)="delete(element.id)" mat-menu-item *ngIf="element.isAuthor">
           <mat-icon>block</mat-icon>
           <span>Delete</span>
         </button>
 
-        <ng-template #disconect>
-          <button mat-menu-item>
+          <button *ngIf="!element.isAuthor" mat-menu-item (click)="disconect(element.id)">
             <mat-icon>block</mat-icon>
             <span>Disconect</span>
           </button>
-        </ng-template>
 
       </mat-menu>
 

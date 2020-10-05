@@ -29,4 +29,27 @@ export class StorehouseListComponent implements OnInit {
         this.alertManager.showError(data.error.errorMessage);
     });
   }
+
+  delete(id:number){
+    this.server.deleteQuery<GenericResponse<boolean>>('/storehouse/deletestorehouse/' + id).subscribe(data => {
+      if (data.isSuccess) {
+        this.alertManager.showSuccess("Storehouse has been deleted");
+        this.ngOnInit()
+      }
+      else
+        this.alertManager.showError(data.error.errorMessage);
+    });
+  }
+
+  disconect(id:number){
+    debugger;
+    this.server.deleteQuery<GenericResponse<boolean>>('/storehouse/' + id + '/disconnect').subscribe(data => {
+      if (data.isSuccess) {
+        this.alertManager.showSuccess("You successfully disconnected");
+        this.ngOnInit()
+      }
+      else
+        this.alertManager.showError(data.error.errorMessage);
+    });
+  }
 }

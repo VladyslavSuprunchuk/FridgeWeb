@@ -1,0 +1,16 @@
+<form class="example-container form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+    <span class="login100-form-title p-b-43">
+        Log In
+    </span>
+
+    <mat-form-field class="field">
+        <input matInput placeholder="Enter your name" formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field class="field">
+        <input matInput placeholder="Enter your email" formControlName="email" required>
+    </mat-form-field>
+    
+    <button  class="for-button" type="submit" mat-raised-button>Join</button>  
+</form>
