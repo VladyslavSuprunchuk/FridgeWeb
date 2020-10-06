@@ -3,8 +3,11 @@
   }
   .cellForNameColumn{
     margin-left: 25px;
-    width:600px;
   }
   .headerForEmailColumn{
-    margin-left: 110px;
+    margin-left: 60px;
+  }
+
+  .cellForEmailColumn{
+    width:500px;
   }

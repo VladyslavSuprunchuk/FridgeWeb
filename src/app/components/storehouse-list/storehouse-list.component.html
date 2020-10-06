@@ -16,9 +16,9 @@
       Name
     </mat-header-cell>
     <mat-cell *matCellDef="let element">
-      <div style="width: 800px;">{{element.title}}</div>
+      <div style="max-width:100px;">{{element.title}}</div>
 
-      <button style="text-align: right;" mat-icon-button [matMenuTriggerFor]="menu"
+      <button style="margin-left: 20%;" mat-icon-button [matMenuTriggerFor]="menu"
         aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
       </button>

@@ -1,0 +1,33 @@
+.form{
+    align-items: center;
+    display: flex;flex-flow: column wrap;
+    padding: 50px;
+    position: fixed; top: 40%; left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+.field {
+    width: 260px;
+    text-align: center;
+}
+
+
+.login100-form-title {
+    width: 90%;
+    display: block;
+    font-size: 30px;
+    color: #333333;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.message {
+    margin: 15px 0 0;
+    color: #4CAF50;
+    font-size: 12px;
+  }
+  .submitButton{
+    width: 260px;
+  }

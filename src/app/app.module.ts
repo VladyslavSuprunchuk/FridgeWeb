@@ -48,7 +48,6 @@ import { StorehouseListComponent } from './components/storehouse-list/storehouse
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { MembersComponent } from './components/members/members.component';
-import { StorehousejoinComponent } from './storehousejoin/storehousejoin.component';
 import { StorehouseJoinComponent } from './components/storehouse-join/storehouse-join.component';
 
 
@@ -64,7 +63,6 @@ import { StorehouseJoinComponent } from './components/storehouse-join/storehouse
     StorehouseEditComponent,
     StorehouseListComponent,
     MembersComponent,
-    StorehousejoinComponent,
     StorehouseJoinComponent
   ],
   imports: [

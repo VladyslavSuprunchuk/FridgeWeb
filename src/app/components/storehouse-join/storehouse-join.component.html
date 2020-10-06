@@ -1,16 +1,19 @@
-<form class="example-container form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+<form class="example-container form" [formGroup]="storehouseJoinForm" (ngSubmit)="onSubmit()">
 
     <span class="login100-form-title p-b-43">
-        Log In
+       Please ask Storehouse's owner to provide you 'Id' and 'Password' so you can join him
     </span>
 
     <mat-form-field class="field">
-        <input matInput placeholder="Enter your name" formControlName="name">
+        <input matInput placeholder="Storehouse Id" formControlName="storehouseId">
     </mat-form-field>
 
     <mat-form-field class="field">
-        <input matInput placeholder="Enter your email" formControlName="email" required>
+        <input matInput placeholder="Password" required formControlName="storehousePassword" [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
     </mat-form-field>
     
-    <button  class="for-button" type="submit" mat-raised-button>Join</button>  
+    <button class="for-button submitButton" type="submit" mat-raised-button>Join</button>  
 </form>
