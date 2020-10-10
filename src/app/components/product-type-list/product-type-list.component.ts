@@ -29,7 +29,7 @@ export class ProductTypeListComponent implements OnInit {
     });
   }
 
-  filterTable (filterValue :string) { 
+  public filterTable (filterValue :string) { 
     this.productTypes.filter = filterValue.trim().toLowerCase(); 
  }
 }

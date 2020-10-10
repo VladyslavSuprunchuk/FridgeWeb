@@ -34,7 +34,7 @@ export class StorehouseJoinComponent implements OnInit {
       storehousePassword: []
     });
   }
-  onSubmit() {
+  public onSubmit() {
     if (this.storehouseJoinForm.valid) {
       let storehouse = new Storehouse();
       storehouse.id = this.storehouseJoinForm.value.storehouseId;

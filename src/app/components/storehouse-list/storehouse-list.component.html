@@ -15,43 +15,50 @@
     <mat-header-cell *matHeaderCellDef>
       Name
     </mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      <div style="max-width:100px;">{{element.title}}</div>
+    <mat-cell *matCellDef="let element" style="width: 110px;">
+      <div class="titleCell">{{element.title}}</div>
 
-      <button style="margin-left: 20%;" mat-icon-button [matMenuTriggerFor]="menu"
-        aria-label="Example icon-button with a menu">
-        <mat-icon>more_vert</mat-icon>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="additionalInfo">
+    <mat-header-cell *matHeaderCellDef>
+      
+    </mat-header-cell>
+    <mat-cell class="additionalInfoCell" *matCellDef="let element">
+      <button mat-icon-button [matMenuTriggerFor]="menu"
+      aria-label="Example icon-button with a menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <mat-menu #menu="matMenu"  style="margin-left: 20px;">
+
+      <button mat-menu-item [routerLink]="['/storehouse-edit', element.id]">
+        <mat-icon>edit</mat-icon>
+        <span>Edit</span>
+      </button>
+      
+      <button mat-menu-item [routerLink]="['/members', element.id]">
+        <mat-icon>people</mat-icon>
+        <span>Members</span>
       </button>
 
-      <mat-menu #menu="matMenu">
+      <button (click)="remove(element.id)" mat-menu-item *ngIf="element.isAuthor">
+        <mat-icon>block</mat-icon>
+        <span>Delete</span>
+      </button>
 
-        <button mat-menu-item [routerLink]="['/storehouse-edit', element.id]">
-          <mat-icon>edit</mat-icon>
-          <span>Edit</span>
-        </button>
-        
-        <button mat-menu-item [routerLink]="['/members', element.id]">
-          <mat-icon>people</mat-icon>
-          <span>Members</span>
-        </button>
-
-        <button (click)="delete(element.id)" mat-menu-item *ngIf="element.isAuthor">
+        <button *ngIf="!element.isAuthor" mat-menu-item (click)="remove(element.id)">
           <mat-icon>block</mat-icon>
-          <span>Delete</span>
+          <span>Disconect</span>
         </button>
 
-          <button *ngIf="!element.isAuthor" mat-menu-item (click)="disconect(element.id)">
-            <mat-icon>block</mat-icon>
-            <span>Disconect</span>
-          </button>
+    </mat-menu>
 
-      </mat-menu>
-
-      <share-button [disabled]="!element.isAuthor ||  element.isLocked " [theme]="'circles-dark'" [button]="'telegram'"
-        [size]="1" [url]="urlService.getCurrentUrl().replace('storehouse-list','storehouse-join')" [description]="'You are invated to share ' + element.title + ' storehouse with ' + authorizationService.getUserinfo().name +' ' + authorizationService.getUserinfo().email 
-      +'. Your storehouse Id: '+element.id +' Password: ' + element.password" [autoSetMeta]="false">
-      </share-button>
-  
+    <share-button [disabled]="!element.isAuthor ||  element.isLocked " [theme]="'circles-dark'" [button]="'telegram'"
+      [size]="1" [url]="urlService.getCurrentUrl().replace('storehouse-list','storehouse-join')" [description]="'You are invated to share ' + element.title + ' storehouse with ' + authorizationService.getUserinfo().name +' ' + authorizationService.getUserinfo().email 
+    +'. Your storehouse Id: '+element.id +' Password: ' + element.password" [autoSetMeta]="false">
+    </share-button>
 
     </mat-cell>
   </ng-container>

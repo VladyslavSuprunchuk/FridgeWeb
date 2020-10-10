@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServerConnectionService } from '../../services/server-connection.service';
 import { AlertManagerService } from '../../services//alert-manager.service';
-import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { GenericResponse } from '../../models/generic-response';
 import { DeleteMemberRequest } from '../../models/Requests/deleteMemberRequest';
@@ -21,7 +20,6 @@ export class MembersComponent implements OnInit {
 
   constructor(private server: ServerConnectionService,
     private alertManager: AlertManagerService,
-    private router: Router,
     private activateRoute: ActivatedRoute,
     private authorizationService:AuthorizationService) { }
 
@@ -29,7 +27,6 @@ export class MembersComponent implements OnInit {
     this.storehouseId = this.activateRoute.snapshot.params['id'];
     if (this.storehouseId != 0) {
       this.server.getQuery<GenericResponse<boolean>>('/storehouse/' + this.storehouseId + '/members').subscribe(data => {
-       console.log(data.data);
         this.storehouseMembers =  data.data;
         let storehouseAdmin:StorehouseMember;
         let storehouseTemp:StorehouseMember;
@@ -46,14 +43,14 @@ export class MembersComponent implements OnInit {
     }
   }
 
-  isCurrentUserOwner(){
+  public isCurrentUserOwner(){
     if(this.storehouseMembers == null)
       return false;
     var user = this.authorizationService.getUserinfo();
     return user.email == this.storehouseMembers.find(x => x.isOwner).email;    
   }
 
-  deleteMember(userToDeleteId: number) {
+  public deleteMember(userToDeleteId: number) {
     var user = this.authorizationService.getUserinfo();
 
     let deleteMemberRequest = new DeleteMemberRequest();

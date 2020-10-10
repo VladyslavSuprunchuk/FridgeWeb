@@ -1,5 +1,4 @@
 .prodycTypeLayout{
-  margin-left: 2%;
   display: block;
     position: relative;
     background: #fff;
@@ -30,12 +29,17 @@
   } 
 
 .expirationTermColumn{
-  width:250px;
+  width:100px;
+  margin-left: 40px;
+}
+
+.nameColumn{
+  width:100px;
   margin-left: 40px;
 }
 
 .headerForPhotoColumn{
-  margin-left: 35px;
+  margin-left: 22px;
 }
 
 .mainDiv{

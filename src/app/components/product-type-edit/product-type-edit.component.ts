@@ -57,7 +57,7 @@ export class ProductTypeEditComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  public onSubmit() {
     if (this.productTypeForm.valid) {
       if (this.id != 0) {
         this.update();
@@ -89,7 +89,7 @@ export class ProductTypeEditComponent implements OnInit {
     })
   }
 
-  delete(): void {
+  public delete(): void {
     this.server.deleteQuery<GenericResponse<boolean>>('/producttype/' + this.productType.id).subscribe(data => {
       if (data.isSuccess){
         this.router.navigate(['product-type-list']);
@@ -101,7 +101,7 @@ export class ProductTypeEditComponent implements OnInit {
     })
   }
 
-  handleFileInput(files: FileList) {
+  public handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
   }
 }

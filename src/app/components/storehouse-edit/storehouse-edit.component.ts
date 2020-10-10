@@ -33,7 +33,6 @@ export class StorehouseEditComponent implements OnInit {
       this.server.getQuery<GenericResponse<boolean>>('/storehouse/' + this.id).subscribe(data => {
         if (data.isSuccess) {
           this.storehouse = data.data;
-          debugger;
           var str = '#'+this.storehouse.colorHex.slice(2);
           this.formInitialization();
           localStorage.setItem("colorOfHeader", str);
@@ -42,7 +41,7 @@ export class StorehouseEditComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  public  onSubmit() {
     if (this.storehouseForm.valid) {
       this.storehouseForm.value.colorHex = this.storehouseForm.value.colorHex.replace('#', 'FF');
       this.storehouseForm.value.isLocked = this.storehouse.isLocked;
@@ -75,7 +74,7 @@ export class StorehouseEditComponent implements OnInit {
     })
   }
 
-  delete(): void {
+  public delete(): void {
     this.server.deleteQuery<GenericResponse<boolean>>('/storehouse/deletestorehouse/' + this.id).subscribe(data => {
       if (data.isSuccess){
         this.router.navigate(['storehouse-list']);
@@ -87,7 +86,7 @@ export class StorehouseEditComponent implements OnInit {
     })
   }
 
-  handleFileInput(files: FileList) {
+  public handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
   }
 
