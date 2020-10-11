@@ -15,9 +15,8 @@
     <mat-header-cell *matHeaderCellDef>
       Name
     </mat-header-cell>
-    <mat-cell *matCellDef="let element" style="width: 110px;">
+    <mat-cell *matCellDef="let element">
       <div class="titleCell">{{element.title}}</div>
-
     </mat-cell>
   </ng-container>
 
@@ -25,13 +24,13 @@
     <mat-header-cell *matHeaderCellDef>
       
     </mat-header-cell>
-    <mat-cell class="additionalInfoCell" *matCellDef="let element">
-      <button mat-icon-button [matMenuTriggerFor]="menu"
-      aria-label="Example icon-button with a menu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
+    <mat-cell *matCellDef="let element">
 
-    <mat-menu #menu="matMenu"  style="margin-left: 20px;">
+      <button class="menuButton" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+
+    <mat-menu #menu="matMenu">
 
       <button mat-menu-item [routerLink]="['/storehouse-edit', element.id]">
         <mat-icon>edit</mat-icon>
@@ -55,7 +54,7 @@
 
     </mat-menu>
 
-    <share-button [disabled]="!element.isAuthor ||  element.isLocked " [theme]="'circles-dark'" [button]="'telegram'"
+    <share-button class="telegramIcon" [disabled]="!element.isAuthor ||  element.isLocked " [theme]="'circles-dark'" [button]="'telegram'"
       [size]="1" [url]="urlService.getCurrentUrl().replace('storehouse-list','storehouse-join')" [description]="'You are invated to share ' + element.title + ' storehouse with ' + authorizationService.getUserinfo().name +' ' + authorizationService.getUserinfo().email 
     +'. Your storehouse Id: '+element.id +' Password: ' + element.password" [autoSetMeta]="false">
     </share-button>

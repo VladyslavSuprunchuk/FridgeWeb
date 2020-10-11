@@ -19,7 +19,6 @@
     margin-top: 0.5%;
     margin-left: 2%;
     display: flex;flex-flow: column wrap;
-    width: 20%;
   }
   
   .submitButton{
@@ -58,7 +57,7 @@
   }
 
   .lockInfo{
-    width: 480px;
+    width: auto;
     display: inline-flex;
   }
 
@@ -73,3 +72,4 @@
     margin-top:13px;
     margin-left:3px;
   }
+

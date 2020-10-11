@@ -16,7 +16,7 @@ export class MembersComponent implements OnInit {
 
   public storehouseId: number;
   public storehouseMembers: StorehouseMember[];
-  public displayedColumns: string[] = ['name','email'];
+  public displayedColumns: string[] = ['name','email','additionalInfo'];
 
   constructor(private server: ServerConnectionService,
     private alertManager: AlertManagerService,

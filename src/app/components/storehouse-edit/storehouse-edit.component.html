@@ -9,7 +9,7 @@
     <button mat-button color="primary" type="button" (click)="fileInput.click()">
       <span *ngIf="fileToUpload!=null">Select another image</span>
       <span *ngIf="fileToUpload==null">Select image</span>
-      <input #fileInput type="file" style="display:none;" id="file" [disabled]="storehouse.isAuthor == false"
+      <input #fileInput type="file" style="display:none;" id="file" [disabled]="storehouse.isAuthor == false && id !=0"
         (change)="handleFileInput($event.target.files)">
     </button>
   </div>
@@ -21,11 +21,11 @@
   </mat-form-field>
 
   <div *ngIf="storehouse.isLocked == true;" class="lockInfo">
-    <mat-icon  (click)="setIsLocked()" class="icon">lock</mat-icon>
+    <mat-icon (click)="setIsLocked()" class="icon">lock</mat-icon>
     <p>Storehouse is locked</p>
   </div>
   <div *ngIf="storehouse.isLocked == false;" class="lockInfo">
-    <mat-icon class="icon"  (click)="setIsLocked()">lock_open</mat-icon>
+    <mat-icon class="icon" (click)="setIsLocked()">lock_open</mat-icon>
     <p>Anybody with password can join this storehouse</p>
   </div>
 
@@ -33,7 +33,7 @@
     <input class="colorInput" matInput type="color" formControlName="colorHex" name="bg" value="#ff0000">
     <p>Select storehouse color</p>
   </div>
-  
+
   <div class="buttons">
     <button [disabled]="storehouseForm.invalid" *ngIf="storehouse.isAuthor == true || id==0" mat-flat-button
       color="primary" class="for-button submitButton" type="submit" mat-raised-button>Save</button>

@@ -8,23 +8,30 @@
 
       <ng-container matColumnDef="email">
         <mat-header-cell *matHeaderCellDef  class="headerForEmailColumn"> Email </mat-header-cell>
-        <mat-cell *matCellDef="let element">
+        <mat-cell  *matCellDef="let element">
 
           <div class="cellForEmailColumn">
             {{element.email}}
           </div>
+          
+       </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="additionalInfo">
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+        <mat-cell  *matCellDef="let element">
 
-           <div style="text-align: right;" *ngIf="element.isOwner">
+           <div class="ownerIcon" *ngIf="element.isOwner">
              Owner
            </div>
 
-            <div style="text-align: right;" *ngIf="isCurrentUserOwner() && !element.isOwner" (click)="deleteMember(element.id)">
+            <div class="deleteOwnerIcon" *ngIf="isCurrentUserOwner() && !element.isOwner" (click)="deleteMember(element.id)">
               <mat-icon>delete_forever</mat-icon>
             </div>
           
        </mat-cell>
       </ng-container>
-  
+
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>

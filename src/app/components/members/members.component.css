@@ -1,13 +1,31 @@
 .headerForNameColumn{
-    margin-left: 35px;
-  }
-  .cellForNameColumn{
     margin-left: 25px;
   }
+  .cellForNameColumn{
+    margin-left: 35px;
+    width:150px;
+  }
   .headerForEmailColumn{
-    margin-left: 60px;
+    margin-left: 70px;
   }
 
   .cellForEmailColumn{
-    width:500px;
+    width:100%;
+  }
+
+  .ownerIcon{
+    margin-left: 25px;
+  }  
+
+  .deleteOwnerIcon{
+    margin-left: 33px;
+  } 
+
+  mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-type {
+    padding-left: 0;
+  }
+
+
+  mat-cell:last-of-type, mat-header-cell:last-of-type, mat-footer-cell:last-of-type {
+      padding-right: 0px;
   }
