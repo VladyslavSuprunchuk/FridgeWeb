@@ -1,4 +1,6 @@
-<mat-toolbar class="position-fixed" *ngIf="colorService.get() != null && !urlService.getCurrentUrl().includes('/storehouse-edit/0') && urlService.getCurrentUrl().includes('/storehouse-edit/'); else unset" [ngStyle]="{'background': colorService.get()}">
+<mat-toolbar class="position-fixed" color="primary"
+ [ngStyle]="{'background': getColor()}">
+
     <div fxHide.gt-xs  style="color: white;">
         <button mat-icon-button (click)="onToggleSidenav()">
             <mat-icon>menu</mat-icon>
@@ -18,26 +20,3 @@
         </ul>
     </div> -->
 </mat-toolbar>
-
-<ng-template #unset>  
-    <mat-toolbar color="primary">
-        <div fxHide.gt-xs>
-            <button mat-icon-button (click)="onToggleSidenav()">
-        <mat-icon>menu</mat-icon>
-        </button>
-        </div>
-        <!-- <div>
-            <a routerLink="/home">Owner-Account</a>
-        </div>
-        <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
-            <ul fxLayout fxLayoutGap="15px" class="navigation-items">
-                <li>
-                    <a routerLink="/owner">Owner Actions</a>
-                </li>
-                <li>
-                    <a routerLink="/account">Account Actions</a>
-                </li>
-            </ul>
-        </div> -->
-    </mat-toolbar>
-  </ng-template>   

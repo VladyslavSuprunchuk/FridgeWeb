@@ -55,7 +55,7 @@
     </mat-menu>
 
     <share-button class="telegramIcon" [disabled]="!element.isAuthor ||  element.isLocked " [theme]="'circles-dark'" [button]="'telegram'"
-      [size]="1" [url]="urlService.getCurrentUrl().replace('storehouse-list','storehouse-join')" [description]="'You are invated to share ' + element.title + ' storehouse with ' + authorizationService.getUserinfo().name +' ' + authorizationService.getUserinfo().email 
+      [size]="1" [url]="urlForshareRedirect()" [description]="'You are invated to share ' + element.title + ' storehouse with ' + authorizationService.getUserinfo().name +' ' + authorizationService.getUserinfo().email 
     +'. Your storehouse Id: '+element.id +' Password: ' + element.password" [autoSetMeta]="false">
     </share-button>
 

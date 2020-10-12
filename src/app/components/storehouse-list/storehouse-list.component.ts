@@ -3,7 +3,6 @@ import { ServerConnectionService } from '../../services/server-connection.servic
 import { Storehouse } from '../../models/storehouse';
 import { GenericResponse } from '../../models/generic-response';
 import { AlertManagerService } from '../../services//alert-manager.service';
-import { UrlService } from '../../services/url.service';
 import { AuthorizationService } from '../../services/authorization.service';
 
 @Component({
@@ -18,7 +17,6 @@ export class StorehouseListComponent implements OnInit {
 
   constructor(private server: ServerConnectionService,
     private alertManager: AlertManagerService,
-    public urlService: UrlService,
     public authorizationService: AuthorizationService) { }
 
   ngOnInit(): void {
@@ -52,5 +50,9 @@ export class StorehouseListComponent implements OnInit {
           this.alertManager.showError(data.error.errorMessage);
       });
     }
+  }
+
+  public urlForshareRedirect():string{
+    return window.location.href.replace('storehouse-list','storehouse-join')
   }
 }
