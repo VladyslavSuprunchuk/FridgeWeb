@@ -17,6 +17,7 @@ import { notZeroValidator, } from '../../shared/validation';
 export class ProductTypeEditComponent implements OnInit {
 
   public id: number;
+  public isCreateProductType: boolean;
   public productType: ProductType = new ProductType();
   public productTypeForm: FormGroup;
   public fileToUpload: File = null;
@@ -31,6 +32,7 @@ export class ProductTypeEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.activateRoute.snapshot.params['id'];
+    this.isCreateProductType = this.activateRoute.snapshot.params['isCreate'];
     this.formInitialization();
     if (this.id != 0) {
       this.server.getQuery<GenericResponse<boolean>>('/producttype/' + this.id).subscribe(data => {
@@ -52,17 +54,19 @@ export class ProductTypeEditComponent implements OnInit {
       openedExpirationTerm: [this.productType.openedExpirationTerm]
     });
     
-    if (this.id != 0) {
+    debugger;
+    if (this.id != 0 && !this.isCreateProductType) {
+      console.log( "disabled");
       this.productTypeForm.get('unitId').disable();
     }
   }
 
   public onSubmit() {
     if (this.productTypeForm.valid) {
-      if (this.id != 0) {
+      if (this.id != 0 && !this.isCreateProductType) {
         this.update();
       } else {
-        this.create();
+       this.create();
       }
     }
   }

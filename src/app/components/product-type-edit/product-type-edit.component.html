@@ -35,7 +35,7 @@
   <div class="buttons">
     <button [disabled]="productTypeForm.invalid" mat-flat-button color="primary" class="for-button submitButton"
       type="submit" mat-raised-button>Save</button>
-    <button *ngIf="id!=0" mat-flat-button color="warn" class="for-button deleteButton" type="button" (click)="delete()"
+    <button *ngIf="id!=0 && !isCreateProductType" mat-flat-button color="warn" class="for-button deleteButton" type="button" (click)="delete()"
       mat-raised-button>Delete</button>
   </div>
 </form>

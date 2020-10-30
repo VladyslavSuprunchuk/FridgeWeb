@@ -1,5 +1,5 @@
 <div class="mainDiv">
-  <mat-form-field >
+  <mat-form-field>
     <input matInput type="text" autocomplete="off" (keyup)="filterTable($event.target.value)" placeholder="Filter">
   </mat-form-field>
   <mat-table [dataSource]="productTypes" class="mat-elevation-z8">
@@ -17,19 +17,51 @@
     </ng-container>
 
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-header-cell  style="margin-left: 20px;" *matHeaderCellDef> Name </mat-header-cell>
       <mat-cell class="nameColumn" *matCellDef="let element"> {{element.name}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="expirationTerm">
-      <mat-header-cell *matHeaderCellDef> Expiration term </mat-header-cell>
+      <mat-header-cell style="margin-left: 20px;" *matHeaderCellDef> Expiration term </mat-header-cell>
       <mat-cell *matCellDef="let element">
         <div class="expirationTermColumn">{{element.expirationTerm}}</div>
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="additionalInfo">
+      <mat-header-cell *matHeaderCellDef>
+
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+
+        <button class="menuButton" mat-icon-button [matMenuTriggerFor]="menu"
+          aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+
+        <mat-menu #menu="matMenu">
+
+          <button mat-menu-item [routerLink]="['/product-type-edit', element.id]">
+            <mat-icon>edit</mat-icon>
+            <span>Edit</span>
+          </button>
+
+          <button mat-menu-item [routerLink]="['/members', element.id]">
+            <mat-icon>people</mat-icon>
+            <span>Hide</span>
+          </button>
+
+          <button mat-menu-item [routerLink]="['/product-type-edit', element.id , true]">
+            <mat-icon>people</mat-icon>
+            <span>Copy</span>
+          </button>
+
+        </mat-menu>
+      </mat-cell>
+    </ng-container>
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row [routerLink]="['/product-type-edit', row.id]" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
   <button [routerLink]="['/product-type-edit', 0]" class="mat-fab-bottom-right" mat-fab>
     <mat-icon class="icon">add</mat-icon>

@@ -13,7 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 export class ProductTypeListComponent implements OnInit {
 
-  public displayedColumns: string[] = ['imageUrl', 'name', 'expirationTerm'];
+  public displayedColumns: string[] = ['imageUrl', 'name', 'expirationTerm' ,'additionalInfo'];
   public productTypes: MatTableDataSource<ProductType>;
   public productTypesFiltered: ProductType[];
   public filterName:string;
@@ -22,14 +22,19 @@ export class ProductTypeListComponent implements OnInit {
 
   ngOnInit(): void {
     this.server.getQuery<GenericResponse<boolean>>('/producttype').subscribe(data => {
-      if (data.isSuccess) 
+      if (data.isSuccess)
         this.productTypes = data.data;
       else
         this.alertManager.showError(data.error.errorMessage);
     });
   }
 
-  public filterTable (filterValue :string) { 
-    this.productTypes.filter = filterValue.trim().toLowerCase(); 
- }
+  public filterTable(filterValue: string) {
+    this.productTypes.filter = filterValue.trim().toLowerCase();
+  }
+
+  public copy(producttype:ProductType) {
+    console.log(producttype);
+  }
+
 }
