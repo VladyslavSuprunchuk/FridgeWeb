@@ -51,7 +51,6 @@ export class MembersComponent implements OnInit {
   }
 
   public deleteMember(userToDeleteId: number) {
-    var user = this.authorizationService.getUserinfo();
 
     let deleteMemberRequest = new DeleteMemberRequest();
     deleteMemberRequest.storehouseId = this.storehouseId;

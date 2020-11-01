@@ -1,4 +1,5 @@
 import {Unit} from './unit'
+import {AuthorClient} from './authorClient'
 
 export class ProductType{
 
@@ -13,6 +14,10 @@ export class ProductType{
     openedExpirationTerm:number = 0;
 
     isFavorite:boolean = false;
+
+    isHidden:boolean = false;
+
+    userAuthor:AuthorClient = new AuthorClient();
 
     description:string;
 

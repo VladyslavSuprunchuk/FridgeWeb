@@ -54,9 +54,7 @@ export class ProductTypeEditComponent implements OnInit {
       openedExpirationTerm: [this.productType.openedExpirationTerm]
     });
     
-    debugger;
     if (this.id != 0 && !this.isCreateProductType) {
-      console.log( "disabled");
       this.productTypeForm.get('unitId').disable();
     }
   }

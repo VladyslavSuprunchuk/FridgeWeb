@@ -1,5 +1,7 @@
 export class Client{
 
+    id:number;
+
     token:string;
 
     refreshToken:string;
