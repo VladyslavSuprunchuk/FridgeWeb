@@ -1,76 +1,85 @@
 <div class="mainDiv">
-  <!-- <mat-form-field>
-    <input matInput type="text" autocomplete="off" (keyup)="filterTable($event.target.value)" placeholder="Filter">
-  </mat-form-field> -->
-  <mat-table [dataSource]="productTypes" class="mat-elevation-z8">
+  <mat-form-field>
+    <input matInput type="text" autocomplete="off" (keyup)="applyFilter($event)" placeholder="Filter">
+  </mat-form-field>
 
-    <ng-container matColumnDef="imageUrl">
-      <mat-header-cell class="headerForPhotoColumn" *matHeaderCellDef> Photo </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <div class="prodycTypeLayout">
-          <div class="productTypePhoto">
-            <img *ngIf="element.imageUrl!=null" [ngStyle]="{'opacity': getOpacity(element.id)}"  class="photo real-image" src="{{element.imageUrl}}">
-            <img *ngIf="element.imageUrl==null" [ngStyle]="{'opacity': getOpacity(element.id)}" class="photo" src="assets/images/grocery-bag.png" />
-          </div>
-        </div>
-      </mat-cell>
-    </ng-container>
+  <div *ngFor="let item of productTypesForTable">
 
-    <ng-container matColumnDef="name">
-      <mat-header-cell  class="nameHeader" *matHeaderCellDef> Name </mat-header-cell>
-      <mat-cell class="nameColumn" *matCellDef="let element">
-         <div *ngIf="element.isHidden == false">
-            {{element.name}} 
-          </div>
-          <div *ngIf="element.isHidden == true">
-            {{element.name}} - Hidden 
+    <div style="text-align: center; margin-top: 20px; ">{{item[0].userAuthor.email}}</div>
+
+    <mat-table style="margin-top: 20px" [dataSource]="item" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="imageUrl">
+        <mat-header-cell class="headerForPhotoColumn" *matHeaderCellDef> Photo </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="prodycTypeLayout">
+            <div class="productTypePhoto">
+              <img *ngIf="element.imageUrl!=null" [ngStyle]="{'opacity': getOpacity(element.id)}"
+                class="photo real-image" src="{{element.imageUrl}}">
+              <img *ngIf="element.imageUrl==null" [ngStyle]="{'opacity': getOpacity(element.id)}" class="photo"
+                src="assets/images/grocery-bag.png" />
+            </div>
           </div>
         </mat-cell>
-    </ng-container>
+      </ng-container>
 
-    <ng-container matColumnDef="expirationTerm">
-      <mat-header-cell style="margin-left: 20px;" *matHeaderCellDef> Expiration term </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <div class="expirationTermColumn">{{element.expirationTerm}}</div>
-      </mat-cell>
-    </ng-container>
+      <ng-container matColumnDef="name">
+        <mat-header-cell class="nameHeader" *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell class="nameColumn" *matCellDef="let element">
+          <div *ngIf="element.isHidden == false">
+            {{element.name}}
+          </div>
+          <div *ngIf="element.isHidden == true">
+            {{element.name}} - Hidden
+          </div>
+        </mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef="additionalInfo">
-      <mat-header-cell *matHeaderCellDef>
+      <ng-container matColumnDef="expirationTerm">
+        <mat-header-cell style="margin-left: 20px;" *matHeaderCellDef> Expiration term </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="expirationTermColumn">{{element.expirationTerm}}</div>
+        </mat-cell>
+      </ng-container>
 
-      </mat-header-cell>
-      <mat-cell *matCellDef="let element">
+      <ng-container matColumnDef="additionalInfo">
+        <mat-header-cell *matHeaderCellDef>
 
-        <button class="menuButton" mat-icon-button [matMenuTriggerFor]="menu"
-          aria-label="Example icon-button with a menu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
 
-        <mat-menu #menu="matMenu">
-
-          <button *ngIf="isAuthorProductType(element.userAuthor.email)" mat-menu-item [routerLink]="['/product-type-edit', element.id]">
-            <mat-icon>edit</mat-icon>
-            <span>Edit</span>
+          <button class="menuButton" mat-icon-button [matMenuTriggerFor]="menu"
+            aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
           </button>
 
-          <button mat-menu-item [routerLink]="['/product-type-edit', element.id , true]">
-            <mat-icon>file_copy</mat-icon>
-            <span>Copy</span>
-          </button>
+          <mat-menu #menu="matMenu">
 
-          <button mat-menu-item (click)="setHide(element.id)">
-            <mat-icon>clear</mat-icon>
-            <span *ngIf="element.isHidden == false" >Hide</span>
-            <span *ngIf="element.isHidden == true" >Unhide</span>
-          </button>
+            <button *ngIf="isAuthorProductType(element.userAuthor.email)" mat-menu-item
+              [routerLink]="['/product-type-edit', element.id]">
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+            </button>
 
-        </mat-menu>
-      </mat-cell>
-    </ng-container>
+            <button mat-menu-item [routerLink]="['/product-type-edit', element.id , true]">
+              <mat-icon>file_copy</mat-icon>
+              <span>Copy</span>
+            </button>
 
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row [ngStyle]="{'opacity': getOpacity(row.id)}" *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
+            <button mat-menu-item (click)="setHide(element.id)">
+              <mat-icon>clear</mat-icon>
+              <span *ngIf="element.isHidden == false">Hide</span>
+              <span *ngIf="element.isHidden == true">Unhide</span>
+            </button>
+
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row [ngStyle]="{'opacity': getOpacity(row.id)}" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
   <button [routerLink]="['/product-type-edit', 0]" class="mat-fab-bottom-right" mat-fab>
     <mat-icon class="icon">add</mat-icon>
   </button>

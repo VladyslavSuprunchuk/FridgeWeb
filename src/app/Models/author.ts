@@ -1,4 +1,4 @@
-export class AuthorClient{
+export class Author{
 
     name:string = '';
 

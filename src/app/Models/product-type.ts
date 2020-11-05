@@ -1,5 +1,5 @@
 import {Unit} from './unit'
-import {AuthorClient} from './authorClient'
+import {Author} from './author'
 
 export class ProductType{
 
@@ -17,7 +17,7 @@ export class ProductType{
 
     isHidden:boolean = false;
 
-    userAuthor:AuthorClient = new AuthorClient();
+    userAuthor:Author = new Author();
 
     description:string;
 

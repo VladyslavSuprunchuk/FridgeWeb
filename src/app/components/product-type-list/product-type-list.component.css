@@ -48,6 +48,7 @@
 
 .mainDiv{
   position: relative;
+  margin-top: 70px;
 }
 
 .mat-fab-bottom-right{
@@ -58,7 +59,7 @@
   position: fixed;
 }
 
-.NameHeader{
+.nameHeader{
   margin-left: 20px;
 }
 

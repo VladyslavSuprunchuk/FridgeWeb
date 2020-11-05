@@ -6,6 +6,7 @@ import { AlertManagerService } from '../../services//alert-manager.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { stringify } from '@angular/compiler/src/util';
 import {AuthorizationService} from '../../services/authorization.service'
+import { Author } from '../../models/author'
 
 @Component({
   selector: 'app-product-type-list',
@@ -17,7 +18,11 @@ export class ProductTypeListComponent implements OnInit {
 
   public displayedColumns: string[] = ['imageUrl', 'name', 'expirationTerm' ,'additionalInfo'];
   public productTypes: ProductType[];
-  public productTypesFiltered: ProductType[];
+  public productTypesForTable: Array<ProductType[]> = new Array<ProductType[]>();
+  public productTypesForFilter: ProductType[];
+
+  public authors:Author[];
+
   public filterName:string;
 
   constructor(private server: ServerConnectionService,
@@ -28,8 +33,12 @@ export class ProductTypeListComponent implements OnInit {
     this.server.getQuery<GenericResponse<boolean>>('/producttype').subscribe(data => {
       if (data.isSuccess)
       {
-        this.productTypes = data.data; 
-        this.productTypes = this.productTypes.sort((a:any,b:any) => b.isHidden - a.isHidden)
+        this.productTypes = data.data;
+         var distinctAuthors = this.productTypes.map(item => item.userAuthor.email)
+        .filter((value, index, self) => self.indexOf(value) === index)
+
+        for(var i=0;i<distinctAuthors.length;i++)
+          this.productTypesForTable.push(this.productTypes.filter(x=>x.userAuthor.email == distinctAuthors[i]));
       }
       else
         this.alertManager.showError(data.error.errorMessage);
@@ -75,11 +84,28 @@ export class ProductTypeListComponent implements OnInit {
     
   }
 
+  public applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.productTypesForTable = new Array<ProductType[]>();
 
+    if (filterValue == "") {
+      var distinctAuthors = this.productTypes.map(item => item.userAuthor.email)
+        .filter((value, index, self) => self.indexOf(value) === index)
 
+      for (var i = 0; i < distinctAuthors.length; i++)
+        this.productTypesForTable.push(this.productTypes.filter(x => x.userAuthor.email == distinctAuthors[i]))
+        
+    }
+    else {
+      this.productTypesForFilter = this.productTypes.filter(x => x.name.toLowerCase().includes(filterValue.toLowerCase().trim()) 
+      || x.expirationTerm.toString().includes(filterValue.toLowerCase().trim()));
+      var distinctAuthors = this.productTypesForFilter.map(item => item.userAuthor.email)
+        .filter((value, index, self) => self.indexOf(value) === index)
 
-  // public filterTable(filterValue: string) {
-  //   this.productTypes.filter = filterValue.trim().toLowerCase();
-  // }
+      for (var i = 0; i < distinctAuthors.length; i++)
+        this.productTypesForTable.push(this.productTypesForFilter.filter(x => x.userAuthor.email == distinctAuthors[i]));
+        
+    }
+  }
 
 }
