@@ -5,9 +5,9 @@
 
   <div *ngFor="let item of productTypesForTable">
 
-    <div style="text-align: center; margin-top: 20px; ">{{item[0].userAuthor.email}}</div>
+    <div class="authorInfo" >{{item[0].userAuthor.name}} - {{ item[0].userAuthor.email}}</div>
 
-    <mat-table style="margin-top: 20px" [dataSource]="item" class="mat-elevation-z8">
+    <mat-table [dataSource]="item" class="mat-elevation-z8 tables">
 
       <ng-container matColumnDef="imageUrl">
         <mat-header-cell class="headerForPhotoColumn" *matHeaderCellDef> Photo </mat-header-cell>

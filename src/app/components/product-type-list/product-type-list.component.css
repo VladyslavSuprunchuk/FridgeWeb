@@ -74,3 +74,11 @@ mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-
 mat-cell:last-of-type, mat-header-cell:last-of-type, mat-footer-cell:last-of-type {
   padding-right: 0px;
 }
+
+.tables{
+  margin-top: 20px
+}
+
+.authorInfo{
+  text-align: center; margin-top: 20px; 
+}
