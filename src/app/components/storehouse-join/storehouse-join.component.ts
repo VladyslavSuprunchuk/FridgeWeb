@@ -5,6 +5,7 @@ import { ServerConnectionService } from '../../services/server-connection.servic
 import { AlertManagerService } from '../../services//alert-manager.service';
 import { Storehouse } from '../../models/storehouse';
 import { Router } from '@angular/router';
+import { StorehouseService } from 'src/app/services/storehouse.service';
 
 @Component({
   selector: 'app-storehouse-join',
@@ -19,7 +20,8 @@ export class StorehouseJoinComponent implements OnInit {
   constructor(private server: ServerConnectionService,
     private fb: FormBuilder,
     private alertManager: AlertManagerService,
-    private router: Router) { }
+    private router: Router,
+    private storehouseService:StorehouseService) { }
 
   ngOnInit(): void {
     this.storehouseJoinForm = new FormGroup({
@@ -42,7 +44,8 @@ export class StorehouseJoinComponent implements OnInit {
       debugger;
       this.server.postQuery<GenericResponse<boolean>>("/storehouse/join", storehouse).subscribe(data => {
         if (data.isSuccess) {
-          this.router.navigate(['storehouse-list']);  
+          this.router.navigate(['storehouse-list']);
+          this.storehouseService.downloadStorehouses();
           this.alertManager.showSuccess("You successfully join to storehouse");
         }
         else

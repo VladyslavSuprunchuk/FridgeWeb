@@ -27,3 +27,23 @@ mat-toolbar{
         border-radius: 0px;
     }
 }
+
+.mat-tab-label-container {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+    z-index: 1;
+    overflow-x: scroll !important;
+}
+
+p {
+    font-family: Lato;
+  }
+  
+  ::ng-deep .mat-tab-header-pagination {
+      display: none !important;
+  }
+
+  .test{
+    overflow-x: auto
+  }

@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { UnitsService } from '../../services/units.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { notZeroValidator, } from '../../shared/validation';
+import { StorehouseService } from 'src/app/services/storehouse.service';
 
 @Component({
   selector: 'app-product-type-edit',
@@ -27,7 +28,8 @@ export class ProductTypeEditComponent implements OnInit {
     private fb: FormBuilder,
     private alertManager: AlertManagerService,
     public unitService: UnitsService,
-    private router: Router) {
+    private router: Router,
+    private storehouseService:StorehouseService) {
   }
 
   ngOnInit(): void {
@@ -73,6 +75,7 @@ export class ProductTypeEditComponent implements OnInit {
     this.server.putFormData<GenericResponse<boolean>>('/producttype/', this.productTypeForm.value, this.fileToUpload).subscribe(data => {
       if (data.isSuccess) {
         this.router.navigate(['product-type-list']);
+        this.storehouseService.downloadStorehouses();
         this.alertManager.showSuccess("Product type was updated successfully");
       }
       else
@@ -84,6 +87,7 @@ export class ProductTypeEditComponent implements OnInit {
     this.server.postFormData<GenericResponse<boolean>>('/producttype/', this.productTypeForm.value, this.fileToUpload).subscribe(data => {
       if (data.isSuccess) {
         this.router.navigate(['product-type-list']);
+        this.storehouseService.downloadStorehouses();
         this.alertManager.showSuccess("Product type has been created");
       }
       else
@@ -95,6 +99,7 @@ export class ProductTypeEditComponent implements OnInit {
     this.server.deleteQuery<GenericResponse<boolean>>('/producttype/' + this.productType.id).subscribe(data => {
       if (data.isSuccess){
         this.router.navigate(['product-type-list']);
+        this.storehouseService.downloadStorehouses();
         this.alertManager.showSuccess("Product type has been deleted");
       }
       else{

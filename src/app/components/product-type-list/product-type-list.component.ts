@@ -4,9 +4,8 @@ import { ProductType } from '../../models/product-type';
 import { GenericResponse } from '../../models/generic-response';
 import { AlertManagerService } from '../../services//alert-manager.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { stringify } from '@angular/compiler/src/util';
-import {AuthorizationService} from '../../services/authorization.service'
-import { Author } from '../../models/author'
+import {AuthorizationService} from '../../services/authorization.service';
+import { Author } from '../../models/author';
 
 @Component({
   selector: 'app-product-type-list',

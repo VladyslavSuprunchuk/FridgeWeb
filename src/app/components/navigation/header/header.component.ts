@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { ColorService } from '../../../services/color.service';
+import { StorehouseService } from '../../../services/storehouse.service';
 import { Router } from '@angular/router';
+import {Observable, Observer} from 'rxjs';
+import { Storehouse } from 'src/app/models/storehouse';
 
 @Component({
   selector: 'app-header',
@@ -10,10 +12,12 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
 
   @Output() public sidenavToggle = new EventEmitter();
- 
-  constructor(public colorService:ColorService,public router: Router) { }
+  public storehouses: Storehouse[];
+
+  constructor(public storehouseService:StorehouseService,public router: Router) { }
   
   ngOnInit(): void {
+    this.storehouses = this.storehouseService.getCurrentStorehouses();
   };
  
   public onToggleSidenav = () => {
@@ -22,7 +26,15 @@ export class HeaderComponent implements OnInit {
 
   public getColor():string{
     if(!window.location.href.includes('/storehouse-edit/0') && window.location.href.includes('/storehouse-edit/'))
-      return this.colorService.get();
+      return this.storehouseService.getColorOfHeader();
   }
 
+  public isNeedStorehouses():boolean{
+    return window.location.href.includes('/product-item-list');
+  }
+
+  ngAfterViewInit(): void {
+    document.getElementsByClassName('mat-tab-header-pagination-before')[0].remove();
+    document.getElementsByClassName('mat-tab-header-pagination-after')[0].remove();
+  }
 }
