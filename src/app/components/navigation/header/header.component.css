@@ -44,6 +44,23 @@ p {
       display: none !important;
   }
 
-  .test{
-    overflow-x: auto
+  .label{
+    width: 250px;
+    margin-left: 280px;
   }
+
+  .mat-tab-label {
+    height: 48px;
+    padding: 0 24px;
+    cursor: pointer;
+    box-sizing: border-box;
+    min-width: 160px;
+    text-align: center;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    margin-left: 30px;
+    width: 240px;
+    position: relative;
+}

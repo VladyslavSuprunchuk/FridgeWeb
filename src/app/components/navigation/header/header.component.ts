@@ -29,12 +29,11 @@ export class HeaderComponent implements OnInit {
       return this.storehouseService.getColorOfHeader();
   }
 
-  public isNeedStorehouses():boolean{
-    return window.location.href.includes('/product-item-list');
+  public setCurrentStorehouseColor(name:string){
+    console.log(name)
   }
 
-  ngAfterViewInit(): void {
-    document.getElementsByClassName('mat-tab-header-pagination-before')[0].remove();
-    document.getElementsByClassName('mat-tab-header-pagination-after')[0].remove();
+  public isNeedStorehouses():boolean{
+    return window.location.href.includes('/product-item-list');
   }
 }
