@@ -26,6 +26,13 @@ export class ServerConnectionService {
       .pipe(catchError(this.handleError<T>('getQuery')));
   }
 
+  public getQueryPromise<T>(url: string, params?: URLSearchParams) {
+    let queryURL: string = `${this.BASE_URL}${url}`;
+    let headers = this.bindHeadersToRequestModel();
+    return this.http.get(queryURL, { headers: headers })
+      .pipe(catchError(this.handleError<T>('getQuery'))).toPromise();
+  }
+
   public postQuery<T>(url: string, object: any, params?: URLSearchParams) {
     let queryURL: string = `${this.BASE_URL}${url}`;
     let headers = this.bindHeadersToRequestModel();

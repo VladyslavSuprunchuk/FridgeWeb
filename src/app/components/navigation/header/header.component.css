@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'Merriweather-Bold';
+    src: url(/assets/fonts/Merriweather-Bold.ttf) format("truetype");
+    font-weight:300;
+  }
+
+
 a {
     text-decoration: none;
     color: white;
@@ -17,9 +24,11 @@ mat-toolbar{
     border-radius: 3px;
 }
 
-.position-fixed{
+.header{
     position: fixed;
     z-index: 999;
+    overflow-x: scroll;
+    overflow-y: hidden;
   }
  
 @media(max-width: 959px){
@@ -63,4 +72,7 @@ p {
     margin-left: 30px;
     width: 240px;
     position: relative;
+    color:white;
+    font-family: 'Merriweather-Bold', sans-serif;
+    font-size: medium;
 }
