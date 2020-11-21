@@ -1,0 +1,22 @@
+<form class="example-container" style="margin-top: 200px;" class="properties" [formGroup]="ProductItemForm" (ngSubmit)="onSubmit()">
+  
+  <div class="selectLebel" *ngIf="productTypeService.getProductTypeInfoForCreateProductItem() == null" (click)="selectProductType()"> Select
+    Product Type
+  </div>
+  <div  class="selectLebel" (click)="selectProductType()" *ngIf="productTypeService.getProductTypeInfoForCreateProductItem() != null">
+    Product Type: {{productTypeService.productTypeInfoForCreateProductItem.name}}
+  </div>
+
+  <div  class="selectLebel" *ngIf="storehouseService.getStorehouseInfoForCreateProductItem() == null" (click)="selectStorehouse()">
+    Select Storehouse
+  </div>
+  <div  class="selectLebel" (click)="selectStorehouse()" *ngIf="storehouseService.getStorehouseInfoForCreateProductItem() != null">
+    Product Type: {{storehouseService.storehouseInfoForCreateProductItem.title}}
+  </div>
+
+  <div class="buttons">
+    <button [disabled]="ProductItemForm.invalid" mat-flat-button color="primary" class="for-button submitButton"
+      type="submit" mat-raised-button>Save</button>
+
+  </div>
+</form>

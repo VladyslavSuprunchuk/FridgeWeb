@@ -17,7 +17,7 @@ export class StorehouseEditComponent implements OnInit {
   public id: number;
   public storehouseForm: FormGroup;
   public fileToUpload: File = null;
-  public storehouse:Storehouse = new Storehouse();
+  public storehouse: Storehouse = new Storehouse();
 
   constructor(private activateRoute: ActivatedRoute,
     private server: ServerConnectionService,
@@ -33,22 +33,27 @@ export class StorehouseEditComponent implements OnInit {
       this.server.getQuery<GenericResponse<boolean>>('/storehouse/' + this.id).subscribe(data => {
         if (data.isSuccess) {
           this.storehouse = data.data;
-          var str = '#'+this.storehouse.colorHex.slice(2);
+          var str = '#' + this.storehouse.colorHex.slice(2);
           this.formInitialization();
           localStorage.setItem("colorOfHeader", str);
+        }
+        else {
+          this.alertManager.showError(data.error.errorMessage);
         }
       });
     }
   }
 
-  public  onSubmit() {
+  public onSubmit() {
     if (this.storehouseForm.valid) {
       this.storehouseForm.value.colorHex = this.storehouseForm.value.colorHex.replace('#', 'FF');
       this.storehouseForm.value.isLocked = this.storehouse.isLocked;
-      if (this.id != 0) 
+      if (this.id != 0) {
         this.update();
-       else 
-        this.create();    
+      }
+      else {
+        this.create();
+      }
     }
   }
 
@@ -58,8 +63,9 @@ export class StorehouseEditComponent implements OnInit {
         this.router.navigate(['storehouse-list']);
         this.alertManager.showSuccess("Storehouse was updated successfully");
       }
-      else
+      else {
         this.alertManager.showError(data.error.errorMessage);
+      }
     })
   }
 
@@ -69,19 +75,20 @@ export class StorehouseEditComponent implements OnInit {
         this.router.navigate(['storehouse-list']);
         this.alertManager.showSuccess("Storehouse type has been created");
       }
-      else
+      else {
         this.alertManager.showError(data.error.errorMessage);
+      }
     })
   }
 
   public delete(): void {
     this.server.deleteQuery<GenericResponse<boolean>>('/storehouse/deletestorehouse/' + this.id).subscribe(data => {
-      if (data.isSuccess){
+      if (data.isSuccess) {
         this.router.navigate(['storehouse-list']);
         this.alertManager.showSuccess("Storehouse has been deleted");
       }
-      else{
-         this.alertManager.showError(data.error.errorMessage);
+      else {
+        this.alertManager.showError(data.error.errorMessage);
       }
     })
   }
@@ -96,22 +103,23 @@ export class StorehouseEditComponent implements OnInit {
       title: ['', Validators.required],
       password: ['', Validators.required],
       colorHex: ['', [Validators.required]],
-      isLocked:[false]
+      isLocked: [false]
     });
   }
 
-  public setIsLocked(){
-    if(this.id==0)
-      this.storehouse.isLocked  = !this.storehouse.isLocked ;
+  public setIsLocked() {
+    if (this.id == 0) {
+      this.storehouse.isLocked = !this.storehouse.isLocked;
+    }
   }
 
   private formInitialization() {
     this.storehouseForm = this.fb.group({
       id: [this.storehouse.id],
-      title: [{value: this.storehouse.title, disabled: !this.storehouse.isAuthor}, Validators.required],
-      password: [{value: this.storehouse.password, disabled: !this.storehouse.isAuthor}, Validators.required],
-      colorHex: [{value: '#'+this.storehouse.colorHex.slice(2), disabled: !this.storehouse.isAuthor}, Validators.required],
-      isLocked:[{value: this.storehouse.isLocked}, Validators.required]
+      title: [{ value: this.storehouse.title, disabled: !this.storehouse.isAuthor }, Validators.required],
+      password: [{ value: this.storehouse.password, disabled: !this.storehouse.isAuthor }, Validators.required],
+      colorHex: [{ value: '#' + this.storehouse.colorHex.slice(2), disabled: !this.storehouse.isAuthor }, Validators.required],
+      isLocked: [{ value: this.storehouse.isLocked }, Validators.required]
     });
   }
 }

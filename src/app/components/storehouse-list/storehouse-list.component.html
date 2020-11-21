@@ -23,48 +23,55 @@
 
   <ng-container matColumnDef="additionalInfo">
     <mat-header-cell *matHeaderCellDef>
-      
+  
     </mat-header-cell>
     <mat-cell *matCellDef="let element">
-
-      <button class="menuButton" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-
-    <mat-menu #menu="matMenu">
-
-      <button mat-menu-item [routerLink]="['/storehouse-edit', element.id]">
-        <mat-icon>edit</mat-icon>
-        <span>Edit</span>
-      </button>
-      
-      <button mat-menu-item [routerLink]="['/members', element.id]">
-        <mat-icon>people</mat-icon>
-        <span>Members</span>
-      </button>
-
-      <button (click)="remove(element.id)" mat-menu-item *ngIf="element.isAuthor">
-        <mat-icon>block</mat-icon>
-        <span>Delete</span>
-      </button>
-
-        <button *ngIf="!element.isAuthor" mat-menu-item (click)="remove(element.id)">
-          <mat-icon>block</mat-icon>
-          <span>Disconect</span>
+      <div *ngIf="storehouseService.isForCreateProductItem == false">
+        <button class="menuButton" mat-icon-button [matMenuTriggerFor]="menu"
+          aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
         </button>
-
-    </mat-menu>
-
-    <share-button class="telegramIcon" [disabled]="!element.isAuthor ||  element.isLocked " [theme]="'circles-dark'" [button]="'telegram'"
-      [size]="1" [url]="urlForshareRedirect()" [description]="'You are invated to share ' + element.title + ' storehouse with ' + authorizationService.getUserinfo().name +' ' + authorizationService.getUserinfo().email 
-    +'. Your storehouse Id: '+element.id +' Password: ' + element.password" [autoSetMeta]="false">
-    </share-button>
-
+  
+        <mat-menu #menu="matMenu">
+  
+          <button mat-menu-item [routerLink]="['/storehouse-edit', element.id]">
+            <mat-icon>edit</mat-icon>
+            <span>Edit</span>
+          </button>
+  
+          <button mat-menu-item [routerLink]="['/members', element.id]">
+            <mat-icon>people</mat-icon>
+            <span>Members</span>
+          </button>
+  
+          <button (click)="remove(element.id)" mat-menu-item *ngIf="element.isAuthor">
+            <mat-icon>block</mat-icon>
+            <span>Delete</span>
+          </button>
+  
+          <button *ngIf="!element.isAuthor" mat-menu-item (click)="remove(element.id)">
+            <mat-icon>block</mat-icon>
+            <span>Disconect</span>
+          </button>
+  
+        </mat-menu>
+  
+        <share-button class="telegramIcon" [disabled]="!element.isAuthor ||  element.isLocked " [theme]="'circles-dark'"
+          [button]="'telegram'" [size]="1" [url]="urlForshareRedirect()" [description]="'You are invated to share ' + element.title + ' storehouse with ' + authorizationService.getUserinfo().name +' ' + authorizationService.getUserinfo().email 
+      +'. Your storehouse Id: '+element.id +' Password: ' + element.password" [autoSetMeta]="false">
+        </share-button>
+      </div>
     </mat-cell>
   </ng-container>
   <mat-header-row *matHeaderRowDef="displayedColumns"> </mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;">
-  </mat-row>
+ 
+  <div *ngIf="storehouseService.isForCreateProductItem == false">
+    <mat-row *matRowDef="let row; columns: displayedColumns;" >  </mat-row>
+  </div>
+
+  <div  *ngIf="storehouseService.isForCreateProductItem == true">
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="setSelectedProductTypeForProductItem(row)">  </mat-row>
+  </div>
 </mat-table>
 <button [routerLink]="['/storehouse-edit', 0]" class="mat-fab-bottom-right" mat-fab>
   <mat-icon class="icon">add</mat-icon>

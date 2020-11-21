@@ -9,10 +9,12 @@ import { StorehouseJoinComponent } from './components/storehouse-join/storehouse
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { MembersComponent } from './components/members/members.component';
+import { ProductItemEditComponent } from './components/product-item-edit/product-item-edit.component';
 
 
 const routes: Routes = [
   { path: 'product-item-list', component: ProductItemListComponent },
+  { path: 'product-item-edit/:id', component: ProductItemEditComponent },
   { path: 'product-type-list', component: ProductTypeListComponent },
   { path: 'product-type-edit/:id', component: ProductTypeEditComponent },
   { path: 'product-type-edit/:id/:isCreate', component: ProductTypeEditComponent },

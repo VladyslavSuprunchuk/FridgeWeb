@@ -44,9 +44,10 @@
 
       <ng-container matColumnDef="additionalInfo">
         <mat-header-cell *matHeaderCellDef>
-
         </mat-header-cell>
+
         <mat-cell *matCellDef="let element">
+        <div *ngIf="productTypeService.isForCreateProductItem == false">
 
           <button class="menuButton" mat-icon-button [matMenuTriggerFor]="menu"
             aria-label="Example icon-button with a menu">
@@ -73,13 +74,20 @@
             </button>
 
           </mat-menu>
+        </div>
         </mat-cell>
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row [ngStyle]="{'opacity': getOpacity(row.id)}" *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
-  </div>
+      <div *ngIf="productTypeService.isForCreateProductItem == false">
+        <mat-row [ngStyle]="{'opacity': getOpacity(row.id)}" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </div>
+        <div *ngIf="productTypeService.isForCreateProductItem == true">
+          <mat-row [ngStyle]="{'opacity': getOpacity(row.id)}" (click)="setSelectedProductTypeForProductItem(row)"
+            *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </div>
+        </mat-table>
+        </div>
   <button [routerLink]="['/product-type-edit', 0]" class="mat-fab-bottom-right" mat-fab>
     <mat-icon class="icon">add</mat-icon>
   </button>

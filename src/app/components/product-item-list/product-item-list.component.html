@@ -1,1 +1,41 @@
-<p style="margin-top: 300px;">product-item-list works!</p>
+<div class="body">
+    <mat-table [dataSource]="productItems" class="mat-elevation-z8">
+        
+        <ng-container matColumnDef="photo">
+            <mat-header-cell class="headerForPhotoColumn" *matHeaderCellDef> Photo </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <div class="productItemPhotoLayout">
+                <div class="productItemPhoto">
+                  <img class="photo" src="assets/images/storehouse.png" />
+                </div>
+              </div>
+            </mat-cell>
+          </ng-container>
+        
+    
+      <ng-container matColumnDef="note">
+        <mat-header-cell class="noteHeader" *matHeaderCellDef>
+          Note
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="noteCell">{{element.notes}}</div>
+        </mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="amount">
+        <mat-header-cell class="amountHeader" *matHeaderCellDef>
+          Left
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="titleCell">{{element.amount}}</div>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"> </mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
+    <button [routerLink]="['/product-item-edit', 0]" class="mat-fab-bottom-right" mat-fab>
+      <mat-icon class="icon">add</mat-icon>
+    </button>
+    </div>

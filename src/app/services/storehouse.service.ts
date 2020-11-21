@@ -13,13 +13,13 @@ import { Subject } from 'rxjs';
 })
 export class StorehouseService {
 
-  constructor(private server: ServerConnectionService, private alertManager: AlertManagerService) {
-  }
-
+  public isForCreateProductItem: boolean = false;
   private _storehouses: Storehouse[] = [];
   public selectedStorehouse: Storehouse;
-
   private _trigger = new Subject<void>();
+
+  constructor(private server: ServerConnectionService, private alertManager: AlertManagerService) {
+  }
 
   get trigger$() {
     return this._trigger.asObservable();
@@ -29,6 +29,9 @@ export class StorehouseService {
     this._trigger.next();
   }
 
+  public get storehouseInfoForCreateProductItem() {
+    return this.getStorehouseInfoForCreateProductItem();
+  }
 
   get storehouses(): Storehouse[] {
     if (this._storehouses.length == 0) {
@@ -52,25 +55,41 @@ export class StorehouseService {
 
   public downloadStorehouses(): void {
     this.server.getQuery<GenericResponse<boolean>>('/storehouse').subscribe(data => {
-      if (data.isSuccess)
+      if (data.isSuccess) {
         this._storehouses = data.data;
-      else
+      }
+      else {
         this.alertManager.showError(data.error.errorMessage);
-
+      }
     });
   }
 
   async getStorehousesAsync() {
     var data = await this.server.getQueryPromise<GenericResponse<boolean>>('/storehouse');
 
-    if (data.isSuccess)
+    if (data.isSuccess) {
       this._storehouses = data.data;
-    else
+    }
+    else {
       this.alertManager.showError(data.error.errorMessage);
+    }
 
     if (this._storehouses.length != 0 && this.selectedStorehouse == null) {
       this.selectedStorehouse = this._storehouses[0];
       localStorage.setItem("colorOfHeader", '#' + this.selectedStorehouse.colorHex.slice(2))
     }
-  } 
+  }
+
+  public saveStorehouseInfoForCreateProductItem(storehouse: Storehouse) {
+    localStorage.setItem("StorehouseInfoForCreateProductItem", JSON.stringify(storehouse))
+  }
+
+  public getStorehouseInfoForCreateProductItem(): Storehouse {
+    let storehouse = localStorage.getItem("StorehouseInfoForCreateProductItem");
+    return JSON.parse(storehouse);
+  }
+
+  public deleteStorehouseForCreateProductItem() {
+    localStorage.removeItem("StorehouseInfoForCreateProductItem");
+  }
 }

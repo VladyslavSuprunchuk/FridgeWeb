@@ -15,6 +15,7 @@ import { StorehouseService } from 'src/app/services/storehouse.service';
   templateUrl: './product-type-edit.component.html',
   styleUrls: ['./product-type-edit.component.css']
 })
+
 export class ProductTypeEditComponent implements OnInit {
 
   public id: number;
@@ -35,6 +36,7 @@ export class ProductTypeEditComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.activateRoute.snapshot.params['id'];
     this.isCreateProductType = this.activateRoute.snapshot.params['isCreate'];
+    debugger;
     this.formInitialization();
     if (this.id != 0) {
       this.server.getQuery<GenericResponse<boolean>>('/producttype/' + this.id).subscribe(data => {
@@ -78,8 +80,9 @@ export class ProductTypeEditComponent implements OnInit {
         this.storehouseService.downloadStorehouses();
         this.alertManager.showSuccess("Product type was updated successfully");
       }
-      else
+      else{
         this.alertManager.showError(data.error.errorMessage);
+      }
     })
   }
 
@@ -90,8 +93,9 @@ export class ProductTypeEditComponent implements OnInit {
         this.storehouseService.downloadStorehouses();
         this.alertManager.showSuccess("Product type has been created");
       }
-      else
+      else{
         this.alertManager.showError(data.error.errorMessage);
+      }
     })
   }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup,FormBuilder ,Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GenericResponse } from '../../models/generic-response';
 import { ServerConnectionService } from '../../services/server-connection.service';
 import { AlertManagerService } from '../../services//alert-manager.service';
@@ -14,14 +14,14 @@ import { StorehouseService } from 'src/app/services/storehouse.service';
 })
 export class StorehouseJoinComponent implements OnInit {
 
-  public  hide = true;
+  public hide = true;
   public storehouseJoinForm: FormGroup;
 
   constructor(private server: ServerConnectionService,
     private fb: FormBuilder,
     private alertManager: AlertManagerService,
     private router: Router,
-    private storehouseService:StorehouseService) { }
+    private storehouseService: StorehouseService) { }
 
   ngOnInit(): void {
     this.storehouseJoinForm = new FormGroup({
@@ -30,7 +30,7 @@ export class StorehouseJoinComponent implements OnInit {
     });
   }
 
-  private formInitialization(){
+  private formInitialization() {
     this.storehouseJoinForm = this.fb.group({
       storehouseId: [],
       storehousePassword: []
@@ -41,16 +41,16 @@ export class StorehouseJoinComponent implements OnInit {
       let storehouse = new Storehouse();
       storehouse.id = this.storehouseJoinForm.value.storehouseId;
       storehouse.password = this.storehouseJoinForm.value.storehousePassword;
-      debugger;
       this.server.postQuery<GenericResponse<boolean>>("/storehouse/join", storehouse).subscribe(data => {
         if (data.isSuccess) {
           this.router.navigate(['storehouse-list']);
           this.storehouseService.downloadStorehouses();
           this.alertManager.showSuccess("You successfully join to storehouse");
         }
-        else
+        else {
           this.alertManager.showError(data.error.errorMessage);
+        }
       });
-    }   
- }
+    }
+  }
 }

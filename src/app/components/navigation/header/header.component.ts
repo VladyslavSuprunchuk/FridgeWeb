@@ -31,8 +31,6 @@ export class HeaderComponent implements OnInit {
     
   }
 
-  @ViewChild("productItemListComponent") productItemListComponent: ProductItemListComponent;
-
   public setSelectedStorehouse(storehouse:Storehouse){
     this.storehouseService.selectedStorehouse = storehouse;
     this.storehouseService.triggerOnChangeSelectedStorehouse();

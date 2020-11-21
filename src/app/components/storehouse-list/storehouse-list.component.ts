@@ -4,6 +4,8 @@ import { Storehouse } from '../../models/storehouse';
 import { GenericResponse } from '../../models/generic-response';
 import { AlertManagerService } from '../../services//alert-manager.service';
 import { AuthorizationService } from '../../services/authorization.service';
+import { Router } from '@angular/router';
+import { StorehouseService } from 'src/app/services/storehouse.service';
 
 @Component({
   selector: 'app-storehouse-list',
@@ -17,14 +19,17 @@ export class StorehouseListComponent implements OnInit {
 
   constructor(private server: ServerConnectionService,
     private alertManager: AlertManagerService,
-    public authorizationService: AuthorizationService) { }
+    public authorizationService: AuthorizationService,
+    private router: Router,
+    public storehouseService:StorehouseService) { }
 
   ngOnInit(): void {
     this.server.getQuery<GenericResponse<boolean>>('/storehouse').subscribe(data => {
       if (data.isSuccess)
         this.storehouses = data.data;
-      else
+      else {
         this.alertManager.showError(data.error.errorMessage);
+      }
     });
   }
 
@@ -35,10 +40,10 @@ export class StorehouseListComponent implements OnInit {
           this.alertManager.showSuccess("Storehouse has been deleted");
           this.ngOnInit()
         }
-        else
+        else {
           this.alertManager.showError(data.error.errorMessage);
+        }
       });
-
     }
     else {
       this.server.deleteQuery<GenericResponse<boolean>>('/storehouse/' + id + '/disconnect').subscribe(data => {
@@ -46,10 +51,20 @@ export class StorehouseListComponent implements OnInit {
           this.alertManager.showSuccess("You successfully disconnected");
           this.ngOnInit()
         }
-        else
+        else {
           this.alertManager.showError(data.error.errorMessage);
+        }
       });
     }
+  }
+
+  ngOnDestroy():void{
+    this.storehouseService.isForCreateProductItem = false;
+  }
+
+  public setSelectedProductTypeForProductItem(storehouse:Storehouse){
+    this.storehouseService.saveStorehouseInfoForCreateProductItem(storehouse);
+    this.router.navigate(['product-item-edit/0']);
   }
 
   public urlForshareRedirect():string{

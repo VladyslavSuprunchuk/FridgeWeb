@@ -6,10 +6,26 @@ import { ProductType } from '../models/product-type'
 })
 export class ProductTypeService {
 
+  public isForCreateProductItem:boolean = false;
+
   constructor() { }
 
-  saveProductTypeInfo(productType: ProductType) {
-    localStorage.setItem("productTypeInfoForCopy",JSON.stringify(productType))
+  public get productTypeInfoForCreateProductItem(){
+    return this.getProductTypeInfoForCreateProductItem();
   }
+
+  public saveProductTypeInfoForCreateProductItem(productType: ProductType) {
+    localStorage.setItem("ProductTypeInfoForCreateProductItem",JSON.stringify(productType))
+  }
+
+  public getProductTypeInfoForCreateProductItem():ProductType{
+    let productType = localStorage.getItem("ProductTypeInfoForCreateProductItem");
+    return JSON.parse(productType);
+  }
+
+  public deleteProductTypeForCreateProductItem(){
+    localStorage.removeItem("ProductTypeInfoForCreateProductItem");
+  }
+
 
 }

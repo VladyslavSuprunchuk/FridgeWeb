@@ -2,10 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ServerConnectionService } from '../../services/server-connection.service';
 import { GenericResponse } from '../../models/generic-response';
 import { AlertManagerService } from '../../services//alert-manager.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { stringify } from '@angular/compiler/src/util';
-import {AuthorizationService} from '../../services/authorization.service';
-import { Storehouse } from '../../models/storehouse';
+import { AuthorizationService } from '../../services/authorization.service';
 import { StorehouseService } from '../../services/storehouse.service';
 import { ProductItem } from '../../models/product-item';
 import { ActivatedRoute } from '@angular/router';
@@ -18,14 +15,14 @@ import { ActivatedRoute } from '@angular/router';
 export class ProductItemListComponent implements OnInit {
 
   public productItems: ProductItem[];
-  // private test = this.testdd();
+  public displayedColumns: string[] = ['photo','note', 'amount'];
 
   constructor(private server: ServerConnectionService,
     private alertManager: AlertManagerService,
     public authorizationService: AuthorizationService,
     private storehouseService: StorehouseService,
     private activateRoute: ActivatedRoute) {
-     }
+  }
 
   ngOnInit(): void {
     this.getProductItems();
@@ -33,9 +30,9 @@ export class ProductItemListComponent implements OnInit {
   }
 
   public async getProductItems(): Promise<void> {
-    if (this.storehouseService.isEmpty && this.storehouseService.selectedStorehouse == undefined) 
+    if (this.storehouseService.isEmpty && this.storehouseService.selectedStorehouse == undefined)
       await this.storehouseService.getStorehousesAsync()
-    
+
     this.server.getQuery<GenericResponse<boolean>>('/storehouse/' + this.storehouseService.selectedStorehouse.id + '/getproductitems').subscribe(data => {
       if (data.isSuccess) {
         this.productItems = data.data;
