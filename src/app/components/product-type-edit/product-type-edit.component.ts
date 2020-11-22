@@ -36,7 +36,6 @@ export class ProductTypeEditComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.activateRoute.snapshot.params['id'];
     this.isCreateProductType = this.activateRoute.snapshot.params['isCreate'];
-    debugger;
     this.formInitialization();
     if (this.id != 0) {
       this.server.getQuery<GenericResponse<boolean>>('/producttype/' + this.id).subscribe(data => {

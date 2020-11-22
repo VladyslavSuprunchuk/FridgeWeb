@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import {Observable, Observer} from 'rxjs';
 import { Storehouse } from 'src/app/models/storehouse';
 import { ProductItemListComponent } from '../../product-item-list/product-item-list.component';
+import { ProductTypeService } from 'src/app/services/productType.service';
 
 @Component({
   selector: 'app-header',

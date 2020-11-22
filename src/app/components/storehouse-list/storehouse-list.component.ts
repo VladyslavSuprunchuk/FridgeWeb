@@ -25,8 +25,9 @@ export class StorehouseListComponent implements OnInit {
 
   ngOnInit(): void {
     this.server.getQuery<GenericResponse<boolean>>('/storehouse').subscribe(data => {
-      if (data.isSuccess)
+      if (data.isSuccess){
         this.storehouses = data.data;
+      }
       else {
         this.alertManager.showError(data.error.errorMessage);
       }

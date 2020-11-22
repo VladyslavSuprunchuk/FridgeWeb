@@ -4,7 +4,7 @@
     <img *ngIf="storehouse==null || storehouse.imageUrl==null" class="photo" src="assets/images/storehouse.png" />
   </div>
 </div>
-<form class="example-container" class="properties" [formGroup]="storehouseForm" (ngSubmit)="onSubmit()">
+<form class="form" [formGroup]="storehouseForm" (ngSubmit)="onSubmit()">
   <div class="fileUpload">
     <button mat-button color="primary" type="button" (click)="fileInput.click()">
       <span *ngIf="fileToUpload!=null">Select another image</span>

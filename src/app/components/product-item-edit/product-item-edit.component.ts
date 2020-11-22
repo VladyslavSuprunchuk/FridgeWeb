@@ -1,8 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ShareService } from '../../services/share.service';
+import { ProductItem } from 'src/app/models/product-item';
 import { ProductTypeService } from 'src/app/services/productType.service';
 import { StorehouseService } from 'src/app/services/storehouse.service';
+import { numberOnlyValidation } from '../../shared/validation';
+import { ActivatedRoute } from '@angular/router';
+import { ServerConnectionService } from 'src/app/services/server-connection.service';
+import { AlertManagerService } from 'src/app/services/alert-manager.service';
+import { GenericResponse } from '../../models/generic-response';
+
 
 @Component({
   selector: 'app-product-item-edit',
@@ -11,47 +19,125 @@ import { StorehouseService } from 'src/app/services/storehouse.service';
 })
 export class ProductItemEditComponent implements OnInit {
 
-  ProductItemForm: FormGroup;
+  public ProductItemForm: FormGroup;
+  public id:number;
+  private productItem = new ProductItem;
 
   constructor(private fb: FormBuilder,
-    public productTypeService:ProductTypeService,
-    public storehouseService:StorehouseService,
-    private router: Router) { }
+    private activateRoute: ActivatedRoute,
+    public productTypeService: ProductTypeService,
+    public storehouseService: StorehouseService,
+    private router: Router,
+    private shareService: ShareService,
+    private server: ServerConnectionService,
+    private alertManager: AlertManagerService) { }
 
-  ngOnInit(): void {
-    this.formEmptyInitialization();
+  ngOnInit(): void 
+  {
+    this.id = this.activateRoute.snapshot.params['id'];
+    if (this.id == 0) {
+      if ((this.productTypeService.productTypeInfoForCreateProductItem != null) || (this.storehouseService.storehouseInfoForCreateProductItem != null)) {
+        this.formReconstruction();
+      }
+      else {
+        this.formEmptyInitialization();
+      }
+    }
+
+  //   if(this.productTypeService.productTypeInfoForCreateProductItem != null)
+  //   this.ProductItemForm.value.productType = this.productTypeService.productTypeInfoForCreateProductItem;
+  // if( this.storehouseService.storehouseInfoForCreateProductItem != null)
+  //   this.ProductItemForm.value.storehouse = this.storehouseService.storehouseInfoForCreateProductItem;
   }
 
   private formEmptyInitialization() {
     this.ProductItemForm = this.fb.group({
-      productType: ['', Validators.required],
-      storehouse: ['', Validators.required],
+      productType: [this.productTypeService.productTypeInfoForCreateProductItem, Validators.required],
+      storehouse: [this.storehouseService.storehouseInfoForCreateProductItem, Validators.required],
+      isOpened: ['', Validators.required],
       manufactureDate: ['', Validators.required],
       purchaseDate: ['', Validators.required],
       notes: ['', Validators.required],
-      amount: ['', Validators.required],
+      amount: ['', [Validators.required, numberOnlyValidation]],
     });
   }
 
-  ngOnDestroy():void{
-    if(this.productTypeService.isForCreateProductItem == false && this.storehouseService.isForCreateProductItem == false)
-    {
-      this.productTypeService.deleteProductTypeForCreateProductItem();
-      this.storehouseService.deleteStorehouseForCreateProductItem();
-    }
+  formReconstruction() {
+    this.ProductItemForm = this.fb.group({
+      productType: [this.productTypeService.productTypeInfoForCreateProductItem, Validators.required],
+      storehouse: [this.storehouseService.storehouseInfoForCreateProductItem, Validators.required],
+      isOpened: [this.shareService.ProductItemInfoFromForm.isOpened, Validators.required],
+      manufactureDate: [this.shareService.ProductItemInfoFromForm.manufactureDate],
+      purchaseDate: [this.shareService.ProductItemInfoFromForm.purchaseDate],
+      notes: [this.shareService.ProductItemInfoFromForm.notes, Validators.required],
+      amount: [this.shareService.ProductItemInfoFromForm.amount, [Validators.required, numberOnlyValidation]],
+    });
   }
 
-  selectProductType(){
+  ngOnDestroy(): void {
+    this.saveFormInfo();
+  }
+
+  saveFormInfo() {
+    let productItem: ProductItem = new ProductItem();
+    productItem.manufactureDate = this.ProductItemForm.value.manufactureDate;
+    productItem.purchaseDate = this.ProductItemForm.value.purchaseDate;
+    productItem.isOpened = this.ProductItemForm.value.isOpened;
+    productItem.notes = this.ProductItemForm.value.notes;
+    productItem.amount = this.ProductItemForm.value.amount;
+    this.shareService.ProductItemInfoFromForm = productItem;
+  }
+
+  selectProductType() {
     this.productTypeService.isForCreateProductItem = true;
     this.router.navigate(['product-type-list'])
   }
 
-  selectStorehouse(){
+  selectStorehouse() {
     this.storehouseService.isForCreateProductItem = true;
     this.router.navigate(['storehouse-list'])
   }
 
-  onSubmit(){
-    
+  onSubmit() {
+    this.productItem.productTypeId = this.productTypeService.productTypeInfoForCreateProductItem.id;
+    this.productItem.newStorehouseId = this.storehouseService.storehouseInfoForCreateProductItem.id;
+    this.productItem.isOpened = this.ProductItemForm.value.isOpened;
+    this.productItem.manufactureDate = this.ProductItemForm.value.manufactureDate;
+    this.productItem.notes = this.ProductItemForm.value.notes;
+    this.productItem.purchaseDate = this.ProductItemForm.value.purchaseDate;
+    this.productItem.amount = this.ProductItemForm.value.amount;
+
+    if (this.ProductItemForm.valid) {
+      if (this.id != 0) {
+        this.update();
+      } else {
+       this.create();
+      }
+    }
+  }
+
+  private update() {
+    // this.server.postQuery<GenericResponse<boolean>>('/storehouse/',  this.productItem).subscribe(data => {
+    //   if (data.isSuccess) {
+    //     this.router.navigate(['product-item-list']);
+    //     this.alertManager.showSuccess("Product Item was updated successfully");
+    //   }
+    //   else {
+    //     this.alertManager.showError(data.error.errorMessage);
+    //   }
+    // })
+  }
+
+  private create() {
+    this.server.postQuery<GenericResponse<boolean>>('/storehouse/' +  this.productItem.newStorehouseId + '/postproductitems',
+      this.productItem).subscribe(data => {
+      if (data.isSuccess) {
+        this.router.navigate(['product-item-list']);
+        this.alertManager.showSuccess("Product Item was updated successfully");
+      }
+      else {
+        this.alertManager.showError(data.error.errorMessage);
+      }
+    })
   }
 }

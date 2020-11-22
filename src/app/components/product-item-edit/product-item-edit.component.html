@@ -1,22 +1,53 @@
-<form class="example-container" style="margin-top: 200px;" class="properties" [formGroup]="ProductItemForm" (ngSubmit)="onSubmit()">
-  
-  <div class="selectLebel" *ngIf="productTypeService.getProductTypeInfoForCreateProductItem() == null" (click)="selectProductType()"> Select
+<form class="form"  [formGroup]="ProductItemForm"
+  (ngSubmit)="onSubmit()">
+
+  <div class="selectLabel" *ngIf="productTypeService.getProductTypeInfoForCreateProductItem() == null"
+    (click)="selectProductType()"> Select
     Product Type
   </div>
-  <div  class="selectLebel" (click)="selectProductType()" *ngIf="productTypeService.getProductTypeInfoForCreateProductItem() != null">
+  <div class="selectLabel" (click)="selectProductType()"
+    *ngIf="productTypeService.getProductTypeInfoForCreateProductItem() != null">
     Product Type: {{productTypeService.productTypeInfoForCreateProductItem.name}}
   </div>
 
-  <div  class="selectLebel" *ngIf="storehouseService.getStorehouseInfoForCreateProductItem() == null" (click)="selectStorehouse()">
+  <div class="selectLabel" *ngIf="storehouseService.getStorehouseInfoForCreateProductItem() == null"
+    (click)="selectStorehouse()">
     Select Storehouse
   </div>
-  <div  class="selectLebel" (click)="selectStorehouse()" *ngIf="storehouseService.getStorehouseInfoForCreateProductItem() != null">
-    Product Type: {{storehouseService.storehouseInfoForCreateProductItem.title}}
+  <div  class="selectLabel" (click)="selectStorehouse()"
+    *ngIf="storehouseService.getStorehouseInfoForCreateProductItem() != null">
+    Storehouse: {{storehouseService.storehouseInfoForCreateProductItem.title}}
   </div>
+
+  <mat-form-field class="input">
+    <mat-label>Manufacture Date</mat-label>
+    <input formControlName="manufactureDate" matInput [matDatepicker]="picker">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="input">
+    <mat-label>Purchase Date</mat-label>
+    <input formControlName="purchaseDate" matInput [matDatepicker]="picker1">
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+  </mat-form-field>
+  
+  <mat-radio-group formControlName="isOpened" style="margin-left: 40px;margin-top: 10px;" aria-label="Select an option">
+    <mat-radio-button value="true">Opened</mat-radio-button>
+    <mat-radio-button value="false">Closed</mat-radio-button>
+  </mat-radio-group>
+
+  <mat-form-field class="input">
+    <textarea matInput placeholder="Notes" formControlName="notes"></textarea>
+  </mat-form-field>
+
+  <mat-form-field class="input">
+    <input matInput placeholder="Amount" formControlName="amount">
+  </mat-form-field>
 
   <div class="buttons">
     <button [disabled]="ProductItemForm.invalid" mat-flat-button color="primary" class="for-button submitButton"
       type="submit" mat-raised-button>Save</button>
-
   </div>
 </form>

@@ -6,6 +6,7 @@ import { AuthorizationService } from '../../services/authorization.service';
 import { StorehouseService } from '../../services/storehouse.service';
 import { ProductItem } from '../../models/product-item';
 import { ActivatedRoute } from '@angular/router';
+import { ProductTypeService } from 'src/app/services/productType.service';
 
 @Component({
   selector: 'app-product-item-list',
@@ -21,10 +22,12 @@ export class ProductItemListComponent implements OnInit {
     private alertManager: AlertManagerService,
     public authorizationService: AuthorizationService,
     private storehouseService: StorehouseService,
-    private activateRoute: ActivatedRoute) {
+    private productTypeService:ProductTypeService) {
   }
 
   ngOnInit(): void {
+    this.productTypeService.deleteProductTypeForCreateProductItem();
+    this.storehouseService.deleteStorehouseForCreateProductItem();
     this.getProductItems();
     this.storehouseService.trigger$.subscribe(() => this.getProductItems());
   }

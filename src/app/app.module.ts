@@ -50,7 +50,7 @@ import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { MembersComponent } from './components/members/members.component';
 import { StorehouseJoinComponent } from './components/storehouse-join/storehouse-join.component';
 import { ProductItemEditComponent } from './components/product-item-edit/product-item-edit.component';
-
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -108,7 +108,11 @@ import { ProductItemEditComponent } from './components/product-item-edit/product
     FormsModule,
     ReactiveFormsModule,
     ShareButtonsModule,
-    ShareIconsModule 
+    ShareIconsModule ,
+    MatDatepickerModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
   ],
   exports: [
     MatTabsModule,

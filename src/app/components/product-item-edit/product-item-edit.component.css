@@ -1,79 +1,62 @@
-.photo{
-    position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      max-width: 100%;
-      max-height: 100%;
-      margin: auto;
-  }
-  
-  .storehousePhoto{
+.selectLabel{
+width: 250px;
+margin-top: 15px;
+}
+
+.storehousePhoto{
+  position: relative;
+  padding-bottom: 100%;
+  overflow: hidden;
+  } 
+
+.form{
+  margin-top: 85px;
+  margin-left: 2%;
+  display: flex;flex-flow: column wrap;
+}
+
+.submitButton{
+  width: 120px;
+}
+
+.deleteButton{
+  margin-left: 60px;
+  width: 120px;
+}
+
+.storehouseLayout{
+  margin-left: 25px;
+  margin-top: 85px;
+  display: block;
+    border: 1px solid #b5e9a7;
+    border-radius: 3px;
     position: relative;
-    padding-bottom: 100%;
-    overflow: hidden;
-    } 
-  
-  .properties{
-    margin-top: 5.5%;
-    margin-left: 2%;
-    display: flex;flex-flow: column wrap;
-  }
-  
-  .submitButton{
-    width: 120px;
-  }
-  
-  .deleteButton{
-    margin-left: 60px;
-    width: 120px;
-  }
-  
-  .storehouseLayout{
-    margin-left: 25px;
-    margin-top: 85px;
-    display: block;
-      border: 1px solid #b5e9a7;
-      border-radius: 3px;
-      position: relative;
-      background: #fff;
-      color: #474747;
-      height: 250px;
-      width: 250px;
-  }
-  
-  .fileUpload{
-    margin-bottom: 25px;
-  }
-  
-  .input{
-    width: 300px;
-  }
-  
-  .icon{
-    margin-top: 12px;
-    margin-left:3px;
-  }
+    background: #fff;
+    color: #474747;
+    height: 250px;
+    width: 250px;
+}
 
-  .lockInfo{
-    width: auto;
-    display: inline-flex;
-  }
+.input{
+  margin-top: 7px;
+  width: 300px;
+}
 
-  .buttons{
-    margin-top: 20px;
-    display: inline-flex;
-  }
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 30px;
+}
 
-  .colorInput{
-    width: 60px;
-    height: 26px;
-    margin-top:13px;
-    margin-left:3px;
-  }
+.buttons{
+  margin-top: 20px;
+  display: inline-flex;
+}
 
-  .selectLebel{
-    width: 220px;
-  }
+.colorInput{
+  width: 60px;
+  height: 26px;
+  margin-top:13px;
+  margin-left:3px;
+}
+
+
 
