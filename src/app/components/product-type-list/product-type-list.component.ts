@@ -5,7 +5,7 @@ import { GenericResponse } from '../../models/generic-response';
 import { AlertManagerService } from '../../services//alert-manager.service';
 import { AuthorizationService } from '../../services/authorization.service';
 import { Author } from '../../models/author';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductTypeService } from '../../services/productType.service'
 import { Client } from 'src/app/models/client';
 
@@ -25,22 +25,27 @@ export class ProductTypeListComponent implements OnInit {
   public authors: Author[];
   public filterName: string;
   public currentUser:Client;
+  public isForCreateProductItem:boolean = false;
 
   constructor(private server: ServerConnectionService,
     private alertManager: AlertManagerService,
     public authorizationService: AuthorizationService,
     private productTypeService: ProductTypeService,
-    private router: Router) { 
+    private router: Router,
+    private activateRoute: ActivatedRoute) { 
        this.currentUser = this.authorizationService.getUserinfo();
     }
 
   ngOnInit(): void {
+    debugger;
+    this.isForCreateProductItem = this.activateRoute.snapshot.params['isForCreateProductItem'];
+
     this.server.getQuery<GenericResponse<boolean>>('/producttype').subscribe(data => {
       if (data.isSuccess) {
         this.productTypes = data.data;
-
-        if (this.productTypeService.isForCreateProductItem == true) {
-          this.productTypes = this.productTypes.filter(x => x.isHidden == false)
+        debugger;
+         if (String(this.isForCreateProductItem) == "true") {
+           this.productTypes = this.productTypes.filter(x => x.isHidden == false)
         }
 
         this.productTypesForTable = this.getProductTypesByDistinctAuthors(this.productTypes);
@@ -79,10 +84,6 @@ export class ProductTypeListComponent implements OnInit {
     if (producttype.isHidden) {
       return "0.7"
     }
-  }
-
-  ngOnDestroy(): void {
-    this.productTypeService.isForCreateProductItem = false;
   }
 
   public setSelectedProductTypeForProductItem(productType: ProductType) {

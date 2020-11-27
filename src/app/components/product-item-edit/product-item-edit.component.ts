@@ -97,13 +97,11 @@ export class ProductItemEditComponent implements OnInit {
   }
 
   selectProductType() {
-    this.productTypeService.isForCreateProductItem = true;
-    this.router.navigate(['product-type-list'])
+    this.router.navigate(['product-type-list/true'])
   }
 
   selectStorehouse() {
-    this.storehouseService.isForCreateProductItem = true;
-    this.router.navigate(['storehouse-list'])
+    this.router.navigate(['storehouse-list/true'])
   }
 
   onSubmit() {

@@ -4,7 +4,7 @@ import { Storehouse } from '../../models/storehouse';
 import { GenericResponse } from '../../models/generic-response';
 import { AlertManagerService } from '../../services//alert-manager.service';
 import { AuthorizationService } from '../../services/authorization.service';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { StorehouseService } from 'src/app/services/storehouse.service';
 import {Location} from '@angular/common';
 
@@ -17,15 +17,19 @@ export class StorehouseListComponent implements OnInit {
 
   public storehouses: Storehouse[];
   public displayedColumns: string[] = ['imageUrl', 'title', 'additionalInfo'];
+  public isForCreateProductItem:boolean = false;
 
   constructor(private server: ServerConnectionService,
     private alertManager: AlertManagerService,
     public authorizationService: AuthorizationService,
     private router: Router,
     public storehouseService:StorehouseService,
+    private activateRoute: ActivatedRoute,
     private _location: Location) { }
 
   ngOnInit(): void {
+    this.isForCreateProductItem = this.activateRoute.snapshot.params['isForCreateProductItem']; // String()
+
     this.server.getQuery<GenericResponse<boolean>>('/storehouse').subscribe(data => {
       if (data.isSuccess){
         this.storehouses = data.data;
@@ -59,10 +63,6 @@ export class StorehouseListComponent implements OnInit {
         }
       });
     }
-  }
-
-  ngOnDestroy():void{
-    this.storehouseService.isForCreateProductItem = false;
   }
 
   public setSelectedStorehouseForProductItem(storehouse:Storehouse){

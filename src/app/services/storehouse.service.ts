@@ -13,7 +13,6 @@ import { Subject } from 'rxjs';
 })
 export class StorehouseService {
 
-  public isForCreateProductItem: boolean = false;
   private _storehouses: Storehouse[] = [];
   private _trigger = new Subject<void>();
 

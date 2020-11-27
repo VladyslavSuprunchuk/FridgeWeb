@@ -38,7 +38,10 @@
       <ng-container matColumnDef="expirationTerm">
         <mat-header-cell style="margin-left: 20px;" *matHeaderCellDef> Expiration term </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <div class="expirationTermColumn">{{element.expirationTerm}}</div>
+          <div style="margin-left: 20px;" *ngIf="element.expirationTerm == 0">
+            No expiring
+          </div>
+          <div  *ngIf="element.expirationTerm != 0" class="expirationTermColumn">{{element.expirationTerm}}</div>
         </mat-cell>
       </ng-container>
 
@@ -47,7 +50,7 @@
         </mat-header-cell>
 
         <mat-cell *matCellDef="let element">
-        <div *ngIf="productTypeService.isForCreateProductItem == false">
+        <div *ngIf="isForCreateProductItem == 'false'">
 
           <button class="menuButton" mat-icon-button [matMenuTriggerFor]="menu"
             aria-label="Example icon-button with a menu">
@@ -56,7 +59,7 @@
 
           <mat-menu #menu="matMenu">
 
-            <button *ngIf="currentUser == element.userAuthor.email" mat-menu-item
+            <button *ngIf="currentUser.email == element.userAuthor.email" mat-menu-item
               [routerLink]="['/product-type-edit', element.id]">
               <mat-icon>edit</mat-icon>
               <span>Edit</span>
@@ -79,10 +82,10 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <div *ngIf="productTypeService.isForCreateProductItem == false">
+      <div *ngIf="isForCreateProductItem == 'false'">
         <mat-row [ngStyle]="{'opacity': getOpacity(row.id)}" *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </div>
-        <div *ngIf="productTypeService.isForCreateProductItem == true">
+        <div *ngIf="isForCreateProductItem == 'true'">
           <mat-row [ngStyle]="{'opacity': getOpacity(row.id)}" (click)="setSelectedProductTypeForProductItem(row)"
             *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </div>

@@ -6,8 +6,6 @@ import { ProductType } from '../models/product-type'
 })
 export class ProductTypeService {
 
-  public isForCreateProductItem:boolean = false;
-
   constructor() { }
 
   public get productTypeInfoForCreateProductItem(){
