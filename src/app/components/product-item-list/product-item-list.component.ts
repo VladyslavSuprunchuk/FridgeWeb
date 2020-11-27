@@ -16,7 +16,7 @@ import { ProductTypeService } from 'src/app/services/productType.service';
 export class ProductItemListComponent implements OnInit {
 
   public productItems: ProductItem[];
-  public displayedColumns: string[] = ['photo','note', 'amount'];
+  public displayedColumns: string[] = ['photo','note', 'amount','additionalInfo'];
 
   constructor(private server: ServerConnectionService,
     private alertManager: AlertManagerService,

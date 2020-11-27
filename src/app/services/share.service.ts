@@ -6,6 +6,17 @@ import { ProductItem } from '../models/product-item'
 })
 export class ShareService {
 
-  public ProductItemInfoFromForm:ProductItem;
+  get productItemFromForm(): ProductItem {
+    return this.getProductItemInfoFromForm();
+  }
 
+
+  public getProductItemInfoFromForm(): ProductItem {
+    let productItem = localStorage.getItem("ProductItemInfoFromForm");
+    return JSON.parse(productItem);
+  }
+
+  public saveProductItemInfoFromForm(productItem: ProductItem) {
+    localStorage.setItem("ProductItemInfoFromForm", JSON.stringify(productItem))
+  }
 }

@@ -1,22 +1,36 @@
 <form class="form"  [formGroup]="ProductItemForm"
   (ngSubmit)="onSubmit()">
 
-  <div class="selectLabel" *ngIf="productTypeService.getProductTypeInfoForCreateProductItem() == null"
-    (click)="selectProductType()"> Select
-    Product Type
+  <div class="selectLabel" *ngIf="productTypeService.getProductTypeInfoForCreateProductItem() == null && id == 0"
+    (click)="selectProductType()">
+     Select Product Type
   </div>
   <div class="selectLabel" (click)="selectProductType()"
-    *ngIf="productTypeService.getProductTypeInfoForCreateProductItem() != null">
+    *ngIf="productTypeService.getProductTypeInfoForCreateProductItem() != null && id == 0">
     Product Type: {{productTypeService.productTypeInfoForCreateProductItem.name}}
   </div>
+  <div class="selectLabel"
+    *ngIf="id != 0">
+    Product Type: {{productItem.productType.name}}
+  </div>
 
-  <div class="selectLabel" *ngIf="storehouseService.getStorehouseInfoForCreateProductItem() == null"
+  <div class="selectLabel" *ngIf="storehouseService.getStorehouseInfoForCreateProductItem() == null && id == 0"
     (click)="selectStorehouse()">
     Select Storehouse
   </div>
-  <div  class="selectLabel" (click)="selectStorehouse()"
-    *ngIf="storehouseService.getStorehouseInfoForCreateProductItem() != null">
+
+  <div class="selectLabel" (click)="selectStorehouse()"
+    *ngIf="storehouseService.getStorehouseInfoForCreateProductItem() != null && id == 0">
     Storehouse: {{storehouseService.storehouseInfoForCreateProductItem.title}}
+  </div>
+
+  <div *ngIf="id != 0" class="selectLabel">
+    <div  (click)="selectStorehouse()" *ngIf="storehouseService.getStorehouseInfoForCreateProductItem() == null">
+      Storehouse: {{storehouseService.selectedStorehouse.title}}
+    </div>
+    <div  (click)="selectStorehouse()" *ngIf="storehouseService.getStorehouseInfoForCreateProductItem() != null">
+      Storehouse: {{storehouseService.storehouseInfoForCreateProductItem.title}}
+    </div>
   </div>
 
   <mat-form-field class="input">
@@ -33,9 +47,16 @@
     <mat-datepicker #picker1></mat-datepicker>
   </mat-form-field>
   
-  <mat-radio-group formControlName="isOpened" style="margin-left: 40px;margin-top: 10px;" aria-label="Select an option">
-    <mat-radio-button value="true">Opened</mat-radio-button>
-    <mat-radio-button value="false">Closed</mat-radio-button>
+  <mat-radio-group formControlName="isOpened" style="margin-left: 40px;margin-top: 10px;" >
+
+    <mat-radio-button  *ngIf="id == 0" value="true">Opened</mat-radio-button>
+    <mat-radio-button  *ngIf="id == 0" value="false">Closed</mat-radio-button>
+
+   <div *ngIf="id != 0">
+      <mat-radio-button [checked]="productItem.isOpened == true" value="true">Opened </mat-radio-button>
+      <mat-radio-button [checked]="productItem.isOpened == false" value="false">Closed </mat-radio-button>
+   </div>
+   
   </mat-radio-group>
 
   <mat-form-field class="input">
@@ -47,7 +68,12 @@
   </mat-form-field>
 
   <div class="buttons">
-    <button [disabled]="ProductItemForm.invalid" mat-flat-button color="primary" class="for-button submitButton"
+    <button *ngIf="id == 0" [disabled]="ProductItemForm.invalid || 
+    productTypeService.productTypeInfoForCreateProductItem == null ||
+    storehouseService.storehouseInfoForCreateProductItem == null" mat-flat-button color="primary" class="for-button submitButton"
       type="submit" mat-raised-button>Save</button>
+      
+      <button *ngIf="id != 0" [disabled]="ProductItemForm.invalid" mat-flat-button color="primary" class="for-button submitButton"
+        type="submit" mat-raised-button>Save</button>
   </div>
 </form>

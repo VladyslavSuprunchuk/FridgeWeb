@@ -6,6 +6,7 @@ import { AlertManagerService } from '../../services//alert-manager.service';
 import { AuthorizationService } from '../../services/authorization.service';
 import { Router } from '@angular/router';
 import { StorehouseService } from 'src/app/services/storehouse.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-storehouse-list',
@@ -21,7 +22,8 @@ export class StorehouseListComponent implements OnInit {
     private alertManager: AlertManagerService,
     public authorizationService: AuthorizationService,
     private router: Router,
-    public storehouseService:StorehouseService) { }
+    public storehouseService:StorehouseService,
+    private _location: Location) { }
 
   ngOnInit(): void {
     this.server.getQuery<GenericResponse<boolean>>('/storehouse').subscribe(data => {
@@ -63,9 +65,9 @@ export class StorehouseListComponent implements OnInit {
     this.storehouseService.isForCreateProductItem = false;
   }
 
-  public setSelectedProductTypeForProductItem(storehouse:Storehouse){
+  public setSelectedStorehouseForProductItem(storehouse:Storehouse){
     this.storehouseService.saveStorehouseInfoForCreateProductItem(storehouse);
-    this.router.navigate(['product-item-edit/0']);
+    this._location.back();
   }
 
   public urlForshareRedirect():string{

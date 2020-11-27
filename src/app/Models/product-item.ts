@@ -14,7 +14,7 @@ export class ProductItem{
 
     manufactureDate:any
 
-    productType:ProductType;
+    productType = new ProductType();
 
     productTypeId:number;
 

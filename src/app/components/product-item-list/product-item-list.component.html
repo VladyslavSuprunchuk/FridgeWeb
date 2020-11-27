@@ -1,22 +1,23 @@
 <div class="body">
     <mat-table [dataSource]="productItems" class="mat-elevation-z8">
-        
-        <ng-container matColumnDef="photo">
-            <mat-header-cell class="headerForPhotoColumn" *matHeaderCellDef> Photo </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-              <div class="productItemPhotoLayout">
-                <div class="productItemPhoto">
-                  <img class="photo" src="assets/images/storehouse.png" />
-                </div>
-              </div>
-            </mat-cell>
-          </ng-container>
-        
-    
+ 
+
+      <ng-container matColumnDef="photo">
+        <mat-header-cell  *matHeaderCellDef> </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="productItemPhotoLayout">
+            <div class="productItemPhoto">
+              <img class="photo"
+                src="https://img.icons8.com/ios/452/meal.png" />
+            </div>
+          </div>
+        </mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="note">
         <mat-header-cell class="noteHeader" *matHeaderCellDef>
           Note
-        </mat-header-cell>
+          </mat-header-cell>
         <mat-cell *matCellDef="let element">
           <div class="noteCell">{{element.notes}}</div>
         </mat-cell>
@@ -31,8 +32,31 @@
         </mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="additionalInfo">
+        <mat-header-cell *matHeaderCellDef>
+      
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+            </mat-expansion-panel-header>
+
+  
+            <mat-icon [routerLink]="['/product-item-edit', element.id]">edit</mat-icon>
+
+            <mat-icon>delete_forever</mat-icon>
+
+            <mat-icon>add_shopping_cart</mat-icon>
+
+            <mat-icon>all_out</mat-icon>
+
+          </mat-expansion-panel>
+        </mat-cell>
+        </ng-container>
+
       <mat-header-row *matHeaderRowDef="displayedColumns"> </mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;">
+       
       </mat-row>
     </mat-table>
     <button [routerLink]="['/product-item-edit', 0]" class="mat-fab-bottom-right" mat-fab>

@@ -15,7 +15,6 @@ export class StorehouseService {
 
   public isForCreateProductItem: boolean = false;
   private _storehouses: Storehouse[] = [];
-  public selectedStorehouse: Storehouse;
   private _trigger = new Subject<void>();
 
   constructor(private server: ServerConnectionService, private alertManager: AlertManagerService) {
@@ -27,6 +26,10 @@ export class StorehouseService {
 
   public triggerOnChangeSelectedStorehouse() {
     this._trigger.next();
+  }
+
+  public get selectedStorehouse():Storehouse {
+    return this.selectedStorehouseInPanel();
   }
 
   public get storehouseInfoForCreateProductItem() {
@@ -43,6 +46,11 @@ export class StorehouseService {
 
   get isEmpty(): boolean {
     return this.storehouses.length == 0;
+  }
+
+  private selectedStorehouseInPanel(){
+    let storehouse = localStorage.getItem("SelectedStorehouseInPanel");
+    return JSON.parse(storehouse);
   }
 
   public getColorOfHeader(): string {
@@ -75,7 +83,7 @@ export class StorehouseService {
     }
 
     if (this._storehouses.length != 0 && this.selectedStorehouse == null) {
-      this.selectedStorehouse = this._storehouses[0];
+      localStorage.setItem("SelectedStorehouseInPanel", JSON.stringify(this._storehouses[0]));
       localStorage.setItem("colorOfHeader", '#' + this.selectedStorehouse.colorHex.slice(2))
     }
   }

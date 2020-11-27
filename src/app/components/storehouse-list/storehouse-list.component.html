@@ -70,7 +70,7 @@
   </div>
 
   <div  *ngIf="storehouseService.isForCreateProductItem == true">
-    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="setSelectedProductTypeForProductItem(row)">  </mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="setSelectedStorehouseForProductItem(row)">  </mat-row>
   </div>
 </mat-table>
 <button [routerLink]="['/storehouse-edit', 0]" class="mat-fab-bottom-right" mat-fab>

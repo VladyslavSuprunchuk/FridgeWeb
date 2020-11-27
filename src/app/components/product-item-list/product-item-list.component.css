@@ -3,10 +3,10 @@
     position: relative;
     background: #fff;
     color: #474747;
-    height: 80px;
-    width: 80px;
+    height: 75px;
+    width: 75px;
 }
-  
+
 .photo{
     position: absolute;
     top: 0;
@@ -26,6 +26,7 @@
     position: relative;
     padding-bottom: 100%;
     overflow: hidden;
+    margin-left: 20px;
 } 
 
 .headerForPhotoColumn{
