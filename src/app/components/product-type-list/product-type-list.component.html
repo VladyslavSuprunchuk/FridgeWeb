@@ -50,7 +50,7 @@
         </mat-header-cell>
 
         <mat-cell *matCellDef="let element">
-        <div *ngIf="isForCreateProductItem == 'false'">
+        <div *ngIf="isForCreateProductItem == false">
 
           <button class="menuButton" mat-icon-button [matMenuTriggerFor]="menu"
             aria-label="Example icon-button with a menu">
@@ -82,10 +82,10 @@
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <div *ngIf="isForCreateProductItem == 'false'">
+      <div *ngIf="isForCreateProductItem == false">
         <mat-row [ngStyle]="{'opacity': getOpacity(row.id)}" *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </div>
-        <div *ngIf="isForCreateProductItem == 'true'">
+        <div *ngIf="isForCreateProductItem == true">
           <mat-row [ngStyle]="{'opacity': getOpacity(row.id)}" (click)="setSelectedProductTypeForProductItem(row)"
             *matRowDef="let row; columns: displayedColumns;"></mat-row>
         </div>

@@ -1,23 +1,22 @@
-<mat-toolbar class="header" color="primary"
- [ngStyle]="{'background': getColor()}">
+<mat-toolbar class="header" color="primary" [ngStyle]="{'background': getColor()}">
 
-    <div fxHide.gt-xs  style="color: white;">
+    <div fxHide.gt-xs style="color: white;">
         <button mat-icon-button (click)="onToggleSidenav()">
             <mat-icon>menu</mat-icon>
         </button>
     </div>
-    
-        <mat-tab-group *ngIf="isNeedStorehouses() == true" mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4">
-            
-            <mat-tab class="label" *ngFor="let item of storehouseService.storehouses" >
-                <ng-template mat-tab-label>
-                    <span (click)="setSelectedStorehouse(item)" class="mat-tab-label">{{item.title}}</span>
-                </ng-template>
-            </mat-tab>
-        </mat-tab-group>
-  
-<!-- 
-    <nav mat-tab-nav-bar style="overflow-x: scroll;" >
+
+    <mat-tab-group *ngIf="isNeedStorehouses() == true" mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4" 
+    [selectedIndex]="getIndex()" #tabGroup>
+        <mat-tab  class="label" *ngFor="let item of storehouseService.storehouses">
+            <ng-template mat-tab-label>
+                <span (click)="setSelectedStorehouse(item)" class="mat-tab-label">{{item.title}}</span>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+
+    <!-- 
+                <nav mat-tab-nav-bar style="overflow-x: scroll;" >
         <a mat-tab-link *ngFor="let link of storehouseService.storehouses"
            (click)="activeLink = link"
            [active]="activeLink == link"> {{link}} </a>
@@ -37,4 +36,4 @@
             </li>
         </ul>
     </div> -->
-</mat-toolbar>
+</mat-toolbar> 

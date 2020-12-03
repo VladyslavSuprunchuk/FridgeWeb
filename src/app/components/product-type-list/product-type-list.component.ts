@@ -37,14 +37,11 @@ export class ProductTypeListComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    debugger;
-    this.isForCreateProductItem = this.activateRoute.snapshot.params['isForCreateProductItem'];
-
+    this.isForCreateProductItem = this.activateRoute.snapshot.params['isForCreateProductItem'] == "true";
     this.server.getQuery<GenericResponse<boolean>>('/producttype').subscribe(data => {
       if (data.isSuccess) {
         this.productTypes = data.data;
-        debugger;
-         if (String(this.isForCreateProductItem) == "true") {
+         if (this.isForCreateProductItem == true) {
            this.productTypes = this.productTypes.filter(x => x.isHidden == false)
         }
 

@@ -28,10 +28,14 @@ export class StorehouseListComponent implements OnInit {
     private _location: Location) { }
 
   ngOnInit(): void {
-    this.isForCreateProductItem = this.activateRoute.snapshot.params['isForCreateProductItem']; // String()
 
+    this.isForCreateProductItem = this.activateRoute.snapshot.params['isForCreateProductItem'] == "true";
+
+    if (this.isForCreateProductItem == false) {
+      console.log(this.isForCreateProductItem);
+    }
     this.server.getQuery<GenericResponse<boolean>>('/storehouse').subscribe(data => {
-      if (data.isSuccess){
+      if (data.isSuccess) {
         this.storehouses = data.data;
       }
       else {

@@ -81,9 +81,9 @@ export class StorehouseService {
       this.alertManager.showError(data.error.errorMessage);
     }
 
-    if (this._storehouses.length != 0 && this.selectedStorehouse == null) {
+    if (this._storehouses.length != 0 || this.selectedStorehouse == null) {
       localStorage.setItem("SelectedStorehouseInPanel", JSON.stringify(this._storehouses[0]));
-      localStorage.setItem("colorOfHeader", '#' + this.selectedStorehouse.colorHex.slice(2))
+      localStorage.setItem("colorOfHeader", '#' + this.selectedStorehouse.colorHex.slice(2));
     }
   }
 

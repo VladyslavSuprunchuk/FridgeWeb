@@ -26,6 +26,7 @@ export class ProductItemListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    //this.storehouseService.storehouseIndex = this.storehouseService.storehouses.indexOf(this.storehouseService.selectedStorehouse);
     this.productTypeService.deleteProductTypeForCreateProductItem();
     this.storehouseService.deleteStorehouseForCreateProductItem();
     this.getProductItems();
@@ -33,8 +34,15 @@ export class ProductItemListComponent implements OnInit {
   }
 
   public async getProductItems(): Promise<void> {
-    if (this.storehouseService.isEmpty && this.storehouseService.selectedStorehouse == undefined)
+    debugger;
+    if (this.storehouseService.isEmpty){
       await this.storehouseService.getStorehousesAsync()
+    }
+
+    
+    if(this.storehouseService.selectedStorehouse != null){
+      localStorage.setItem("colorOfHeader", '#' + this.storehouseService.selectedStorehouse.colorHex.slice(2));
+    }
 
     this.server.getQuery<GenericResponse<boolean>>('/storehouse/' + this.storehouseService.selectedStorehouse.id + '/getproductitems').subscribe(data => {
       if (data.isSuccess) {

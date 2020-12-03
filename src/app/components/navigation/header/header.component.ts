@@ -5,6 +5,9 @@ import {Observable, Observer} from 'rxjs';
 import { Storehouse } from 'src/app/models/storehouse';
 import { ProductItemListComponent } from '../../product-item-list/product-item-list.component';
 import { ProductTypeService } from 'src/app/services/productType.service';
+import {FormControl} from '@angular/forms';
+
+
 
 @Component({
   selector: 'app-header',
@@ -20,7 +23,23 @@ export class HeaderComponent implements OnInit {
   
   ngOnInit(): void {
   };
- 
+
+  public getIndex():number{
+    debugger;
+    //let value = this.storehouseService.storehouses.(this.storehouseService.selectedStorehouse);
+    //return value;
+    return findWithAttr(this.storehouseService.storehouses, this.storehouseService.selectedStorehouse.id);
+
+    function findWithAttr(array:Storehouse[], value) {
+      for(var i = 0; i < array.length; i += 1) {
+          if(array[i].id === value) {
+              return i;
+          }
+      }
+      return -1;
+    }
+  }
+
   public onToggleSidenav = () => {
     this.sidenavToggle.emit();
   }
