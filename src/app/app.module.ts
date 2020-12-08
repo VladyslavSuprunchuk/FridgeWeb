@@ -51,6 +51,9 @@ import { MembersComponent } from './components/members/members.component';
 import { StorehouseJoinComponent } from './components/storehouse-join/storehouse-join.component';
 import { ProductItemEditComponent } from './components/product-item-edit/product-item-edit.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -127,8 +130,13 @@ import { MatNativeDateModule } from '@angular/material/core';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthorizationInterceptor,
       multi: true
-    }
+    },
+    {provide: MAT_DATE_LOCALE, useValue: 'ja-JP'},
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+ 

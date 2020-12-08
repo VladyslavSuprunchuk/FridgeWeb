@@ -25,10 +25,19 @@
     
       <ng-container matColumnDef="amount">
         <mat-header-cell class="amountHeader" *matHeaderCellDef>
+          Amount
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="titleCell">{{element.amount}} {{ element.productType.unit.shortName}} </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="left">
+        <mat-header-cell class="amountHeader" *matHeaderCellDef>
           Left
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <div class="titleCell">{{element.amount}}</div>
+          <mat-progress-bar mode="determinate" [value]="getLeftProductItem(element)"></mat-progress-bar>
         </mat-cell>
       </ng-container>
 
@@ -44,7 +53,7 @@
   
             <mat-icon [routerLink]="['/product-item-edit', element.id]">edit</mat-icon>
 
-            <mat-icon>delete_forever</mat-icon>
+            <mat-icon (click)="delete(element.id)" >delete_forever</mat-icon>
 
             <mat-icon>add_shopping_cart</mat-icon>
 

@@ -7,6 +7,7 @@ import { StorehouseService } from '../../services/storehouse.service';
 import { ProductItem } from '../../models/product-item';
 import { ActivatedRoute } from '@angular/router';
 import { ProductTypeService } from 'src/app/services/productType.service';
+import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-product-item-list',
@@ -16,29 +17,58 @@ import { ProductTypeService } from 'src/app/services/productType.service';
 export class ProductItemListComponent implements OnInit {
 
   public productItems: ProductItem[];
-  public displayedColumns: string[] = ['photo','note', 'amount','additionalInfo'];
+  public displayedColumns: string[] = ['photo','note', 'amount','left','additionalInfo'];
 
   constructor(private server: ServerConnectionService,
     private alertManager: AlertManagerService,
     public authorizationService: AuthorizationService,
     private storehouseService: StorehouseService,
-    private productTypeService:ProductTypeService) {
+    private productTypeService:ProductTypeService,
+    public datepipe: DatePipe) {
   }
 
   ngOnInit(): void {
-    //this.storehouseService.storehouseIndex = this.storehouseService.storehouses.indexOf(this.storehouseService.selectedStorehouse);
     this.productTypeService.deleteProductTypeForCreateProductItem();
     this.storehouseService.deleteStorehouseForCreateProductItem();
     this.getProductItems();
     this.storehouseService.trigger$.subscribe(() => this.getProductItems());
   }
 
-  public async getProductItems(): Promise<void> {
+  public delete(id:number):void{
+    this.server.deleteQuery<GenericResponse<boolean>>('/productitem/' + id).subscribe(data => {
+      if (data.isSuccess) {
+        this.alertManager.showSuccess("Product Item was successfully deleted");
+        this.getProductItems();
+      }
+      else {
+        this.alertManager.showError(data.error.errorMessage);
+      }
+    });
+  }
+
+  public getCountProductType(item:ProductItem):number{
+    return item.productType.expirationTerm;
+  }
+
+  public getLeftProductItem(item:ProductItem):number{
     debugger;
+     let today = new Date();
+     let todayDate = this.datepipe.transform((today), 'MM-dd-yyyy') ;
+     var diff = Math.abs(new Date(todayDate).getTime() - (new Date(item.manufactureDate)).getTime());
+     var diffDays = Math.ceil(diff / (1000 * 3600 * 24)); 
+
+     if(item.productType.expirationTerm - diffDays <=0){
+       return 100;
+     }
+
+     var result = (100 / item.productType.expirationTerm) * diffDays
+     return result
+  }
+
+  public async getProductItems(): Promise<void> {
     if (this.storehouseService.isEmpty){
       await this.storehouseService.getStorehousesAsync()
     }
-
     
     if(this.storehouseService.selectedStorehouse != null){
       localStorage.setItem("colorOfHeader", '#' + this.storehouseService.selectedStorehouse.colorHex.slice(2));
@@ -47,6 +77,7 @@ export class ProductItemListComponent implements OnInit {
     this.server.getQuery<GenericResponse<boolean>>('/storehouse/' + this.storehouseService.selectedStorehouse.id + '/getproductitems').subscribe(data => {
       if (data.isSuccess) {
         this.productItems = data.data;
+        console.log(this.productItems);
       }
       else {
         this.alertManager.showError(data.error.errorMessage);

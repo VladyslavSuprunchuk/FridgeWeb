@@ -25,9 +25,6 @@ export class HeaderComponent implements OnInit {
   };
 
   public getIndex():number{
-    debugger;
-    //let value = this.storehouseService.storehouses.(this.storehouseService.selectedStorehouse);
-    //return value;
     return findWithAttr(this.storehouseService.storehouses, this.storehouseService.selectedStorehouse.id);
 
     function findWithAttr(array:Storehouse[], value) {

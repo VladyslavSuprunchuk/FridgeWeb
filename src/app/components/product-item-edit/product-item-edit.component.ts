@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Data, Router } from '@angular/router';
 import { ShareService } from '../../services/share.service';
 import { ProductItem } from 'src/app/models/product-item';
 import { ProductTypeService } from 'src/app/services/productType.service';
@@ -10,7 +10,9 @@ import { ActivatedRoute } from '@angular/router';
 import { ServerConnectionService } from 'src/app/services/server-connection.service';
 import { AlertManagerService } from 'src/app/services/alert-manager.service';
 import { GenericResponse } from '../../models/generic-response';
-
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { Moment } from 'moment';
+import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-product-item-edit',
@@ -30,7 +32,9 @@ export class ProductItemEditComponent implements OnInit {
     private router: Router,
     private shareService: ShareService,
     private server: ServerConnectionService,
-    private alertManager: AlertManagerService) { }
+    private alertManager: AlertManagerService,
+    public datepipe: DatePipe,
+    private dateAdapter: DateAdapter<Date>) { }
 
   ngOnInit(): void 
   {
@@ -50,13 +54,14 @@ export class ProductItemEditComponent implements OnInit {
         }
       });
     }
+    this.dateAdapter.setLocale("Uk");
   }
 
   private formEmptyInitialization() {
     this.ProductItemForm = this.fb.group({
       isOpened: ['', Validators.required],
-      manufactureDate: [''],
-      purchaseDate: [''],
+      manufactureDate: ['', Validators.required],
+      purchaseDate: ['', Validators.required],
       notes: ['', Validators.required],
       amount: ['', [numberOnlyValidation]],
     });
@@ -117,11 +122,14 @@ export class ProductItemEditComponent implements OnInit {
         this.productItem.newStorehouseId = this.storehouseService.selectedStorehouse.id;
       }
     }
+    debugger;
 
     this.productItem.isOpened = this.ProductItemForm.value.isOpened;
-    this.productItem.manufactureDate = this.ProductItemForm.value.manufactureDate;
     this.productItem.notes = this.ProductItemForm.value.notes;
-    this.productItem.purchaseDate = this.ProductItemForm.value.purchaseDate;
+
+    this.productItem.manufactureDate = this.datepipe.transform((this.ProductItemForm.value.manufactureDate  as Date), 'MM-dd-yyyy');
+    this.productItem.purchaseDate = this.datepipe.transform((this.ProductItemForm.value.purchaseDate  as Date), 'MM-dd-yyyy');
+
     this.productItem.amount = this.ProductItemForm.value.amount;
 
     if (this.ProductItemForm.valid) {
@@ -147,6 +155,7 @@ export class ProductItemEditComponent implements OnInit {
   }
 
   private create() {
+    debugger;
     this.server.postQuery<GenericResponse<boolean>>('/storehouse/' +  this.productItem.newStorehouseId + '/postproductitems',
       this.productItem).subscribe(data => {
       if (data.isSuccess) {

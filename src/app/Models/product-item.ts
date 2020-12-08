@@ -10,9 +10,9 @@ export class ProductItem{
 
     isOpened:boolean;
 
-    purchaseDate:any;
+    purchaseDate:string;
 
-    manufactureDate:any
+    manufactureDate:string;
 
     productType = new ProductType();
 
