@@ -17,7 +17,8 @@ import { DatePipe } from '@angular/common'
 export class ProductItemListComponent implements OnInit {
 
   public productItems: ProductItem[];
-  public displayedColumns: string[] = ['photo','note', 'amount','left','additionalInfo'];
+  public displayedColumns: string[] = ['photo', 'amount','left','additionalInfo'];
+  public amountToTake:number;
 
   constructor(private server: ServerConnectionService,
     private alertManager: AlertManagerService,
@@ -46,16 +47,20 @@ export class ProductItemListComponent implements OnInit {
     });
   }
 
-  public getCountProductType(item:ProductItem):number{
-    return item.productType.expirationTerm;
+  public getCountLeftProductItem(item:ProductItem):number{
+    return item.productType.expirationTerm - this.getCountOfPassedDays(item.manufactureDate);
   }
 
-  public getLeftProductItem(item:ProductItem):number{
-    debugger;
-     let today = new Date();
-     let todayDate = this.datepipe.transform((today), 'MM-dd-yyyy') ;
-     var diff = Math.abs(new Date(todayDate).getTime() - (new Date(item.manufactureDate)).getTime());
-     var diffDays = Math.ceil(diff / (1000 * 3600 * 24)); 
+  private getCountOfPassedDays(date:string):number{
+    let today = new Date();
+    let todayDate = this.datepipe.transform((today), 'MM-dd-yyyy') ;
+    var diff = Math.abs(new Date(todayDate).getTime() - (new Date(date)).getTime());
+    return Math.ceil(diff / (1000 * 3600 * 24) ) + 1 ; 
+  }
+
+  public getLeftProductItemForDisplay(item:ProductItem):number{
+
+     var diffDays = this.getCountOfPassedDays(item.manufactureDate);
 
      if(item.productType.expirationTerm - diffDays <=0){
        return 100;

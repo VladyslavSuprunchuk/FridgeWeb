@@ -11,7 +11,6 @@ import { ServerConnectionService } from 'src/app/services/server-connection.serv
 import { AlertManagerService } from 'src/app/services/alert-manager.service';
 import { GenericResponse } from '../../models/generic-response';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import { Moment } from 'moment';
 import { DatePipe } from '@angular/common'
 
 @Component({
@@ -24,6 +23,7 @@ export class ProductItemEditComponent implements OnInit {
   public ProductItemForm: FormGroup;
   public id:number = 0;
   public productItem = new ProductItem;
+  public manufactureDate:number;
 
   constructor(private fb: FormBuilder,
     private activateRoute: ActivatedRoute,
@@ -59,31 +59,37 @@ export class ProductItemEditComponent implements OnInit {
 
   private formEmptyInitialization() {
     this.ProductItemForm = this.fb.group({
-      isOpened: ['', Validators.required],
+      isOpened: ["false", Validators.required],
       manufactureDate: ['', Validators.required],
       purchaseDate: ['', Validators.required],
-      notes: ['', Validators.required],
-      amount: ['', [numberOnlyValidation]],
+      notes: [''],
+      amount: [ '', [numberOnlyValidation,Validators.required]],
+    });
+
+    var today = new Date();
+    this.ProductItemForm.patchValue({
+      manufactureDate:today,
+      purchaseDate:today
     });
   }
 
   private formInitialization() {
     this.ProductItemForm = this.fb.group({
-      isOpened: [this.productItem.isOpened, Validators.required],
-      manufactureDate: [this.productItem.manufactureDate],
-      purchaseDate: [this.productItem.purchaseDate],
-      notes: [this.productItem.notes, Validators.required],
-      amount: [this.productItem.amount, [numberOnlyValidation]],
+      isOpened: [String(this.productItem.isOpened), Validators.required],
+      manufactureDate: [this.productItem.manufactureDate, Validators.required],
+      purchaseDate: [this.productItem.purchaseDate, Validators.required],
+      notes: [this.productItem.notes],
+      amount: [this.productItem.amount, [numberOnlyValidation,Validators.required]],
     });
   }
 
   formReconstruction() {
     this.ProductItemForm = this.fb.group({
       isOpened: [this.shareService.productItemFromForm.isOpened, Validators.required],
-      manufactureDate: [this.shareService.productItemFromForm.manufactureDate],
-      purchaseDate: [this.shareService.productItemFromForm.purchaseDate],
-      notes: [this.shareService.productItemFromForm.notes, Validators.required],
-      amount: [this.shareService.productItemFromForm.amount, [numberOnlyValidation]],
+      manufactureDate: [this.shareService.productItemFromForm.manufactureDate,Validators.required],
+      purchaseDate: [this.shareService.productItemFromForm.purchaseDate, Validators.required],
+      notes: [this.shareService.productItemFromForm.notes],
+      amount: [this.shareService.productItemFromForm.amount, [numberOnlyValidation,Validators.required]],
     });
   }
 
@@ -122,14 +128,11 @@ export class ProductItemEditComponent implements OnInit {
         this.productItem.newStorehouseId = this.storehouseService.selectedStorehouse.id;
       }
     }
-    debugger;
 
     this.productItem.isOpened = this.ProductItemForm.value.isOpened;
     this.productItem.notes = this.ProductItemForm.value.notes;
-
-    this.productItem.manufactureDate = this.datepipe.transform((this.ProductItemForm.value.manufactureDate  as Date), 'MM-dd-yyyy');
-    this.productItem.purchaseDate = this.datepipe.transform((this.ProductItemForm.value.purchaseDate  as Date), 'MM-dd-yyyy');
-
+    this.productItem.manufactureDate = this.datepipe.transform((this.ProductItemForm.value.manufactureDate as Date), 'MM-dd-yyyy');
+    this.productItem.purchaseDate = this.datepipe.transform((this.ProductItemForm.value.purchaseDate as Date), 'MM-dd-yyyy');
     this.productItem.amount = this.ProductItemForm.value.amount;
 
     if (this.ProductItemForm.valid) {
@@ -155,7 +158,6 @@ export class ProductItemEditComponent implements OnInit {
   }
 
   private create() {
-    debugger;
     this.server.postQuery<GenericResponse<boolean>>('/storehouse/' +  this.productItem.newStorehouseId + '/postproductitems',
       this.productItem).subscribe(data => {
       if (data.isSuccess) {

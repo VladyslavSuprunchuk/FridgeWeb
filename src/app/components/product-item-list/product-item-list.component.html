@@ -1,7 +1,5 @@
 <div class="body">
     <mat-table [dataSource]="productItems" class="mat-elevation-z8">
- 
-
       <ng-container matColumnDef="photo">
         <mat-header-cell  *matHeaderCellDef> </mat-header-cell>
         <mat-cell *matCellDef="let element">
@@ -13,32 +11,40 @@
           </div>
         </mat-cell>
       </ng-container>
-
-      <ng-container matColumnDef="note">
-        <mat-header-cell class="noteHeader" *matHeaderCellDef>
-          Note
-          </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <div class="noteCell">{{element.notes}}</div>
-        </mat-cell>
-      </ng-container>
     
       <ng-container matColumnDef="amount">
         <mat-header-cell class="amountHeader" *matHeaderCellDef>
           Amount
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <div class="titleCell">{{element.amount}} {{ element.productType.unit.shortName}} </div>
+          <div>{{element.amount}} {{ element.productType.unit.shortName}} </div>
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="left">
-        <mat-header-cell class="amountHeader" *matHeaderCellDef>
+        <mat-header-cell class="headerLeft"
+         *matHeaderCellDef>
           Left
-        </mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <mat-progress-bar mode="determinate" [value]="getLeftProductItem(element)"></mat-progress-bar>
-        </mat-cell>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            
+            <div style="position: absolute;margin-bottom:23px;margin-left: 60px;">
+              {{getCountLeftProductItem(element)}}
+            </div>
+
+            <mat-progress-bar style=" position: relative;width: 140px;" *ngIf="getLeftProductItemForDisplay(element) <= 10;" color="accent" mode="determinate"
+              [value]="getLeftProductItemForDisplay(element)">
+            </mat-progress-bar>
+                
+            <mat-progress-bar  style=" position: relative;width: 140px;" *ngIf="getLeftProductItemForDisplay(element) > 10 && getLeftProductItemForDisplay(element) <=80" color="primary"
+              mode="determinate" [value]="getLeftProductItemForDisplay(element)">
+            </mat-progress-bar>      
+          
+            <mat-progress-bar style=" position: relative;width: 140px;"  color="warn" *ngIf="getLeftProductItemForDisplay(element) > 80" mode="determinate"
+              [value]="getLeftProductItemForDisplay(element)">
+            </mat-progress-bar>
+             
+          </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="additionalInfo">
@@ -46,12 +52,60 @@
       
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel  (opened)="panelOpenState = true" (closed)="panelOpenState = false">
             <mat-expansion-panel-header>
             </mat-expansion-panel-header>
 
-  
-            <mat-icon [routerLink]="['/product-item-edit', element.id]">edit</mat-icon>
+            
+            <div style="position: relative;display: inline-block; border-radius: 50%;width: 29px;height: 29px;"> 
+              <div style="margin-left: 6px;position: absolute;margin-top:5px; color: white;">
+                <div class="example-button-container">
+                  <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon">
+                    <<
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div style="position: relative;display: inline-block; border-radius: 50%;width: 29px;height: 29px;margin-right: 35px;margin-left: 11px;"> 
+              <div style="margin-left: 11px;position: absolute;margin-top: 5px; color: white;">
+                <div class="example-button-container">
+                  <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon">
+                    <
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <mat-form-field style="display: inline-block;width:100px;">
+              <input matInput [(ngModel)]="amountToTake">
+            </mat-form-field>
+
+            <div style="position: relative;;display: inline-block; border-radius: 50%;  width: 29px;height: 29px;margin-right: 19px;"> 
+              <div style="margin-left: 11px;position: absolute;margin-top: 5px; color: white;">
+                <div class="example-button-container">
+                  <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon">
+                    >
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div style="position: relative;display: inline-block; border-radius: 50%;width: 29px;height: 29px;"> 
+              <div style="margin-left: 8px;position: absolute;margin-top: 5px; color: white;">
+                <div class="example-button-container">
+                  <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon">
+                    >>
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <button mat-flat-button color="primary" class="submitButton" type="submit" mat-raised-button>
+              Save
+            </button>
+
+            <mat-icon style="display:block" [routerLink]="['/product-item-edit', element.id]">edit</mat-icon>
 
             <mat-icon (click)="delete(element.id)" >delete_forever</mat-icon>
 

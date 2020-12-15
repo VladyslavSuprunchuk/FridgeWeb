@@ -47,16 +47,11 @@
     <mat-datepicker #picker1></mat-datepicker>
   </mat-form-field>
   
-  <mat-radio-group formControlName="isOpened" style="margin-left: 40px;margin-top: 10px;" >
-
-    <mat-radio-button  *ngIf="id == 0" value="true">Opened</mat-radio-button>
-    <mat-radio-button  *ngIf="id == 0" value="false">Closed</mat-radio-button>
-
-   <div *ngIf="id != 0">
-      <mat-radio-button [checked]="productItem.isOpened == true" value="true">Opened </mat-radio-button>
-      <mat-radio-button [checked]="productItem.isOpened == false" value="false">Closed </mat-radio-button>
-   </div>
-   
+  <mat-radio-group formControlName="isOpened" style="margin-left: 40px;margin-top: 10px;">
+  
+    <mat-radio-button value="true">Opened</mat-radio-button>
+    <mat-radio-button value="false">Closed</mat-radio-button>
+  
   </mat-radio-group>
 
   <mat-form-field class="input">
