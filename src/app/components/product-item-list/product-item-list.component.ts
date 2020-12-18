@@ -17,7 +17,6 @@ import { DatePipe } from '@angular/common'
 export class ProductItemListComponent implements OnInit {
 
   public productItems: ProductItem[];
-  public displayedColumns: string[] = ['photo', 'amount','left','additionalInfo'];
   public amountToTake:number;
 
   constructor(private server: ServerConnectionService,
@@ -82,7 +81,6 @@ export class ProductItemListComponent implements OnInit {
     this.server.getQuery<GenericResponse<boolean>>('/storehouse/' + this.storehouseService.selectedStorehouse.id + '/getproductitems').subscribe(data => {
       if (data.isSuccess) {
         this.productItems = data.data;
-        console.log(this.productItems);
       }
       else {
         this.alertManager.showError(data.error.errorMessage);

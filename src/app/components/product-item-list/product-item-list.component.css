@@ -1,10 +1,7 @@
 .productItemPhotoLayout{
-    display: block;
-    position: relative;
-    background: #fff;
-    color: #474747;
     height: 75px;
     width: 75px;
+    max-width:75px;
 }
 
 .photo{
@@ -18,8 +15,12 @@
     margin: auto;
 }
  
+
+
 .body{
     margin-top: 65px;
+    width: 100%;
+    position: relative;
 }
 
 .productItemPhoto {
@@ -56,12 +57,4 @@
         margin-left: 78px;
         border-radius: 30px;
         width: 50px;
-      }
-
-      .headerLeft{
-        margin-left: 80px;
-      }
-
-      .amountHeader{
-        margin-left: 40px;
       }
