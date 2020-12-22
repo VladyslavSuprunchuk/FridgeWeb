@@ -17,7 +17,7 @@ import { DatePipe } from '@angular/common'
 export class ProductItemListComponent implements OnInit {
 
   public productItems: ProductItem[];
-  public amountToTake:number;
+  public iterators:Array<number> = Array<number>();
 
   constructor(private server: ServerConnectionService,
     private alertManager: AlertManagerService,
@@ -32,6 +32,36 @@ export class ProductItemListComponent implements OnInit {
     this.storehouseService.deleteStorehouseForCreateProductItem();
     this.getProductItems();
     this.storehouseService.trigger$.subscribe(() => this.getProductItems());
+  }
+
+  public DecIteratorByOne(productItem:ProductItem):void{
+    var iterator = this.iterators[this.productItems.indexOf(productItem)];1
+
+    if ((productItem.productType.unit.iterator - iterator) < 0){
+      productItem.productType.unit.iterator = 0;
+      return;
+    }
+
+      productItem.productType.unit.iterator =  Number((productItem.productType.unit.iterator - iterator).toFixed(1));
+      if (productItem.amount < productItem.productType.unit.iterator){
+        productItem.productType.unit.iterator = productItem.amount;
+      }  
+    
+  }
+
+  public IncIteratorByOne(productItem:ProductItem):void{
+    if (productItem.amount < productItem.productType.unit.iterator){
+      productItem.productType.unit.iterator = productItem.amount;
+      return;
+    }
+
+    if(productItem.amount > productItem.productType.unit.iterator){
+      var iterator = this.iterators[this.productItems.indexOf(productItem)];
+      productItem.productType.unit.iterator =  Number((productItem.productType.unit.iterator + iterator).toFixed(1));
+      if (productItem.amount < productItem.productType.unit.iterator){
+        productItem.productType.unit.iterator = productItem.amount;
+      }  
+    }
   }
 
   public delete(id:number):void{
@@ -81,6 +111,9 @@ export class ProductItemListComponent implements OnInit {
     this.server.getQuery<GenericResponse<boolean>>('/storehouse/' + this.storehouseService.selectedStorehouse.id + '/getproductitems').subscribe(data => {
       if (data.isSuccess) {
         this.productItems = data.data;
+        for(var i = 0; i < this.productItems.length;i++){
+          this.iterators[i] = this.productItems[i].productType.unit.iterator;
+        }
       }
       else {
         this.alertManager.showError(data.error.errorMessage);

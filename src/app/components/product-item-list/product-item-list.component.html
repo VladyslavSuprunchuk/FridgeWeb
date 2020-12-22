@@ -42,14 +42,55 @@
           </mat-list-item>
         </mat-panel-title>
         <mat-panel-description>
+          </mat-panel-description>
+          </mat-expansion-panel-header>
           
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <p>This is the primary content of the panel.</p>
+          <div style="text-align: center;">
+            <button style="margin-right: 10px;" mat-mini-fab color="primary">
+              <mat-icon style="width: 10px;">keyboard_arrow_left</mat-icon>
+              <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+          
+            <button style="margin-right: 10px;" (click)="DecIteratorByOne(item)" mat-mini-fab color="primary">
+              <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+          
+            <mat-form-field style="display: inline-block;width:100px;text-align: center;">
+              <input matInput [(ngModel)]="item.productType.unit.iterator">
+              <div style="position: absolute;margin-top: -15px;margin-left: 60px;">{{item.productType.unit.shortName}}</div>
+            </mat-form-field>
+                      
+            <button style="margin-left: 10px;" mat-mini-fab color="primary" (click)="IncIteratorByOne(item)">
+              <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+          
+            <button style="margin-left: 10px;" mat-mini-fab color="primary">
+              <mat-icon style="width: 10px;margin-left: 5px;" >keyboard_arrow_right</mat-icon>
+              <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+          
+            <button style="display: block;margin: auto;" mat-flat-button color="primary" class="submitButton" type="submit"
+              mat-raised-button>
+              Submit
+            </button>
+          
+            <div style="margin-top: 15px;">
+          
+              <mat-icon style=" font-size:31px" [routerLink]="['/product-item-edit', item.id]">edit</mat-icon>
+          
+              <mat-icon style=" font-size:31px" (click)="delete(item.id)">delete_forever</mat-icon>
+          
+              <mat-icon style=" font-size:31px">add_shopping_cart</mat-icon>
+          
+              <mat-icon style=" font-size:31px">all_out</mat-icon>
+            </div>
+          </div>
     </mat-expansion-panel>
 
    
     <mat-divider></mat-divider>
   </mat-list>
-
+  <button [routerLink]="['/product-item-edit', 0]" class="mat-fab-bottom-right" mat-fab>
+    <mat-icon class="icon">add</mat-icon>
+  </button>
 </div>
