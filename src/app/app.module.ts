@@ -54,6 +54,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { DatePipe } from '@angular/common';
+import { ProductItemDetailComponent } from './components/product-item-detail/product-item-detail.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { DatePipe } from '@angular/common';
     StorehouseListComponent,
     MembersComponent,
     StorehouseJoinComponent,
-    ProductItemEditComponent
+    ProductItemEditComponent,
+    ProductItemDetailComponent
   ],
   imports: [
     BrowserModule,

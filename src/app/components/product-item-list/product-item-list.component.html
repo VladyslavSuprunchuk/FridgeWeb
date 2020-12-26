@@ -1,93 +1,9 @@
 <div class="body">
   <mat-list *ngFor="let item of productItems">
 
-    <mat-expansion-panel hideToggle>
-      <mat-expansion-panel-header style="height: 80px;">
-        <mat-panel-title style="margin-bottom:33px;margin-top: 40px;width: 100%;">
-          <mat-list-item>
-            <div style="width:100%;display: flex;flex-direction: row; ">
-      
-              <div class="productItemPhotoLayout">
-                <div class="productItemPhoto">
-                  <img class="photo"
-                    src="https://img.icons8.com/ios/452/meal.png" />
-                </div>
-              </div>
-                
-              <div style="margin-top: 25px;margin-left: 40%;position: absolute;">
-                {{item.amount}} {{ item.productType.unit.shortName}}
-              </div>
-      
-              <div style="position: absolute;margin-left: 79.5%;margin-top: 15px">
-                {{getCountLeftProductItem(item)}}
-              </div>
-      
-              <div style="margin-top: 35px;margin-left: 70%;">
-      
-                <mat-progress-bar style=" position: absolute;width:20%;margin-left: -50px;" *ngIf="getLeftProductItemForDisplay(item) <= 10;"
-                  color="accent" mode="determinate" [value]="getLeftProductItemForDisplay(item)">
-                </mat-progress-bar>
-              
-                <mat-progress-bar style=" position: absolute;width:20%;margin-left: -50px;"
-                  *ngIf="getLeftProductItemForDisplay(item) > 10 && getLeftProductItemForDisplay(item) <=80" color="primary"
-                  mode="determinate" [value]="getLeftProductItemForDisplay(item)">
-                </mat-progress-bar>
-              
-                <mat-progress-bar style=" position: absolute;width:20%;margin-left: -50px;" color="warn"
-                  *ngIf="getLeftProductItemForDisplay(item) > 80" mode="determinate" [value]="getLeftProductItemForDisplay(item)">
-                </mat-progress-bar>
-                
-              </div>
-            </div>
-          </mat-list-item>
-        </mat-panel-title>
-        <mat-panel-description>
-          </mat-panel-description>
-          </mat-expansion-panel-header>
-          
-          <div style="text-align: center;">
-            <button style="margin-right: 10px;" mat-mini-fab color="primary">
-              <mat-icon style="width: 10px;">keyboard_arrow_left</mat-icon>
-              <mat-icon>keyboard_arrow_left</mat-icon>
-            </button>
-          
-            <button style="margin-right: 10px;" (click)="DecIteratorByOne(item)" mat-mini-fab color="primary">
-              <mat-icon>keyboard_arrow_left</mat-icon>
-            </button>
-          
-            <mat-form-field style="display: inline-block;width:100px;text-align: center;">
-              <input matInput [(ngModel)]="item.productType.unit.iterator">
-              <div style="position: absolute;margin-top: -15px;margin-left: 60px;">{{item.productType.unit.shortName}}</div>
-            </mat-form-field>
-                      
-            <button style="margin-left: 10px;" mat-mini-fab color="primary" (click)="IncIteratorByOne(item)">
-              <mat-icon>keyboard_arrow_right</mat-icon>
-            </button>
-          
-            <button style="margin-left: 10px;" mat-mini-fab color="primary">
-              <mat-icon style="width: 10px;margin-left: 5px;" >keyboard_arrow_right</mat-icon>
-              <mat-icon>keyboard_arrow_right</mat-icon>
-            </button>
-          
-            <button style="display: block;margin: auto;" mat-flat-button color="primary" class="submitButton" type="submit"
-              mat-raised-button>
-              Submit
-            </button>
-          
-            <div style="margin-top: 15px;">
-          
-              <mat-icon style=" font-size:31px" [routerLink]="['/product-item-edit', item.id]">edit</mat-icon>
-          
-              <mat-icon style=" font-size:31px" (click)="delete(item.id)">delete_forever</mat-icon>
-          
-              <mat-icon style=" font-size:31px">add_shopping_cart</mat-icon>
-          
-              <mat-icon style=" font-size:31px">all_out</mat-icon>
-            </div>
-          </div>
-    </mat-expansion-panel>
+    <app-product-item-detail [item]="item">    
+    </app-product-item-detail>
 
-   
     <mat-divider></mat-divider>
   </mat-list>
   <button [routerLink]="['/product-item-edit', 0]" class="mat-fab-bottom-right" mat-fab>
