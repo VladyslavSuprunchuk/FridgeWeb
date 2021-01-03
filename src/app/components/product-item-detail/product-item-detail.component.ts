@@ -5,9 +5,7 @@ import { AlertManagerService } from '../../services//alert-manager.service';
 import { AuthorizationService } from '../../services/authorization.service';
 import { StorehouseService } from '../../services/storehouse.service';
 import { ProductItem } from '../../models/product-item';  
-import { ProductTypeService } from 'src/app/services/productType.service';
 import { DatePipe } from '@angular/common'
-import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,6 +13,7 @@ import { Router } from '@angular/router';
   templateUrl: './product-item-detail.component.html',
   styleUrls: ['./product-item-detail.component.css']
 })
+
 export class ProductItemDetailComponent implements OnInit {
 
   @Input() item: ProductItem = new ProductItem();
@@ -24,15 +23,13 @@ export class ProductItemDetailComponent implements OnInit {
     private alertManager: AlertManagerService,
     public authorizationService: AuthorizationService,
     private storehouseService: StorehouseService,
-    private productTypeService:ProductTypeService,
-    public datepipe: DatePipe,
-    private router: Router) { }
+    public datepipe: DatePipe) { }
 
   ngOnInit(): void {
     this.amountToTake = this.item.productType.unit.iterator;
   } 
 
-  public decreaseAmountToTake(productItem:ProductItem, count:number):void{
+  public decreaseAmountToTake(count:number):void{
 
     if (this.amountToTake < 0 ) {
       this.amountToTake = 0;
@@ -40,11 +37,11 @@ export class ProductItemDetailComponent implements OnInit {
     }
 
     if(count == 1){
-      this.amountToTake = Number((this.amountToTake - productItem.productType.unit.iterator).toFixed(1));
+      this.amountToTake = Number((this.amountToTake - this.item.productType.unit.iterator).toFixed(1));
     }
     else{
-      this.amountToTake = Number((this.amountToTake - productItem.productType.unit.iterator 
-                                                    - productItem.productType.unit.iterator).toFixed(1));
+      this.amountToTake = Number((this.amountToTake - this.item.productType.unit.iterator 
+                                                    - this.item.productType.unit.iterator).toFixed(1));
     }
 
     if (this.amountToTake < 0) {
@@ -69,36 +66,45 @@ export class ProductItemDetailComponent implements OnInit {
     }
     else{
       if(newAmount == 0){
-        this.delete(this.item.id);
+        this.delete();
       }
     }
 
   }
 
-  public increaseAmoutToTake(productItem:ProductItem, count:number):void{
+  public increaseAmoutToTake(count:number):void{
 
-    if (productItem.amount < this.amountToTake) {
-      this.amountToTake = productItem.amount;
+    if (this.item.amount < this.amountToTake) {
+      this.amountToTake = this.item.amount;
       return;
     }
 
     if(count == 1){
-      this.amountToTake = Number((this.amountToTake + productItem.productType.unit.iterator).toFixed(1));
+      this.amountToTake = Number((this.amountToTake + this.item.productType.unit.iterator).toFixed(1));
     }
     else{
-      this.amountToTake = Number((this.amountToTake + productItem.productType.unit.iterator 
-                                                    + productItem.productType.unit.iterator).toFixed(1));
+      this.amountToTake = Number((this.amountToTake + this.item.productType.unit.iterator 
+                                                    + this.item.productType.unit.iterator).toFixed(1));
     }
 
-    if (productItem.amount < this.amountToTake) {
-      this.amountToTake = productItem.amount;
+    if (this.item.amount < this.amountToTake) {
+      this.amountToTake = this.item.amount;
       return;
     }
   
  }
 
-  public delete(id:number):void{
-    this.server.deleteQuery<GenericResponse<boolean>>('/productitem/' + id).subscribe(data => {
+ public getExpireDate(){
+   var expireDate = new Date();
+   var manufDateAsString = this.datepipe.transform((this.item.manufactureDate), 'MM-dd-yyyy');
+   var date = new Date(manufDateAsString) ;
+   expireDate.setDate(date.getDate() + this.item.productType.expirationTerm)
+   var expireDateAsString = this.datepipe.transform((expireDate), 'dd-MM-yyyy');
+  return expireDateAsString;
+ }
+
+  public delete():void{
+    this.server.deleteQuery<GenericResponse<boolean>>('/productitem/' + this.item.id).subscribe(data => {
       if (data.isSuccess) {
         this.alertManager.showSuccess("Product Item was successfully deleted");
         this.storehouseService.triggerOnChangeSelectedStorehouse();
@@ -109,13 +115,12 @@ export class ProductItemDetailComponent implements OnInit {
     });
   }
 
-  public getCountLeftProductItem(item:ProductItem){
-
-    if(item.productType.expirationTerm == 0){
+  public getCountLeftProductItem(){
+    if(this.item.productType.expirationTerm == 0){
       return "No expiring"
     }
 
-    return item.productType.expirationTerm - this.getCountOfPassedDays(item.manufactureDate);
+    return this.item.productType.expirationTerm - this.getCountOfPassedDays(this.item.manufactureDate);
   }
 
   private getCountOfPassedDays(date:string):number{
@@ -125,17 +130,15 @@ export class ProductItemDetailComponent implements OnInit {
     return Math.ceil(diff / (1000 * 3600 * 24) ) + 1 ; 
   }
 
-  public getLeftProductItemForDisplay(item:ProductItem):number{
+  public getLeftProductItemForDisplay():number{
 
-     var diffDays = this.getCountOfPassedDays(item.manufactureDate);
+     var diffDays = this.getCountOfPassedDays(this.item.manufactureDate);
 
-     if(item.productType.expirationTerm - diffDays <=0){
+     if(this.item.productType.expirationTerm - diffDays <=0){
        return 100;
      }
 
-     var result = (100 / item.productType.expirationTerm) * diffDays
+     var result = (100 / this.item.productType.expirationTerm) * diffDays
      return result
   }
-
-
 }
