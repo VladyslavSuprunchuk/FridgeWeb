@@ -5,7 +5,6 @@ import { AlertManagerService } from '../../services//alert-manager.service';
 import { AuthorizationService } from '../../services/authorization.service';
 import { StorehouseService } from '../../services/storehouse.service';
 import { ProductItem } from '../../models/product-item';
-import { ActivatedRoute } from '@angular/router';
 import { ProductTypeService } from 'src/app/services/productType.service';
 import { DatePipe } from '@angular/common'
 
@@ -46,8 +45,6 @@ export class ProductItemListComponent implements OnInit {
     this.server.getQuery<GenericResponse<boolean>>('/storehouse/' + this.storehouseService.selectedStorehouse.id + '/getproductitems').subscribe(data => {
       if (data.isSuccess) {
         this.productItems = data.data;
-        for(var i = 0; i < this.productItems.length;i++){
-        }
       }
       else {
         this.alertManager.showError(data.error.errorMessage);

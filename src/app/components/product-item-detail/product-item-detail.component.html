@@ -17,28 +17,28 @@
           </div>
     
           
-          <div *ngIf="getCountLeftProductItem() != 'No expiring' " style="position: absolute;margin-left: 79.5%;margin-top: 15px;">
-            {{getCountLeftProductItem()}}
+          <div *ngIf="getExpireDays() != 'No expiring' " style="position: absolute;margin-left: 79.5%;margin-top: 15px;">
+            {{getExpireDays()}}
           </div>
           
-          <div  *ngIf="getCountLeftProductItem() == 'No expiring' "
-           style="position: absolute;margin-left: 70%;margin-top: 15px;width:150px">
+          <div  *ngIf="getExpireDays() == 'No expiring' "
+           style="position: absolute;margin-left: 70%;margin-top: 25px;width:150px">
            No expiring
           </div>
 
-          <div style="margin-top: 35px;margin-left: 70%;">
+          <div style="margin-top: 35px;margin-left: 70%;"  *ngIf="getExpireDays() != 'No expiring' ">
     
-            <mat-progress-bar style=" position: absolute;width:20%;margin-left: -50px;" *ngIf="getLeftProductItemForDisplay() <= 10;"
-              color="accent" mode="determinate" [value]="getLeftProductItemForDisplay()">
+            <mat-progress-bar style=" position: absolute;width:20%;margin-left: -50px;" *ngIf="getProgressBarPercentage() <= 10;"
+              color="accent" mode="determinate" [value]="getProgressBarPercentage()">
             </mat-progress-bar>
           
             <mat-progress-bar style=" position: absolute;width:20%;margin-left: -50px;"
-              *ngIf="getLeftProductItemForDisplay() > 10 && getLeftProductItemForDisplay() <= 80" color="primary"
-              mode="determinate" [value]="getLeftProductItemForDisplay()">
+              *ngIf="getProgressBarPercentage() > 10 && getProgressBarPercentage() <= 80" color="primary"
+              mode="determinate" [value]="getProgressBarPercentage()">
             </mat-progress-bar>
           
             <mat-progress-bar style=" position: absolute;width:20%;margin-left: -50px;" color="warn"
-              *ngIf="getLeftProductItemForDisplay() > 80" mode="determinate" [value]="getLeftProductItemForDisplay()">
+              *ngIf="getProgressBarPercentage() > 80" mode="determinate" [value]="getProgressBarPercentage()">
             </mat-progress-bar>
             
           </div>
@@ -51,12 +51,12 @@
       </mat-expansion-panel-header>
       
       <div style="text-align: center;">
-        <button style="margin-right: 10px;" mat-mini-fab color="primary" (click)="decreaseAmountToTake(2)" >
+        <button style="margin-right: 10px;" mat-mini-fab color="primary" (click)="changrAmountToTake(-iterator*2)" >
           <mat-icon style="width: 10px;">keyboard_arrow_left</mat-icon>
           <mat-icon>keyboard_arrow_left</mat-icon>
         </button>
       
-        <button style="margin-right: 10px;" (click)="decreaseAmountToTake(1)" mat-mini-fab color="primary">
+        <button style="margin-right: 10px;" (click)="changrAmountToTake(-iterator)" mat-mini-fab color="primary">
           <mat-icon>keyboard_arrow_left</mat-icon>
         </button>
       
@@ -65,11 +65,11 @@
           <div style="position: absolute;margin-top: -15px;margin-left: 70px;">{{item.productType.unit.shortName}}</div>
         </mat-form-field>
                   
-        <button style="margin-left: 10px;" mat-mini-fab color="primary" (click)="increaseAmoutToTake(1)">
+        <button style="margin-left: 10px;" mat-mini-fab color="primary" (click)="changrAmountToTake(iterator)">
           <mat-icon>keyboard_arrow_right</mat-icon>
         </button>
       
-        <button style="margin-left: 10px;" mat-mini-fab color="primary" (click)="increaseAmoutToTake(2)">
+        <button style="margin-left: 10px;" mat-mini-fab color="primary" (click)="changrAmountToTake(iterator*2)">
           <mat-icon style="width: 10px;margin-left: 5px;" >keyboard_arrow_right</mat-icon>
           <mat-icon>keyboard_arrow_right</mat-icon>
         </button>
@@ -81,13 +81,13 @@
       
         <div style="margin-top: 15px;margin-left: -15px;">
       
-          <mat-icon style=" font-size:31px" [routerLink]="['/product-item-edit', item.id]">edit</mat-icon>
+          <mat-icon style=" font-size:38px; margin-right: 62px;" [routerLink]="['/product-item-edit', item.id]">edit</mat-icon>
       
-          <mat-icon style=" font-size:31px" (click)="delete()">delete_forever</mat-icon>
+          <mat-icon style=" font-size:38px; margin-right: 62px;" (click)="delete()">delete_forever</mat-icon>
       
-          <mat-icon style=" font-size:31px">add_shopping_cart</mat-icon>
+          <mat-icon style=" font-size:38px; margin-right: 62px;">add_shopping_cart</mat-icon>
       
-          <mat-icon style=" font-size:31px">all_out</mat-icon>
+          <mat-icon style=" font-size:38px;">all_out</mat-icon>
 
         <div> Expire date {{getExpireDate()}}</div>
         </div>
