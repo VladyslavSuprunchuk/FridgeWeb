@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { from } from 'rxjs';
 import { GenericResponse } from '../models/generic-response';
 import { Storehouse } from '../models/storehouse'
 import { AlertManagerService } from './alert-manager.service';
@@ -15,6 +13,7 @@ export class StorehouseService {
 
   private _storehouses: Storehouse[] = [];
   private _trigger = new Subject<void>();
+  private _selectedStorehouseInPanel: Storehouse;
 
   constructor(private server: ServerConnectionService, private alertManager: AlertManagerService) {
   }
@@ -27,8 +26,8 @@ export class StorehouseService {
     this._trigger.next();
   }
 
-  public get selectedStorehouse():Storehouse {
-    return this.selectedStorehouseInPanel();
+  public get selectedStorehouse(): Storehouse {
+    return this._selectedStorehouseInPanel ?? this.getSelectedStorehouseInPanelFromSession();
   }
 
   public get storehouseInfoForCreateProductItem() {
@@ -47,7 +46,7 @@ export class StorehouseService {
     return this.storehouses.length == 0;
   }
 
-  private selectedStorehouseInPanel(){
+  private getSelectedStorehouseInPanelFromSession() {
     let storehouse = localStorage.getItem("SelectedStorehouseInPanel");
     return JSON.parse(storehouse);
   }
@@ -82,9 +81,14 @@ export class StorehouseService {
     }
 
     if (this._storehouses.length != 0 || this.selectedStorehouse == null) {
-      localStorage.setItem("SelectedStorehouseInPanel", JSON.stringify(this._storehouses[0]));
+      this.setSelectedStorehouseInPanel(this._storehouses[0]);
       localStorage.setItem("colorOfHeader", '#' + this.selectedStorehouse.colorHex.slice(2));
     }
+  }
+
+  public setSelectedStorehouseInPanel(storehouse: Storehouse) {
+    this._selectedStorehouseInPanel = storehouse;
+    localStorage.setItem("SelectedStorehouseInPanel", JSON.stringify(storehouse))
   }
 
   public saveStorehouseInfoForCreateProductItem(storehouse: Storehouse) {

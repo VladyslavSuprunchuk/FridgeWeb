@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ServerConnectionService } from '../../services/server-connection.service';
 import { GenericResponse } from '../../models/generic-response';
 import { AlertManagerService } from '../../services//alert-manager.service';
