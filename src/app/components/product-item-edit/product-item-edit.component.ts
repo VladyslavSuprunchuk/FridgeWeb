@@ -46,7 +46,7 @@ export class ProductItemEditComponent implements OnInit {
       }
     }
     else{
-      this.server.getQuery<GenericResponse<boolean>>('/storehouse/' + this.storehouseService.selectedStorehouse.id
+      this.server.getQuery<GenericResponse<boolean>>('/productitem/' + this.storehouseService.selectedStorehouse.id
        + '/getproductitem/' + this.id).subscribe(data => {
         if (data.isSuccess) {
           this.productItem = data.data;

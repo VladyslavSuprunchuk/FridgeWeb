@@ -43,7 +43,7 @@ export class StorehouseJoinComponent implements OnInit {
       storehouse.password = this.storehouseJoinForm.value.storehousePassword;
       this.server.postQuery<GenericResponse<boolean>>("/storehouse/join", storehouse).subscribe(data => {
         if (data.isSuccess) {
-          this.router.navigate(['storehouse-list']);
+          this.router.navigate(['storehouse-list/false']);
           this.storehouseService.downloadStorehouses();
           this.alertManager.showSuccess("You successfully join to storehouse");
         }

@@ -10,9 +10,11 @@ import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { MembersComponent } from './components/members/members.component';
 import { ProductItemEditComponent } from './components/product-item-edit/product-item-edit.component';
+import { LogInComponent } from './components/log-in/log-in.component';
 
 
 const routes: Routes = [
+  { path: 'log-in', component: LogInComponent },
   { path: 'product-item-list', component: ProductItemListComponent },
   { path: 'product-item-edit/:id', component: ProductItemEditComponent },
   { path: 'product-type-list/:isForCreateProductItem', component: ProductTypeListComponent },
@@ -22,8 +24,7 @@ const routes: Routes = [
   { path: 'storehouse-edit/:id', component: StorehouseEditComponent },
   { path: 'members/:id', component: MembersComponent },
   { path: 'storehouse-join', component: StorehouseJoinComponent },
-  // {path: 'login', component: LogInComponent}
- // {path: 'mediaservice', component: MediaServiceComponent}
+  { path: '', redirectTo: '/log-in', pathMatch: 'full' }
 ];
 
 @NgModule({

@@ -44,18 +44,9 @@ mat-toolbar{
     z-index: 1;
     overflow-x: scroll !important;
 }
-
-p {
-    font-family: Lato;
-  }
   
   ::ng-deep .mat-tab-header-pagination {
       display: none !important;
-  }
-
-  .label{
-    width: 250px;
-    margin-left: 280px;
   }
 
   .mat-tab-label {
@@ -63,14 +54,14 @@ p {
     padding: 0 24px;
     cursor: pointer;
     box-sizing: border-box;
-    min-width: 160px;
+    min-width:  auto;
     text-align: center;
     display: inline-flex;
     justify-content: center;
     align-items: center;
     white-space: nowrap;
-    margin-left: 30px;
-    width: 240px;
+    margin-left: 20px;
+    width: auto;
     position: relative;
     color:black;
     font-family: 'Merriweather-Bold', sans-serif;

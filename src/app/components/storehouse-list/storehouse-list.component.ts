@@ -31,9 +31,6 @@ export class StorehouseListComponent implements OnInit {
 
     this.isForCreateProductItem = this.activateRoute.snapshot.params['isForCreateProductItem'] == "true";
 
-    if (this.isForCreateProductItem == false) {
-      console.log(this.isForCreateProductItem);
-    }
     this.server.getQuery<GenericResponse<boolean>>('/storehouse').subscribe(data => {
       if (data.isSuccess) {
         this.storehouses = data.data;
@@ -48,6 +45,7 @@ export class StorehouseListComponent implements OnInit {
     if (this.storehouses.find(x => x.id == id).isAuthor) {
       this.server.deleteQuery<GenericResponse<boolean>>('/storehouse/deletestorehouse/' + id).subscribe(data => {
         if (data.isSuccess) {
+          this.storehouseService.downloadStorehouses();
           this.alertManager.showSuccess("Storehouse has been deleted");
           this.ngOnInit()
         }
@@ -59,6 +57,7 @@ export class StorehouseListComponent implements OnInit {
     else {
       this.server.deleteQuery<GenericResponse<boolean>>('/storehouse/' + id + '/disconnect').subscribe(data => {
         if (data.isSuccess) {
+          this.storehouseService.downloadStorehouses();
           this.alertManager.showSuccess("You successfully disconnected");
           this.ngOnInit()
         }

@@ -5,7 +5,7 @@ import { ServerConnectionService } from '../../services/server-connection.servic
 import { AlertManagerService } from '../../services//alert-manager.service';
 import { Client } from '../../models/client';
 import { Router } from '@angular/router';
-
+import { AuthorizationService }  from '../../services/authorization.service'
 @Component({
   selector: 'app-log-in',
   templateUrl: './log-in.component.html',
@@ -21,15 +21,15 @@ export class LogInComponent implements OnInit {
   constructor(private server: ServerConnectionService,
     private alertManager: AlertManagerService,
      private router: Router,
-     private fb: FormBuilder) { }
+     private fb: FormBuilder,
+     private authorizationService: AuthorizationService) { }
 
   ngOnInit() {
-    this.loginForm = new FormGroup({
-      name: new FormControl(),
-      email: new FormControl(),
-      password: new FormControl()
-    });
     this.formInitialization();
+    var token = this.authorizationService.getToken() ;
+    if(token != null){
+      this.router.navigate(['product-item-list']);
+    }
   }
 
   private formInitialization(){
@@ -57,7 +57,7 @@ export class LogInComponent implements OnInit {
       this.server.postQuery<GenericResponse<boolean>>("/login", this.loginForm.value).subscribe(data => {
         if (data.isSuccess) {
           this.saveUserInfo(data);
-          this.router.navigate(['product-type-list']);   
+          this.router.navigate(['product-item-list']);   
         }
         else
           this.alertManager.showError(data.error.errorMessage);
@@ -76,7 +76,7 @@ export class LogInComponent implements OnInit {
       this.server.postQuery<GenericResponse<boolean>>("/signUp", this.loginForm.value).subscribe(data => {
         if (data.isSuccess) {
           this.saveUserInfo(data);
-          this.router.navigate(['product-type-list']);
+          this.router.navigate(['product-item-list']);
         }
         else
         this.alertManager.showSuccess(data.error.errorMessage);

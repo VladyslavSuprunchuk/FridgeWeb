@@ -6,7 +6,6 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <app-header *ngIf="authorizationService.getToken() != null" (sidenavToggle)="sidenav.toggle()"></app-header>
-    <app-log-in *ngIf="authorizationService.getToken() == null" (sidenavToggle)="sidenav.toggle()"></app-log-in>
     <main>
       <router-outlet></router-outlet>
     </main>

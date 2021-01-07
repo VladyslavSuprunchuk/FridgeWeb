@@ -21,10 +21,6 @@ export class HeaderComponent implements OnInit {
   };
 
   public getIndex(): number {
-    if (this.storehouseService.isEmpty) {
-      this.storehouseService.getStorehousesAsync()
-    }
-
     if (this.storehouseService.selectedStorehouse != null) {
       for (var i = 0; i < this.storehouseService.storehouses.length; i += 1) {
         if (this.storehouseService.storehouses[i].id === this.storehouseService.selectedStorehouse.id) {

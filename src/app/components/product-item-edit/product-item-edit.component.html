@@ -58,8 +58,19 @@
     <textarea matInput placeholder="Notes" formControlName="notes"></textarea>
   </mat-form-field>
 
+
   <mat-form-field class="input">
+
+    <div style="position: absolute;margin-left: 73%" *ngIf="productTypeService.productTypeInfoForCreateProductItem != null" >
+      {{productTypeService.productTypeInfoForCreateProductItem.unit.name}} 
+    </div>
+
+    <div style="position: absolute;margin-left: 73%" *ngIf="productItem != null" >
+      {{productItem.productType.unit.name}} 
+    </div>
+
     <input matInput placeholder="Amount" formControlName="amount">
+
   </mat-form-field>
 
   <div class="buttons">

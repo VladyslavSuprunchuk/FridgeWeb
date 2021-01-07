@@ -1,5 +1,5 @@
 <mat-expansion-panel hideToggle>
-  <mat-expansion-panel-header style="height: 80px;">
+  <mat-expansion-panel-header style="height: auto;padding: 0;">
     <mat-panel-title style="margin-bottom:33px;margin-top: 40px;width: 100%;">
 
       <mat-list-item *ngIf="item">
@@ -12,11 +12,10 @@
             </div>
           </div>
             
-          <div style="margin-top: 25px;margin-left: 40%;position: absolute;">
-            {{item.amount}} {{ item.productType.unit.shortName}}
-          </div>
-    
-          
+          <div style="margin-top: 25px;margin-left: 30%;position: absolute;width: 130px;">
+            {{ item.productType.name}}
+           </div>
+     
           <div *ngIf="getExpireDays() != 'No expiring' " style="position: absolute;margin-left: 79.5%;margin-top: 15px;">
             {{getExpireDays()}}
           </div>
@@ -89,7 +88,12 @@
       
           <mat-icon style=" font-size:38px;">all_out</mat-icon>
 
+          <div>
+            {{item.amount}} {{ item.productType.unit.shortName}}
+          </div>
+
         <div> Expire date {{getExpireDate()}}</div>
+
         </div>
       </div>
 </mat-expansion-panel>

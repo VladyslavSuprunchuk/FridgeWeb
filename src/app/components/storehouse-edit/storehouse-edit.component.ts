@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ServerConnectionService } from '../../services/server-connection.service';
 import { Storehouse } from '../../models/storehouse';
+import { StorehouseService } from 'src/app/services/storehouse.service';
 
 @Component({
   selector: 'app-storehouse-edit',
@@ -23,7 +24,8 @@ export class StorehouseEditComponent implements OnInit {
     private server: ServerConnectionService,
     private fb: FormBuilder,
     private alertManager: AlertManagerService,
-    private router: Router) {
+    private router: Router,
+    private storehouseService:StorehouseService) {
   }
 
   ngOnInit(): void {
@@ -60,7 +62,7 @@ export class StorehouseEditComponent implements OnInit {
   private update() {
     this.server.putFormData<GenericResponse<boolean>>('/storehouse/', this.storehouseForm.value, this.fileToUpload).subscribe(data => {
       if (data.isSuccess) {
-        this.router.navigate(['storehouse-list']);
+        this.router.navigate(['storehouse-list/false']);
         this.alertManager.showSuccess("Storehouse was updated successfully");
       }
       else {
@@ -72,7 +74,8 @@ export class StorehouseEditComponent implements OnInit {
   private create() {
     this.server.postFormData<GenericResponse<boolean>>('/storehouse/', this.storehouseForm.value, this.fileToUpload).subscribe(data => {
       if (data.isSuccess) {
-        this.router.navigate(['storehouse-list']);
+        this.storehouseService.downloadStorehouses();
+        this.router.navigate(['storehouse-list/false']);
         this.alertManager.showSuccess("Storehouse type has been created");
       }
       else {
@@ -81,10 +84,11 @@ export class StorehouseEditComponent implements OnInit {
     })
   }
 
-  public delete(): void {
+  public delete(): void { //TODOTODO is need? already on list have function delete storehouse
     this.server.deleteQuery<GenericResponse<boolean>>('/storehouse/deletestorehouse/' + this.id).subscribe(data => {
       if (data.isSuccess) {
-        this.router.navigate(['storehouse-list']);
+        this.storehouseService.downloadStorehouses();
+        this.router.navigate(['storehouse-list/false']);
         this.alertManager.showSuccess("Storehouse has been deleted");
       }
       else {

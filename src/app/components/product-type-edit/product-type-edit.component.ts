@@ -75,7 +75,7 @@ export class ProductTypeEditComponent implements OnInit {
   private update() {
     this.server.putFormData<GenericResponse<boolean>>('/producttype/', this.productTypeForm.value, this.fileToUpload).subscribe(data => {
       if (data.isSuccess) {
-        this.router.navigate(['product-type-list']);
+        this.router.navigate(['product-type-list/false']);
         this.storehouseService.downloadStorehouses();
         this.alertManager.showSuccess("Product type was updated successfully");
       }
@@ -88,8 +88,7 @@ export class ProductTypeEditComponent implements OnInit {
   private create() {
     this.server.postFormData<GenericResponse<boolean>>('/producttype/', this.productTypeForm.value, this.fileToUpload).subscribe(data => {
       if (data.isSuccess) {
-        this.router.navigate(['product-type-list']);
-        this.storehouseService.downloadStorehouses();
+        this.router.navigate(['product-type-list/false']);
         this.alertManager.showSuccess("Product type has been created");
       }
       else{
@@ -101,8 +100,7 @@ export class ProductTypeEditComponent implements OnInit {
   public delete(): void {
     this.server.deleteQuery<GenericResponse<boolean>>('/producttype/' + this.productType.id).subscribe(data => {
       if (data.isSuccess){
-        this.router.navigate(['product-type-list']);
-        this.storehouseService.downloadStorehouses();
+        this.router.navigate(['product-type-list/false']);
         this.alertManager.showSuccess("Product type has been deleted");
       }
       else{
