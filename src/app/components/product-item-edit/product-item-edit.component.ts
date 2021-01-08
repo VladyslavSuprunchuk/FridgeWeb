@@ -20,7 +20,7 @@ import { DatePipe } from '@angular/common'
 })
 export class ProductItemEditComponent implements OnInit {
 
-  public ProductItemForm: FormGroup;
+  public productItemForm: FormGroup;
   public id:number = 0;
   public productItem = new ProductItem;
   public manufactureDate:number;
@@ -58,7 +58,7 @@ export class ProductItemEditComponent implements OnInit {
   }
 
   private formEmptyInitialization() {
-    this.ProductItemForm = this.fb.group({
+    this.productItemForm = this.fb.group({
       isOpened: ["false", Validators.required],
       manufactureDate: ['', Validators.required],
       purchaseDate: ['', Validators.required],
@@ -67,14 +67,14 @@ export class ProductItemEditComponent implements OnInit {
     });
 
     var today = new Date();
-    this.ProductItemForm.patchValue({
+    this.productItemForm.patchValue({
       manufactureDate:today,
       purchaseDate:today
     });
   }
 
   private formInitialization() {
-    this.ProductItemForm = this.fb.group({
+    this.productItemForm = this.fb.group({
       isOpened: [String(this.productItem.isOpened), Validators.required],
       manufactureDate: [this.productItem.manufactureDate, Validators.required],
       purchaseDate: [this.productItem.purchaseDate, Validators.required],
@@ -84,7 +84,7 @@ export class ProductItemEditComponent implements OnInit {
   }
 
   formReconstruction() {
-    this.ProductItemForm = this.fb.group({
+    this.productItemForm = this.fb.group({
       isOpened: [this.shareService.productItemFromForm.isOpened, Validators.required],
       manufactureDate: [this.shareService.productItemFromForm.manufactureDate,Validators.required],
       purchaseDate: [this.shareService.productItemFromForm.purchaseDate, Validators.required],
@@ -99,11 +99,11 @@ export class ProductItemEditComponent implements OnInit {
 
   saveFormInfo() {
     let productItem: ProductItem = new ProductItem();
-    productItem.manufactureDate = this.ProductItemForm.value.manufactureDate;
-    productItem.purchaseDate = this.ProductItemForm.value.purchaseDate;
-    productItem.isOpened = this.ProductItemForm.value.isOpened;
-    productItem.notes = this.ProductItemForm.value.notes;
-    productItem.amount = this.ProductItemForm.value.amount;
+    productItem.manufactureDate = this.productItemForm.value.manufactureDate;
+    productItem.purchaseDate = this.productItemForm.value.purchaseDate;
+    productItem.isOpened = this.productItemForm.value.isOpened;
+    productItem.notes = this.productItemForm.value.notes;
+    productItem.amount = this.productItemForm.value.amount;
     this.shareService.saveProductItemInfoFromForm(productItem);
   }
 
@@ -129,13 +129,13 @@ export class ProductItemEditComponent implements OnInit {
       }
     }
 
-    this.productItem.isOpened = this.ProductItemForm.value.isOpened;
-    this.productItem.notes = this.ProductItemForm.value.notes;
-    this.productItem.manufactureDate = this.datepipe.transform((this.ProductItemForm.value.manufactureDate as Date), 'MM-dd-yyyy');
-    this.productItem.purchaseDate = this.datepipe.transform((this.ProductItemForm.value.purchaseDate as Date), 'MM-dd-yyyy');
-    this.productItem.amount = this.ProductItemForm.value.amount;
+    this.productItem.isOpened = this.productItemForm.value.isOpened;
+    this.productItem.notes = this.productItemForm.value.notes;
+    this.productItem.manufactureDate = this.datepipe.transform((this.productItemForm.value.manufactureDate as Date), 'MM-dd-yyyy');
+    this.productItem.purchaseDate = this.datepipe.transform((this.productItemForm.value.purchaseDate as Date), 'MM-dd-yyyy');
+    this.productItem.amount = this.productItemForm.value.amount;
 
-    if (this.ProductItemForm.valid) {
+    if (this.productItemForm.valid) {
       if (this.id != 0) {
         this.update();
       } else {

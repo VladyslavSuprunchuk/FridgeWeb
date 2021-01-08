@@ -101,9 +101,15 @@ export class ProductTypeListComponent implements OnInit {
   }
 
   private getProductTypesByDistinctAuthors(productTypes: ProductType[]): Array<ProductType[]> {
+    debugger;
     let productTypesForTable = new Array<ProductType[]>();
     var distinctAuthors = productTypes.map(item => item.userAuthor.email)
-      .filter((value, index, self) => self.indexOf(value) === index)
+      .filter((value, index, self) => self.indexOf(value) === index);
+
+    if(distinctAuthors.includes(this.currentUser.email)){
+      distinctAuthors.splice(distinctAuthors.indexOf(this.currentUser.email), 1)
+      distinctAuthors.unshift(this.currentUser.email);
+    }
 
     for (var i = 0; i < distinctAuthors.length; i++)
       productTypesForTable.push(productTypes.filter(x => x.userAuthor.email == distinctAuthors[i]))

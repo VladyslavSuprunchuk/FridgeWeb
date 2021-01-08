@@ -30,6 +30,10 @@ export class StorehouseService {
     return this._selectedStorehouseInPanel ?? this.getSelectedStorehouseInPanelFromSession();
   }
 
+  public set selectedStorehouse(storehouse: Storehouse) {
+    this._selectedStorehouseInPanel = storehouse;
+  }
+
   public get storehouseInfoForCreateProductItem() {
     return this.getStorehouseInfoForCreateProductItem();
   }
@@ -63,6 +67,10 @@ export class StorehouseService {
     this.server.getQuery<GenericResponse<boolean>>('/storehouse').subscribe(data => {
       if (data.isSuccess) {
         this._storehouses = data.data;
+        if (this._storehouses.length != 0 || this.selectedStorehouse == null) {
+          this.setSelectedStorehouseInPanel(this._storehouses[0]);
+          localStorage.setItem("colorOfHeader", '#' + this.selectedStorehouse.colorHex.slice(2));
+        }
       }
       else {
         this.alertManager.showError(data.error.errorMessage);
@@ -70,7 +78,7 @@ export class StorehouseService {
     });
   }
 
-  async getStorehousesAsync() {
+  public async getStorehousesAsync() {
     var data = await this.server.getQueryPromise<GenericResponse<boolean>>('/storehouse');
 
     if (data.isSuccess) {

@@ -6,6 +6,7 @@ import { AlertManagerService } from '../../services//alert-manager.service';
 import { Client } from '../../models/client';
 import { Router } from '@angular/router';
 import { AuthorizationService }  from '../../services/authorization.service'
+import { StorehouseService } from 'src/app/services/storehouse.service';
 @Component({
   selector: 'app-log-in',
   templateUrl: './log-in.component.html',
@@ -22,7 +23,8 @@ export class LogInComponent implements OnInit {
     private alertManager: AlertManagerService,
      private router: Router,
      private fb: FormBuilder,
-     private authorizationService: AuthorizationService) { }
+     private authorizationService: AuthorizationService,
+     private storehouseSerivce:StorehouseService) { }
 
   ngOnInit() {
     this.formInitialization();
@@ -57,6 +59,8 @@ export class LogInComponent implements OnInit {
       this.server.postQuery<GenericResponse<boolean>>("/login", this.loginForm.value).subscribe(data => {
         if (data.isSuccess) {
           this.saveUserInfo(data);
+          this.storehouseSerivce.selectedStorehouse = null;
+          this.storehouseSerivce.downloadStorehouses();
           this.router.navigate(['product-item-list']);   
         }
         else
@@ -76,6 +80,8 @@ export class LogInComponent implements OnInit {
       this.server.postQuery<GenericResponse<boolean>>("/signUp", this.loginForm.value).subscribe(data => {
         if (data.isSuccess) {
           this.saveUserInfo(data);
+          this.storehouseSerivce.selectedStorehouse = null;
+          this.storehouseSerivce.downloadStorehouses();
           this.router.navigate(['product-item-list']);
         }
         else
