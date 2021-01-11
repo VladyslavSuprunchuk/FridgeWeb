@@ -18,6 +18,8 @@ export class StorehouseService {
   constructor(private server: ServerConnectionService, private alertManager: AlertManagerService) {
   }
 
+  //#region Trigger Block
+  // For updates Product Items list
   get trigger$() {
     return this._trigger.asObservable();
   }
@@ -25,6 +27,11 @@ export class StorehouseService {
   public triggerOnChangeSelectedStorehouse() {
     this._trigger.next();
   }
+  //#endregion
+
+  // -------------------------------------------------------------------------
+  // Public Get and Set Methods
+  // -------------------------------------------------------------------------
 
   public get selectedStorehouse(): Storehouse {
     return this._selectedStorehouseInPanel ?? this.getSelectedStorehouseInPanelFromSession();
@@ -49,6 +56,11 @@ export class StorehouseService {
   get isEmpty(): boolean {
     return this.storehouses.length == 0;
   }
+
+  // -------------------------------------------------------------------------
+  // Private Methods
+  // -------------------------------------------------------------------------
+
 
   private getSelectedStorehouseInPanelFromSession() {
     let storehouse = localStorage.getItem("SelectedStorehouseInPanel");
@@ -78,7 +90,12 @@ export class StorehouseService {
     });
   }
 
-  public resetListOfStorehouses(){
+  // -------------------------------------------------------------------------
+  // Public Methods
+  // -------------------------------------------------------------------------
+
+
+  public resetListOfStorehouses() {
     this._storehouses.length = 0;
   }
 
