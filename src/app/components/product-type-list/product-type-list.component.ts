@@ -88,6 +88,18 @@ export class ProductTypeListComponent implements OnInit {
     this.router.navigate(['product-item-edit/0']);
   }
 
+  public delete(id:number): void {
+    this.server.deleteQuery<GenericResponse<boolean>>('/producttype/' + id).subscribe(data => {
+      if (data.isSuccess){
+        this.router.navigate(['product-type-list/false']);
+        this.alertManager.showSuccess("Product type has been deleted");
+      }
+      else{
+         this.alertManager.showError(data.error.errorMessage);
+      }
+    })
+  }
+
   public applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     if (filterValue == "") {
@@ -101,7 +113,6 @@ export class ProductTypeListComponent implements OnInit {
   }
 
   private getProductTypesByDistinctAuthors(productTypes: ProductType[]): Array<ProductType[]> {
-    debugger;
     let productTypesForTable = new Array<ProductType[]>();
     var distinctAuthors = productTypes.map(item => item.userAuthor.email)
       .filter((value, index, self) => self.indexOf(value) === index);

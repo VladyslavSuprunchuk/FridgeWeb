@@ -59,8 +59,6 @@ export class LogInComponent implements OnInit {
       this.server.postQuery<GenericResponse<boolean>>("/login", this.loginForm.value).subscribe(data => {
         if (data.isSuccess) {
           this.saveUserInfo(data);
-          this.storehouseSerivce.selectedStorehouse = null;
-          this.storehouseSerivce.downloadStorehouses();
           this.router.navigate(['product-item-list']);   
         }
         else
@@ -80,8 +78,6 @@ export class LogInComponent implements OnInit {
       this.server.postQuery<GenericResponse<boolean>>("/signUp", this.loginForm.value).subscribe(data => {
         if (data.isSuccess) {
           this.saveUserInfo(data);
-          this.storehouseSerivce.selectedStorehouse = null;
-          this.storehouseSerivce.downloadStorehouses();
           this.router.navigate(['product-item-list']);
         }
         else

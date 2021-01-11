@@ -67,7 +67,7 @@ export class StorehouseService {
     this.server.getQuery<GenericResponse<boolean>>('/storehouse').subscribe(data => {
       if (data.isSuccess) {
         this._storehouses = data.data;
-        if (this._storehouses.length != 0 || this.selectedStorehouse == null) {
+        if (this.selectedStorehouse == null) {
           this.setSelectedStorehouseInPanel(this._storehouses[0]);
           localStorage.setItem("colorOfHeader", '#' + this.selectedStorehouse.colorHex.slice(2));
         }
@@ -76,6 +76,10 @@ export class StorehouseService {
         this.alertManager.showError(data.error.errorMessage);
       }
     });
+  }
+
+  public resetListOfStorehouses(){
+    this._storehouses.length = 0;
   }
 
   public async getStorehousesAsync() {
@@ -88,7 +92,7 @@ export class StorehouseService {
       this.alertManager.showError(data.error.errorMessage);
     }
 
-    if (this._storehouses.length != 0 || this.selectedStorehouse == null) {
+    if (this.selectedStorehouse == null) {
       this.setSelectedStorehouseInPanel(this._storehouses[0]);
       localStorage.setItem("colorOfHeader", '#' + this.selectedStorehouse.colorHex.slice(2));
     }

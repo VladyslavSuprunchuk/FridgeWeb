@@ -23,7 +23,6 @@ export class ProductItemEditComponent implements OnInit {
   public productItemForm: FormGroup;
   public id:number = 0;
   public productItem = new ProductItem;
-  public manufactureDate:number;
 
   constructor(private fb: FormBuilder,
     private activateRoute: ActivatedRoute,
@@ -43,6 +42,9 @@ export class ProductItemEditComponent implements OnInit {
     if (this.id == 0) {
       if ((this.productTypeService.productTypeInfoForCreateProductItem != null) || (this.storehouseService.storehouseInfoForCreateProductItem != null)) {
         this.formReconstruction();
+      }
+      else{
+        this.storehouseService.saveStorehouseInfoForCreateProductItem(this.storehouseService.selectedStorehouse);
       }
     }
     else{

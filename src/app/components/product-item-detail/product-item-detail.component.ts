@@ -6,6 +6,8 @@ import { AuthorizationService } from '../../services/authorization.service';
 import { StorehouseService } from '../../services/storehouse.service';
 import { ProductItem } from '../../models/product-item';
 import { DatePipe } from '@angular/common'
+import { FormControl } from '@angular/forms';
+import { Validators } from '@angular/forms';
 
 
 @Component({
@@ -17,7 +19,7 @@ import { DatePipe } from '@angular/common'
 export class ProductItemDetailComponent implements OnInit {
 
   @Input() item: ProductItem = new ProductItem();
-  public amountToTake = this.item.productType.unit.iterator;
+  public amountToTake: number;
   public iterator: number;
 
   constructor(private server: ServerConnectionService,
@@ -44,24 +46,25 @@ export class ProductItemDetailComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    var newAmount = this.item.amount - this.amountToTake;
-    if (newAmount > 0) {
-      this.server.putQuery<GenericResponse<boolean>>('/productitem/updateamount/' + this.item.id, newAmount).subscribe(data => {
-        if (data.isSuccess) {
-          this.alertManager.showSuccess("Amount has been changed");
-          this.storehouseService.triggerOnChangeSelectedStorehouse();
+    if (this.amountToTake.toString().match(/^[0-9]+(\.?[0-9]+)?$/)){
+      var newAmount = this.item.amount - this.amountToTake;
+      if (newAmount > 0) {
+        this.server.putQuery<GenericResponse<boolean>>('/productitem/updateamount/' + this.item.id, newAmount).subscribe(data => {
+          if (data.isSuccess) {
+            this.alertManager.showSuccess("Amount has been changed");
+            this.storehouseService.triggerOnChangeSelectedStorehouse();
+          }
+          else {
+            this.alertManager.showError(data.error.errorMessage);
+          }
+        });
+      }
+      else {
+        if (newAmount == 0) {
+          this.delete();
         }
-        else {
-          this.alertManager.showError(data.error.errorMessage);
-        }
-      });
-    }
-    else {
-      if (newAmount == 0) {
-        this.delete();
       }
     }
-
   }
 
   public getExpireDate() {
@@ -90,6 +93,10 @@ export class ProductItemDetailComponent implements OnInit {
       return "No expiring"
     }
 
+    if(this.item.isOpened){
+      return this.item.productType.openedExpirationTerm - this.getCountOfPassedDays(this.item.manufactureDate);
+    }
+
     return this.item.productType.expirationTerm - this.getCountOfPassedDays(this.item.manufactureDate);
   }
 
@@ -99,16 +106,22 @@ export class ProductItemDetailComponent implements OnInit {
     var diff = Math.abs(new Date(todayDate).getTime() - (new Date(date)).getTime());
     return Math.ceil(diff / (1000 * 3600 * 24)) + 1;
   }
-  
-  public getProgressBarPercentage(): number {
 
-    var diffDays = this.getCountOfPassedDays(this.item.manufactureDate);
-
-    if (this.item.productType.expirationTerm - diffDays <= 0) {
+  private getExpireDateForProgressBarPercentage(diffDays:number, date:number):number{
+    if (date - diffDays <= 0) {
       return 100;
     }
 
-    var result = (100 / this.item.productType.expirationTerm) * diffDays
-    return result
+    var result = (100 / date) * diffDays
+    return result;
+  }
+  
+  public getProgressBarPercentage(): number {
+    var diffDays = this.getCountOfPassedDays(this.item.manufactureDate);
+    if(this.item.isOpened){
+      return this.getExpireDateForProgressBarPercentage(diffDays,this.item.productType.openedExpirationTerm); 
+    }
+
+    return this.getExpireDateForProgressBarPercentage(diffDays,this.item.productType.expirationTerm);
   }
 }

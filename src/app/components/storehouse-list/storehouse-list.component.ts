@@ -45,6 +45,11 @@ export class StorehouseListComponent implements OnInit {
     if (this.storehouses.find(x => x.id == id).isAuthor) {
       this.server.deleteQuery<GenericResponse<boolean>>('/storehouse/deletestorehouse/' + id).subscribe(data => {
         if (data.isSuccess) {
+
+          if(this.storehouseService.selectedStorehouse.id == id){
+            this.storehouseService.setSelectedStorehouseInPanel(null);
+          }
+  
           this.storehouseService.downloadStorehouses();
           this.alertManager.showSuccess("Storehouse has been deleted");
           this.ngOnInit()

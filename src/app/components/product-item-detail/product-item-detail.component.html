@@ -14,6 +14,7 @@
             
           <div style="margin-top: 25px;margin-left: 30%;position: absolute;width: 130px;">
             {{ item.productType.name}}
+            <div>{{item.amount}} {{ item.productType.unit.shortName}}</div>
            </div>
      
           <div *ngIf="getExpireDays() != 'No expiring' " style="position: absolute;margin-left: 79.5%;margin-top: 15px;">
@@ -27,12 +28,13 @@
 
           <div style="margin-top: 35px;margin-left: 70%;"  *ngIf="getExpireDays() != 'No expiring' ">
     
-            <mat-progress-bar style=" position: absolute;width:20%;margin-left: -50px;" *ngIf="getProgressBarPercentage() <= 10;"
+            <mat-progress-bar style=" position: absolute;width:20%;margin-left: -50px;" 
+            *ngIf="getProgressBarPercentage() >= 50 && getProgressBarPercentage() < 80"
               color="accent" mode="determinate" [value]="getProgressBarPercentage()">
             </mat-progress-bar>
           
             <mat-progress-bar style=" position: absolute;width:20%;margin-left: -50px;"
-              *ngIf="getProgressBarPercentage() > 10 && getProgressBarPercentage() <= 80" color="primary"
+              *ngIf="getProgressBarPercentage() < 50" color="primary"
               mode="determinate" [value]="getProgressBarPercentage()">
             </mat-progress-bar>
           
@@ -88,11 +90,7 @@
       
           <mat-icon style=" font-size:38px;">all_out</mat-icon>
 
-          <div>
-            {{item.amount}} {{ item.productType.unit.shortName}}
-          </div>
-
-        <div> Expire date {{getExpireDate()}}</div>
+          <div> Expire date {{getExpireDate()}}</div>
 
         </div>
       </div>

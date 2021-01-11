@@ -34,10 +34,11 @@ export class ProductItemListComponent implements OnInit {
  
 
   public async getProductItems(): Promise<void> {
+    debugger;
     if (this.storehouseService.isEmpty){
       await this.storehouseService.getStorehousesAsync()
     }
-    
+
     if(this.storehouseService.selectedStorehouse != null){
       localStorage.setItem("colorOfHeader", '#' + this.storehouseService.selectedStorehouse.colorHex.slice(2));
     }

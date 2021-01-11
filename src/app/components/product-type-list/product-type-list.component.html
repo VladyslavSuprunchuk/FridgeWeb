@@ -76,6 +76,11 @@
               <span *ngIf="element.isHidden == true">Unhide</span>
             </button>
 
+            <button *ngIf="currentUser.email == element.userAuthor.email" (click)="delete(element.id)" mat-menu-item>
+              <mat-icon>block</mat-icon>
+              <span>Delete</span>
+            </button>
+
           </mat-menu>
         </div>
         </mat-cell>

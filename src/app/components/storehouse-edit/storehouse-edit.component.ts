@@ -84,9 +84,14 @@ export class StorehouseEditComponent implements OnInit {
     })
   }
 
-  public delete(): void { //TODOTODO is need? already on list have function delete storehouse
+  public delete(): void { 
     this.server.deleteQuery<GenericResponse<boolean>>('/storehouse/deletestorehouse/' + this.id).subscribe(data => {
       if (data.isSuccess) {
+
+        if(this.storehouseService.selectedStorehouse.id == this.id){
+          this.storehouseService.setSelectedStorehouseInPanel(null);
+        }
+
         this.storehouseService.downloadStorehouses();
         this.router.navigate(['storehouse-list/false']);
         this.alertManager.showSuccess("Storehouse has been deleted");
