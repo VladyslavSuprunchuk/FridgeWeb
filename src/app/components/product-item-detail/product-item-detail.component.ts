@@ -42,11 +42,11 @@ export class ProductItemDetailComponent implements OnInit {
 
     if (this.item.amount < this.amountToTake) {
       this.amountToTake = this.item.amount;
-    }    
+    }
   }
 
   public onSubmit(): void {
-    if (this.amountToTake.toString().match(/^[0-9]+(\.?[0-9]+)?$/)){
+    if (this.amountToTake.toString().match(/^[0-9]+(\.?[0-9]+)?$/)) {
       var newAmount = this.item.amount - this.amountToTake;
       if (newAmount > 0) {
         this.server.putQuery<GenericResponse<boolean>>('/productitem/updateamount/' + this.item.id, newAmount).subscribe(data => {
@@ -69,8 +69,7 @@ export class ProductItemDetailComponent implements OnInit {
 
   public getExpireDate() {
     var expireDate = new Date();
-    var manufDateAsString = this.datepipe.transform((this.item.manufactureDate), 'MM-dd-yyyy');
-    var manufDate = new Date(manufDateAsString);
+    var manufDate = new Date(this.item.manufactureDate);
     expireDate.setDate(manufDate.getDate() + this.item.productType.expirationTerm)
     var expireDateAsString = this.datepipe.transform((expireDate), 'dd-MM-yyyy');
     return expireDateAsString;
@@ -93,7 +92,7 @@ export class ProductItemDetailComponent implements OnInit {
       return "No expiring"
     }
 
-    if(this.item.isOpened){
+    if (this.item.isOpened) {
       return this.item.productType.openedExpirationTerm - this.getCountOfPassedDays(this.item.manufactureDate);
     }
 
@@ -107,7 +106,7 @@ export class ProductItemDetailComponent implements OnInit {
     return Math.ceil(diff / (1000 * 3600 * 24)) + 1;
   }
 
-  private getExpireDateForProgressBarPercentage(diffDays:number, date:number):number{
+  private getExpireDateForProgressBarPercentage(diffDays: number, date: number): number {
     if (date - diffDays <= 0) {
       return 100;
     }
@@ -115,13 +114,13 @@ export class ProductItemDetailComponent implements OnInit {
     var result = (100 / date) * diffDays
     return result;
   }
-  
+
   public getProgressBarPercentage(): number {
     var diffDays = this.getCountOfPassedDays(this.item.manufactureDate);
-    if(this.item.isOpened){
-      return this.getExpireDateForProgressBarPercentage(diffDays,this.item.productType.openedExpirationTerm); 
+    if (this.item.isOpened) {
+      return this.getExpireDateForProgressBarPercentage(diffDays, this.item.productType.openedExpirationTerm);
     }
 
-    return this.getExpireDateForProgressBarPercentage(diffDays,this.item.productType.expirationTerm);
+    return this.getExpireDateForProgressBarPercentage(diffDays, this.item.productType.expirationTerm);
   }
 }
