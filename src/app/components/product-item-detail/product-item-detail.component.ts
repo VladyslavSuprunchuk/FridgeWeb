@@ -100,10 +100,9 @@ export class ProductItemDetailComponent implements OnInit {
   }
 
   private getCountOfPassedDays(date: string): number {
-    let today = new Date();
-    let todayDate = this.datepipe.transform((today), 'MM-dd-yyyy');
-    var diff = Math.abs(new Date(todayDate).getTime() - (new Date(date)).getTime());
-    return Math.ceil(diff / (1000 * 3600 * 24)) + 1;
+    var diff = Math.abs(new Date().getTime() - new Date(date).getTime());
+    var diffDays = Math.ceil(diff / (1000 * 3600 * 24)); 
+    return diffDays;
   }
 
   private getExpireDateForProgressBarPercentage(diffDays: number, date: number): number {
@@ -117,9 +116,10 @@ export class ProductItemDetailComponent implements OnInit {
 
   public getProgressBarPercentage(): number {
     var diffDays = this.getCountOfPassedDays(this.item.manufactureDate);
-    if (this.item.isOpened) {
-      return this.getExpireDateForProgressBarPercentage(diffDays, this.item.productType.openedExpirationTerm);
-    }
+    //TODO uncomment when UnpackingDate is added
+    // if (this.item.isOpened) {
+    //   return this.getExpireDateForProgressBarPercentage(diffDays, this.item.productType.openedExpirationTerm);
+    // }
 
     return this.getExpireDateForProgressBarPercentage(diffDays, this.item.productType.expirationTerm);
   }

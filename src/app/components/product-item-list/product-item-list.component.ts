@@ -34,7 +34,6 @@ export class ProductItemListComponent implements OnInit {
  
 
   public async getProductItems(): Promise<void> {
-    debugger;
     if (this.storehouseService.isEmpty){
       await this.storehouseService.getStorehousesAsync()
     }
