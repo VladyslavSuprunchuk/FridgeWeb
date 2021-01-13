@@ -68,11 +68,9 @@ export class ProductItemDetailComponent implements OnInit {
   }
 
   public getExpireDate() {
-    var expireDate = new Date();
-    var manufDate = new Date(this.item.manufactureDate);
-    expireDate.setDate(manufDate.getDate() + this.item.productType.expirationTerm)
-    var expireDateAsString = this.datepipe.transform((expireDate), 'dd-MM-yyyy');
-    return expireDateAsString;
+    var expireDate = new Date(this.item.manufactureDate);
+    expireDate.setDate(expireDate.getDate() + this.item.productType.expirationTerm)
+    return this.datepipe.transform((expireDate), 'dd-MM-yyyy');
   }
 
   public delete(): void {
@@ -92,9 +90,10 @@ export class ProductItemDetailComponent implements OnInit {
       return "No expiring"
     }
 
-    if (this.item.isOpened) {
-      return this.item.productType.openedExpirationTerm - this.getCountOfPassedDays(this.item.manufactureDate);
-    }
+    //TODO uncomment when UnpackingDate is added
+    // if (this.item.isOpened) {
+    //   return this.item.productType.openedExpirationTerm - this.getCountOfPassedDays(this.item.manufactureDate);
+    // }
 
     return this.item.productType.expirationTerm - this.getCountOfPassedDays(this.item.manufactureDate);
   }
