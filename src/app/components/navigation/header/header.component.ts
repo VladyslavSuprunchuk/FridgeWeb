@@ -48,7 +48,6 @@ export class HeaderComponent implements OnInit {
   }
 
   public setSelectedStorehouse(storehouse: Storehouse) {
-    debugger;
     this.storehouseService.selectedStorehouseInPanel = storehouse;
     this.storehouseService.triggerOnChangeSelectedStorehouse();
     // localStorage.setItem("colorOfHeader", '#' + storehouse.colorHex.slice(2))

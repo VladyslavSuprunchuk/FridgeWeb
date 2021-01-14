@@ -76,7 +76,6 @@ export class ProductTypeEditComponent implements OnInit {
     this.server.putFormData<GenericResponse<boolean>>('/producttype/', this.productTypeForm.value, this.fileToUpload).subscribe(data => {
       if (data.isSuccess) {
         this.router.navigate(['product-type-list/false']);
-        this.storehouseService.downloadStorehouses();
         this.alertManager.showSuccess("Product type was updated successfully");
       }
       else{

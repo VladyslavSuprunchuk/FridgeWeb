@@ -61,7 +61,7 @@ export class StorehouseService {
   }
 
   get isEmpty(): boolean {
-    return this.storehouses.length == 0;
+    return this._storehouses.length == 0;
   }
 
   // -------------------------------------------------------------------------

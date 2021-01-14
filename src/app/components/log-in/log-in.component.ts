@@ -58,12 +58,10 @@ export class LogInComponent implements OnInit {
     if (this.loginForm.valid) {
       this.server.postQuery<GenericResponse<boolean>>("/login", this.loginForm.value).subscribe(data => {
         if (data.isSuccess) {
-          debugger;
           this.saveUserInfo(data);
           this.router.navigate(['product-item-list']);   
         }
         else
-        debugger;
         if(data.error != null){
           this.alertManager.showError(data.error.errorMessage);
         }

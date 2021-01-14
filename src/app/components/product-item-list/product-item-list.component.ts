@@ -26,7 +26,6 @@ export class ProductItemListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    debugger;
     this.productTypeService.selectedProductTypeForCreateProductItem = null;
     this.storehouseService.selectedStorehouseForCreateProductItem = null;
     this.getProductItems();
@@ -40,8 +39,6 @@ export class ProductItemListComponent implements OnInit {
     }
 
     if(this.storehouseService.selectedStorehouseInPanel != null){
-      localStorage.setItem("colorOfHeader", '#' + this.storehouseService.selectedStorehouseInPanel.colorHex.slice(2));
-
       this.server.getQuery<GenericResponse<boolean>>('/storehouse/' + this.storehouseService.selectedStorehouseInPanel.id + '/getproductitems').subscribe(data => {
         if (data.isSuccess) {
           this.productItems = data.data;

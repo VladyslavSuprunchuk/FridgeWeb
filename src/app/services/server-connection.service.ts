@@ -101,7 +101,7 @@ export class ServerConnectionService {
       }
 
       result = error.error;
-      (result.error.errorMessage);
+      // (result.error.errorMessage);
       return of(result);
     };
   }
