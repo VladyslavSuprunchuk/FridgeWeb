@@ -80,7 +80,12 @@ export class ProductTypeEditComponent implements OnInit {
         this.alertManager.showSuccess("Product type was updated successfully");
       }
       else{
-        this.alertManager.showError(data.error.errorMessage);
+        if(data.error != null){
+          this.alertManager.showError(data.error.errorMessage);
+        }
+        else{
+          this.alertManager.showError("Internal Error");
+        }
       }
     })
   }
@@ -92,7 +97,12 @@ export class ProductTypeEditComponent implements OnInit {
         this.alertManager.showSuccess("Product type has been created");
       }
       else{
-        this.alertManager.showError(data.error.errorMessage);
+        if(data.error != null){
+          this.alertManager.showError(data.error.errorMessage);
+        }
+        else{
+          this.alertManager.showError("Internal Error");
+        }
       }
     })
   }
@@ -104,7 +114,12 @@ export class ProductTypeEditComponent implements OnInit {
         this.alertManager.showSuccess("Product type has been deleted");
       }
       else{
-         this.alertManager.showError(data.error.errorMessage);
+        if(data.error != null){
+          this.alertManager.showError(data.error.errorMessage);
+        }
+        else{
+          this.alertManager.showError("Internal Error");
+        }
       }
     })
   }

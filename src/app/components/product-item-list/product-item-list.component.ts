@@ -26,8 +26,9 @@ export class ProductItemListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.productTypeService.deleteProductTypeForCreateProductItem();
-    this.storehouseService.deleteStorehouseForCreateProductItem();
+    debugger;
+    this.productTypeService.selectedProductTypeForCreateProductItem = null;
+    this.storehouseService.selectedStorehouseForCreateProductItem = null;
     this.getProductItems();
     this.storehouseService.trigger$.subscribe(() => this.getProductItems());
   }
@@ -38,18 +39,23 @@ export class ProductItemListComponent implements OnInit {
       await this.storehouseService.getStorehousesAsync()
     }
 
-    if(this.storehouseService.selectedStorehouse != null){
-      localStorage.setItem("colorOfHeader", '#' + this.storehouseService.selectedStorehouse.colorHex.slice(2));
-    }
+    if(this.storehouseService.selectedStorehouseInPanel != null){
+      localStorage.setItem("colorOfHeader", '#' + this.storehouseService.selectedStorehouseInPanel.colorHex.slice(2));
 
-    this.server.getQuery<GenericResponse<boolean>>('/storehouse/' + this.storehouseService.selectedStorehouse.id + '/getproductitems').subscribe(data => {
-      if (data.isSuccess) {
-        this.productItems = data.data;
-      }
-      else {
-        this.alertManager.showError(data.error.errorMessage);
-      }
-    });
+      this.server.getQuery<GenericResponse<boolean>>('/storehouse/' + this.storehouseService.selectedStorehouseInPanel.id + '/getproductitems').subscribe(data => {
+        if (data.isSuccess) {
+          this.productItems = data.data;
+        }
+        else {
+          if(data.error != null){
+            this.alertManager.showError(data.error.errorMessage);
+          }
+          else{
+            this.alertManager.showError("Internal Error");
+          }
+        }
+      });
+    }   
   }
 }
 

@@ -48,7 +48,12 @@ export class ProductTypeListComponent implements OnInit {
         this.productTypesForTable = this.getProductTypesByDistinctAuthors(this.productTypes);
       }
       else {
-        this.alertManager.showError(data.error.errorMessage);
+        if(data.error != null){
+          this.alertManager.showError(data.error.errorMessage);
+        }
+        else{
+          this.alertManager.showError("Internal Error");
+        }
       }
     });
   }
@@ -70,7 +75,12 @@ export class ProductTypeListComponent implements OnInit {
         this.alertManager.showSuccess(message);
       }
       else {
-        this.alertManager.showError(data.error.errorMessage);
+        if(data.error != null){
+          this.alertManager.showError(data.error.errorMessage);
+        }
+        else{
+          this.alertManager.showError("Internal Error");
+        }
       }
     });
   }
@@ -84,7 +94,8 @@ export class ProductTypeListComponent implements OnInit {
   }
 
   public setSelectedProductTypeForProductItem(productType: ProductType) {
-    this.productTypeService.saveProductTypeInfoForCreateProductItem(productType);
+    debugger;
+    this.productTypeService.selectedProductTypeForCreateProductItem = productType;
     this.router.navigate(['product-item-edit/0']);
   }
 
@@ -95,7 +106,12 @@ export class ProductTypeListComponent implements OnInit {
         this.alertManager.showSuccess("Product type has been deleted");
       }
       else{
-         this.alertManager.showError(data.error.errorMessage);
+        if(data.error != null){
+          this.alertManager.showError(data.error.errorMessage);
+        }
+        else{
+          this.alertManager.showError("Internal Error");
+        }
       }
     })
   }

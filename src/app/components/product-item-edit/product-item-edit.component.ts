@@ -40,15 +40,15 @@ export class ProductItemEditComponent implements OnInit {
     this.formEmptyInitialization();
     this.id = this.activateRoute.snapshot.params['id'];
     if (this.id == 0) {
-      if ((this.productTypeService.productTypeInfoForCreateProductItem != null) || (this.storehouseService.storehouseInfoForCreateProductItem != null)) {
+      if ((this.productTypeService.selectedProductTypeForCreateProductItem != null) || (this.storehouseService.selectedStorehouseForCreateProductItem != null)) {
         this.formReconstruction();
       }
       else{
-        this.storehouseService.saveStorehouseInfoForCreateProductItem(this.storehouseService.selectedStorehouse);
+        this.storehouseService.selectedStorehouseForCreateProductItem = this.storehouseService.selectedStorehouseInPanel;
       }
     }
     else{
-      this.server.getQuery<GenericResponse<boolean>>('/productitem/' + this.storehouseService.selectedStorehouse.id
+      this.server.getQuery<GenericResponse<boolean>>('/productitem/' + this.storehouseService.selectedStorehouseInPanel.id
        + '/getproductitem/' + this.id).subscribe(data => {
         if (data.isSuccess) {
           this.productItem = data.data;
@@ -119,15 +119,15 @@ export class ProductItemEditComponent implements OnInit {
 
   onSubmit() {
     if(this.id == 0){
-      this.productItem.productTypeId = this.productTypeService.productTypeInfoForCreateProductItem.id;
-      this.productItem.newStorehouseId = this.storehouseService.storehouseInfoForCreateProductItem.id;
+      this.productItem.productTypeId = this.productTypeService.selectedProductTypeForCreateProductItem.id;
+      this.productItem.newStorehouseId = this.storehouseService.selectedStorehouseForCreateProductItem.id;
     }
     else{
-      if(this.storehouseService.storehouseInfoForCreateProductItem != null){
-        this.productItem.newStorehouseId = this.storehouseService.storehouseInfoForCreateProductItem.id;
+      if(this.storehouseService.selectedStorehouseForCreateProductItem != null){
+        this.productItem.newStorehouseId = this.storehouseService.selectedStorehouseForCreateProductItem.id;
       }
       else{
-        this.productItem.newStorehouseId = this.storehouseService.selectedStorehouse.id;
+        this.productItem.newStorehouseId = this.storehouseService.selectedStorehouseForCreateProductItem.id;
       }
     }
 
@@ -154,7 +154,12 @@ export class ProductItemEditComponent implements OnInit {
           this.alertManager.showSuccess("Product Item was updated successfully");
         }
         else {
-          this.alertManager.showError(data.error.errorMessage);
+          if(data.error != null){
+            this.alertManager.showError(data.error.errorMessage);
+          }
+          else{
+            this.alertManager.showError("Internal Error");
+          }
         }
     })
   }
@@ -167,7 +172,12 @@ export class ProductItemEditComponent implements OnInit {
         this.alertManager.showSuccess("Product Item was created successfully");
       }
       else {
-        this.alertManager.showError(data.error.errorMessage);
+        if(data.error != null){
+          this.alertManager.showError(data.error.errorMessage);
+        }
+        else{
+          this.alertManager.showError("Internal Error");
+        }
       }
     })
   }

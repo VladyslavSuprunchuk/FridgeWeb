@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ServerConnectionService } from '../../services/server-connection.service';
 import { Storehouse } from '../../models/storehouse';
 import { StorehouseService } from 'src/app/services/storehouse.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-storehouse-edit',
@@ -25,7 +26,8 @@ export class StorehouseEditComponent implements OnInit {
     private fb: FormBuilder,
     private alertManager: AlertManagerService,
     private router: Router,
-    private storehouseService:StorehouseService) {
+    private storehouseService:StorehouseService,
+    private cdRef:ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -40,9 +42,21 @@ export class StorehouseEditComponent implements OnInit {
           localStorage.setItem("colorOfHeader", str);
         }
         else {
-          this.alertManager.showError(data.error.errorMessage);
+          if(data.error != null){
+            this.alertManager.showError(data.error.errorMessage);
+          }
+          else{
+            this.alertManager.showError("Internal Error");
+          }
         }
       });
+    }
+  }
+
+  ngOnDestroy(){
+    if (this.id != 0) {
+      this.cdRef.detectChanges();
+      localStorage.removeItem("colorOfHeader");
     }
   }
 
@@ -66,7 +80,12 @@ export class StorehouseEditComponent implements OnInit {
         this.alertManager.showSuccess("Storehouse was updated successfully");
       }
       else {
-        this.alertManager.showError(data.error.errorMessage);
+        if(data.error != null){
+          this.alertManager.showError(data.error.errorMessage);
+        }
+        else{
+          this.alertManager.showError("Internal Error");
+        }
       }
     })
   }
@@ -79,7 +98,12 @@ export class StorehouseEditComponent implements OnInit {
         this.alertManager.showSuccess("Storehouse type has been created");
       }
       else {
-        this.alertManager.showError(data.error.errorMessage);
+        if(data.error != null){
+          this.alertManager.showError(data.error.errorMessage);
+        }
+        else{
+          this.alertManager.showError("Internal Error");
+        }
       }
     })
   }
@@ -88,8 +112,8 @@ export class StorehouseEditComponent implements OnInit {
     this.server.deleteQuery<GenericResponse<boolean>>('/storehouse/deletestorehouse/' + this.id).subscribe(data => {
       if (data.isSuccess) {
 
-        if(this.storehouseService.selectedStorehouse.id == this.id){
-          this.storehouseService.setSelectedStorehouseInPanel(null);
+        if(this.storehouseService.selectedStorehouseInPanel.id == this.id){
+          this.storehouseService.selectedStorehouseInPanel = null;
         }
 
         this.storehouseService.downloadStorehouses();
@@ -97,7 +121,12 @@ export class StorehouseEditComponent implements OnInit {
         this.alertManager.showSuccess("Storehouse has been deleted");
       }
       else {
-        this.alertManager.showError(data.error.errorMessage);
+        if(data.error != null){
+          this.alertManager.showError(data.error.errorMessage);
+        }
+        else{
+          this.alertManager.showError("Internal Error");
+        }
       }
     })
   }

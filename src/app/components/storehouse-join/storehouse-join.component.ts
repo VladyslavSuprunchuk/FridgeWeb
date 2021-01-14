@@ -48,7 +48,12 @@ export class StorehouseJoinComponent implements OnInit {
           this.alertManager.showSuccess("You successfully join to storehouse");
         }
         else {
-          this.alertManager.showError(data.error.errorMessage);
+          if(data.error != null){
+            this.alertManager.showError(data.error.errorMessage);
+          }
+          else{
+            this.alertManager.showError("Internal Error");
+          }
         }
       });
     }

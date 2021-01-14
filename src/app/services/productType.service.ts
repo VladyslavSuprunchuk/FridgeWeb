@@ -3,27 +3,25 @@ import { ProductType } from '../models/product-type'
 
 @Injectable({
   providedIn: 'root'
-})
+}) // TypeInfoForCreate
 export class ProductTypeService {
+
+  private _selectedProductTypeForCreateProductItem: ProductType;
 
   constructor() { }
 
-  public get productTypeInfoForCreateProductItem(){
-    return this.getProductTypeInfoForCreateProductItem();
+  public get selectedProductTypeForCreateProductItem(){ 
+    return this._selectedProductTypeForCreateProductItem ?? this.getProductTypeForCreateProductItemFromSession();
   }
 
-  public saveProductTypeInfoForCreateProductItem(productType: ProductType) {
-    localStorage.setItem("ProductTypeInfoForCreateProductItem",JSON.stringify(productType))
+  public set selectedProductTypeForCreateProductItem(productType: ProductType){ 
+   this._selectedProductTypeForCreateProductItem = productType;
+   localStorage.setItem("ProductTypeInfoForCreateProductItem", JSON.stringify(this._selectedProductTypeForCreateProductItem));
   }
 
-  public getProductTypeInfoForCreateProductItem():ProductType{
+  private getProductTypeForCreateProductItemFromSession(): ProductType{
     let productType = localStorage.getItem("ProductTypeInfoForCreateProductItem");
-    return JSON.parse(productType);
+    this._selectedProductTypeForCreateProductItem =  JSON.parse(productType)
+    return this._selectedProductTypeForCreateProductItem;
   }
-
-  public deleteProductTypeForCreateProductItem(){
-    localStorage.removeItem("ProductTypeInfoForCreateProductItem");
-  }
-
-
 }

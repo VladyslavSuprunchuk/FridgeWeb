@@ -36,7 +36,12 @@ export class StorehouseListComponent implements OnInit {
         this.storehouses = data.data;
       }
       else {
-        this.alertManager.showError(data.error.errorMessage);
+        if(data.error != null){
+          this.alertManager.showError(data.error.errorMessage);
+        }
+        else{
+          this.alertManager.showError("Internal Error");
+        }
       }
     });
   }
@@ -46,8 +51,8 @@ export class StorehouseListComponent implements OnInit {
       this.server.deleteQuery<GenericResponse<boolean>>('/storehouse/deletestorehouse/' + id).subscribe(data => {
         if (data.isSuccess) {
 
-          if(this.storehouseService.selectedStorehouse.id == id){
-            this.storehouseService.setSelectedStorehouseInPanel(null);
+          if(this.storehouseService.selectedStorehouseInPanel.id == id){
+            this.storehouseService.selectedStorehouseInPanel = null;
           }
   
           this.storehouseService.downloadStorehouses();
@@ -55,7 +60,12 @@ export class StorehouseListComponent implements OnInit {
           this.ngOnInit()
         }
         else {
-          this.alertManager.showError(data.error.errorMessage);
+          if(data.error != null){
+            this.alertManager.showError(data.error.errorMessage);
+          }
+          else{
+            this.alertManager.showError("Internal Error");
+          }
         }
       });
     }
@@ -67,14 +77,19 @@ export class StorehouseListComponent implements OnInit {
           this.ngOnInit()
         }
         else {
-          this.alertManager.showError(data.error.errorMessage);
+          if(data.error != null){
+            this.alertManager.showError(data.error.errorMessage);
+          }
+          else{
+            this.alertManager.showError("Internal Error");
+          }
         }
       });
     }
   }
 
   public setSelectedStorehouseForProductItem(storehouse:Storehouse){
-    this.storehouseService.saveStorehouseInfoForCreateProductItem(storehouse);
+    this.storehouseService.selectedStorehouseForCreateProductItem = storehouse;
     this._location.back();
   }
 

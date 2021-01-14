@@ -58,11 +58,18 @@ export class LogInComponent implements OnInit {
     if (this.loginForm.valid) {
       this.server.postQuery<GenericResponse<boolean>>("/login", this.loginForm.value).subscribe(data => {
         if (data.isSuccess) {
+          debugger;
           this.saveUserInfo(data);
           this.router.navigate(['product-item-list']);   
         }
         else
+        debugger;
+        if(data.error != null){
           this.alertManager.showError(data.error.errorMessage);
+        }
+        else{
+          this.alertManager.showError("Internal Error");
+        }
       });
     }     
   }
@@ -81,7 +88,12 @@ export class LogInComponent implements OnInit {
           this.router.navigate(['product-item-list']);
         }
         else
-        this.alertManager.showSuccess(data.error.errorMessage);
+        if(data.error != null){
+          this.alertManager.showError(data.error.errorMessage);
+        }
+        else{
+          this.alertManager.showError("Internal Error");
+        }
       });
     }
   }

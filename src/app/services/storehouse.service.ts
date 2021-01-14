@@ -14,6 +14,7 @@ export class StorehouseService {
   private _storehouses: Storehouse[] = [];
   private _trigger = new Subject<void>();
   private _selectedStorehouseInPanel: Storehouse;
+  private _selectedStorehouseForCreateProductItem: Storehouse;
 
   constructor(private server: ServerConnectionService, private alertManager: AlertManagerService) {
   }
@@ -30,19 +31,25 @@ export class StorehouseService {
   //#endregion
 
   // -------------------------------------------------------------------------
-  // Public Get and Set Methods
+  // Public Get and Set Properties
   // -------------------------------------------------------------------------
 
-  public get selectedStorehouse(): Storehouse {
+  public get selectedStorehouseInPanel(): Storehouse {
     return this._selectedStorehouseInPanel ?? this.getSelectedStorehouseInPanelFromSession();
   }
 
-  public set selectedStorehouse(storehouse: Storehouse) {
+  public set selectedStorehouseInPanel(storehouse: Storehouse) {
     this._selectedStorehouseInPanel = storehouse;
+    localStorage.setItem("SelectedStorehouseInPanel", JSON.stringify(storehouse));
   }
 
-  public get storehouseInfoForCreateProductItem() {
-    return this.getStorehouseInfoForCreateProductItem();
+  public get selectedStorehouseForCreateProductItem() {
+    return this._selectedStorehouseForCreateProductItem ?? this.getStorehouseForCreateProductItemFromSession();
+  }
+
+  public set selectedStorehouseForCreateProductItem(storehouse: Storehouse) {
+     this._selectedStorehouseForCreateProductItem =  storehouse;
+     localStorage.setItem("StorehouseInfoForCreateProductItem", JSON.stringify(storehouse));
   }
 
   get storehouses(): Storehouse[] {
@@ -64,31 +71,16 @@ export class StorehouseService {
 
   private getSelectedStorehouseInPanelFromSession() {
     let storehouse = localStorage.getItem("SelectedStorehouseInPanel");
-    return JSON.parse(storehouse);
+    this._selectedStorehouseInPanel = JSON.parse(storehouse);
+    return this._selectedStorehouseInPanel;
   }
 
-  public getColorOfHeader(): string {
-    return localStorage.getItem("colorOfHeader");
+  private getStorehouseForCreateProductItemFromSession(): Storehouse {
+    let storehouse = localStorage.getItem("StorehouseInfoForCreateProductItem");
+    this._selectedStorehouseForCreateProductItem = JSON.parse(storehouse);
+    return this._selectedStorehouseForCreateProductItem;
   }
-
-  public dropColorOfHeader(): void {
-    localStorage.removeItem("colorOfHeader");
-  }
-
-  public downloadStorehouses(): void {
-    this.server.getQuery<GenericResponse<boolean>>('/storehouse').subscribe(data => {
-      if (data.isSuccess) {
-        this._storehouses = data.data;
-        if (this.selectedStorehouse == null) {
-          this.setSelectedStorehouseInPanel(this._storehouses[0]);
-          localStorage.setItem("colorOfHeader", '#' + this.selectedStorehouse.colorHex.slice(2));
-        }
-      }
-      else {
-        this.alertManager.showError(data.error.errorMessage);
-      }
-    });
-  }
+ 
 
   // -------------------------------------------------------------------------
   // Public Methods
@@ -99,6 +91,27 @@ export class StorehouseService {
     this._storehouses.length = 0;
   }
 
+  public downloadStorehouses(): void {
+    this.server.getQuery<GenericResponse<boolean>>('/storehouse').subscribe(data => {
+      if (data.isSuccess) {
+        this._storehouses = data.data;
+        if (this.selectedStorehouseInPanel == null) {
+          if(this._storehouses.length != 0){
+            this.selectedStorehouseInPanel = this._storehouses[0];
+          }
+        }
+      }
+      else {
+        if(data.error != null){
+          this.alertManager.showError(data.error.errorMessage);
+        }
+        else{
+          this.alertManager.showError("Internal Error");
+        }
+      }
+    });
+  }
+
   public async getStorehousesAsync() {
     var data = await this.server.getQueryPromise<GenericResponse<boolean>>('/storehouse');
 
@@ -106,30 +119,18 @@ export class StorehouseService {
       this._storehouses = data.data;
     }
     else {
-      this.alertManager.showError(data.error.errorMessage);
+      if(data.error != null){
+        this.alertManager.showError(data.error.errorMessage);
+      }
+      else{
+        this.alertManager.showError("Internal Error");
+      }
     }
 
-    if (this.selectedStorehouse == null) {
-      this.setSelectedStorehouseInPanel(this._storehouses[0]);
-      localStorage.setItem("colorOfHeader", '#' + this.selectedStorehouse.colorHex.slice(2));
+    if (this.selectedStorehouseInPanel == null) {
+      if(this._storehouses.length != 0){
+        this.selectedStorehouseInPanel = this._storehouses[0];
+      }
     }
-  }
-
-  public setSelectedStorehouseInPanel(storehouse: Storehouse) {
-    this._selectedStorehouseInPanel = storehouse;
-    localStorage.setItem("SelectedStorehouseInPanel", JSON.stringify(storehouse))
-  }
-
-  public saveStorehouseInfoForCreateProductItem(storehouse: Storehouse) {
-    localStorage.setItem("StorehouseInfoForCreateProductItem", JSON.stringify(storehouse))
-  }
-
-  public getStorehouseInfoForCreateProductItem(): Storehouse {
-    let storehouse = localStorage.getItem("StorehouseInfoForCreateProductItem");
-    return JSON.parse(storehouse);
-  }
-
-  public deleteStorehouseForCreateProductItem() {
-    localStorage.removeItem("StorehouseInfoForCreateProductItem");
   }
 }

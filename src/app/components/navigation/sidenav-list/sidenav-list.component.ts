@@ -23,8 +23,8 @@ export class SidenavListComponent implements OnInit {
 
   public onLogoutClick(){
     this.storehouseSerivce.resetListOfStorehouses();
-    this.storehouseSerivce.selectedStorehouse = null;
-    this.storehouseSerivce.setSelectedStorehouseInPanel(null);
+    this.storehouseSerivce.selectedStorehouseInPanel = null;
+    localStorage.removeItem("colorOfHeader");
     this.onSidenavClose();
     this.authorizationService.dropToken();
     this.router.navigate(['']);

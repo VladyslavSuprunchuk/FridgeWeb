@@ -62,7 +62,12 @@ export class MembersComponent implements OnInit {
         this.alertManager.showSuccess("Member was deleted successfully");
       }
       else {
-        this.alertManager.showError(data.error.errorMessage);
+        if(data.error != null){
+          this.alertManager.showError(data.error.errorMessage);
+        }
+        else{
+          this.alertManager.showError("Internal Error");
+        }
       }
     });
   }

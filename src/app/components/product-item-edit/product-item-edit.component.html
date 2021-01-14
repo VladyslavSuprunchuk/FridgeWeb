@@ -1,35 +1,35 @@
 <form class="form"  [formGroup]="productItemForm"
   (ngSubmit)="onSubmit()">
 
-  <div class="selectLabel" *ngIf="productTypeService.getProductTypeInfoForCreateProductItem() == null && id == 0"
+  <div class="selectLabel" *ngIf="productTypeService.selectedProductTypeForCreateProductItem == null && id == 0"
     (click)="selectProductType()">
      Select Product Type
   </div>
   <div class="selectLabel" (click)="selectProductType()"
-    *ngIf="productTypeService.getProductTypeInfoForCreateProductItem() != null && id == 0">
-    Product Type: {{productTypeService.productTypeInfoForCreateProductItem.name}}
+    *ngIf="productTypeService.selectedProductTypeForCreateProductItem != null && id == 0">
+    Product Type: {{productTypeService.selectedProductTypeForCreateProductItem.name}}
   </div>
   <div class="selectLabel"
     *ngIf="id != 0">
     Product Type: {{productItem.productType.name}}
   </div>
 
-  <div class="selectLabel" *ngIf="storehouseService.getStorehouseInfoForCreateProductItem() == null && id == 0"
+  <div class="selectLabel" *ngIf="storehouseService.selectedStorehouseForCreateProductItem == null && id == 0"
     (click)="selectStorehouse()">
     Select Storehouse
   </div>
 
   <div class="selectLabel" (click)="selectStorehouse()"
-    *ngIf="storehouseService.getStorehouseInfoForCreateProductItem() != null && id == 0">
-    Storehouse: {{storehouseService.storehouseInfoForCreateProductItem.title}}
+    *ngIf="storehouseService.selectedStorehouseForCreateProductItem != null && id == 0">
+    Storehouse: {{storehouseService.selectedStorehouseForCreateProductItem.title}}
   </div>
 
   <div *ngIf="id != 0" class="selectLabel">
-    <div  (click)="selectStorehouse()" *ngIf="storehouseService.getStorehouseInfoForCreateProductItem() == null">
-      Storehouse: {{storehouseService.selectedStorehouse.title}}
+    <div  (click)="selectStorehouse()" *ngIf="storehouseService.selectedStorehouseForCreateProductItem == null">
+      Storehouse: {{storehouseService.selectedStorehouseInPanel.title}}
     </div>
-    <div  (click)="selectStorehouse()" *ngIf="storehouseService.getStorehouseInfoForCreateProductItem() != null">
-      Storehouse: {{storehouseService.storehouseInfoForCreateProductItem.title}}
+    <div  (click)="selectStorehouse()" *ngIf="storehouseService.selectedStorehouseForCreateProductItem != null">
+      Storehouse: {{storehouseService.selectedStorehouseForCreateProductItem.title}}
     </div>
   </div>
 
@@ -61,8 +61,8 @@
 
   <mat-form-field class="input">
 
-    <div style="position: absolute;margin-left: 73%" *ngIf="productTypeService.productTypeInfoForCreateProductItem != null" >
-      {{productTypeService.productTypeInfoForCreateProductItem.unit.name}} 
+    <div style="position: absolute;margin-left: 73%" *ngIf="productTypeService.selectedProductTypeForCreateProductItem != null" >
+      {{productTypeService.selectedProductTypeForCreateProductItem.unit.name}} 
     </div>
 
     <div style="position: absolute;margin-left: 73%" *ngIf="productItem != null" >
@@ -75,8 +75,8 @@
 
   <div class="buttons">
     <button *ngIf="id == 0" [disabled]="productItemForm.invalid || 
-    productTypeService.productTypeInfoForCreateProductItem == null ||
-    storehouseService.storehouseInfoForCreateProductItem == null" mat-flat-button color="primary" class="for-button submitButton"
+    productTypeService.selectedProductTypeForCreateProductItem == null ||
+    storehouseService.selectedStorehouseForCreateProductItem == null" mat-flat-button color="primary" class="for-button submitButton"
       type="submit" mat-raised-button>Save</button>
       
       <button *ngIf="id != 0" [disabled]="productItemForm.invalid" mat-flat-button color="primary" class="for-button submitButton"
