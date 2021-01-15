@@ -7,6 +7,8 @@ import { Client } from '../../models/client';
 import { Router } from '@angular/router';
 import { AuthorizationService }  from '../../services/authorization.service'
 import { StorehouseService } from 'src/app/services/storehouse.service';
+import { Guid } from '../../shared/guid';
+
 @Component({
   selector: 'app-log-in',
   templateUrl: './log-in.component.html',
@@ -18,18 +20,20 @@ export class LogInComponent implements OnInit {
   public loginForm: FormGroup;
   private client: Client;
   public isWantToCreateAccount:boolean = false;
+  private deviceId: string;
 
   constructor(private server: ServerConnectionService,
     private alertManager: AlertManagerService,
-     private router: Router,
-     private fb: FormBuilder,
-     private authorizationService: AuthorizationService,
-     private storehouseSerivce:StorehouseService) { }
+    private router: Router,
+    private fb: FormBuilder,
+    private authorizationService: AuthorizationService) { }
 
   ngOnInit() {
+    this.deviceId = Guid.newGuid();
+    localStorage.setItem("deviceId", this.deviceId);
     this.formInitialization();
-    var token = this.authorizationService.getToken() ;
-    if(token != null){
+    var token = this.authorizationService.getToken();
+    if (token != null) {
       this.router.navigate(['product-item-list']);
     }
   }
@@ -39,7 +43,7 @@ export class LogInComponent implements OnInit {
       name: [],
       email: [],
       password: [],
-      deviceId: [],
+      deviceId: [this.deviceId],
     });
   }
 

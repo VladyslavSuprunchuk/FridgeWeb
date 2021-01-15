@@ -11,7 +11,7 @@
             </div>
           </div>
 
-          <div style="margin-top: 25px;margin-left: 30%;position: absolute;width: 130px;">
+          <div style="margin-top: 15px;margin-left: 30%;position: absolute;width: 130px;">
             {{ item.productType.name}}
             <div>{{item.amount}} {{ item.productType.unit.shortName}}</div>
           </div>
@@ -75,7 +75,7 @@
       <mat-icon>keyboard_arrow_right</mat-icon>
     </button>
 
-    <button (click)="onSubmit()" style="display: block;margin: auto;" mat-flat-button color="primary"
+    <button (click)="onSubmit()" style="display: block;margin: auto; width: 100px;height: 40px;" mat-flat-button color="primary"
       class="submitButton" type="submit" mat-raised-button>
       Submit
     </button>
